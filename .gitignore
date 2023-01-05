@@ -10,3 +10,4 @@ build/
 pubspec.lock
 *.iml
 lib/src/generated/
+lib/src/agent/
