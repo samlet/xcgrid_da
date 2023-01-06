@@ -3,6 +3,7 @@ import 'package:protobuf/protobuf.dart';
 import '../../common_proto.dart';
 import '../agent/preset_manager.dart';
 import '../generated/call_builder.pb.dart';
+import '../generated/preset_manager.pb.dart';
 import '../preset_base.dart';
 import '../xcrpc_client.dart';
 
@@ -22,6 +23,8 @@ import '../util.dart';
 class DummyPresetKeys{
   final String regionId;
   BundleKey get regionKey => BundleKey(regionId: regionId);
+  final String? plId;
+  BundleKey? get plKey => plId!=null?BundleKey(regionId: regionId, id: plId):null;
   final String noteId;
   BundleKey get noteKey => BundleKey(regionId: regionId, id: noteId);
   final String memoId;
@@ -30,7 +33,41 @@ class DummyPresetKeys{
   DummyPresetKeys({
     required this.noteId,
     required this.memoId,
+    this.plId,
     this.regionId='default'});
+
+  factory DummyPresetKeys.fromMap(Map<String, String> keysMap){
+    return DummyPresetKeys(
+        noteId: keysMap['noteId']!,
+        memoId: keysMap['memoId']!,
+        plId: keysMap['plId'],
+        regionId: keysMap['regionId']??'default'
+    );
+  }
+
+  factory DummyPresetKeys.fromMeta(CallBuilderContextProto meta){
+    Map<String, BundleKey> keysMap = meta.keys;
+    return DummyPresetKeys(
+        noteId: keysMap['note']!.id,
+        memoId: keysMap['memo']!.id,
+        plId: meta.plId,
+        regionId: meta.regionId
+    );
+  }
+
+  Map<String, String> get keys => {
+    'noteId': noteId,
+    'memoId': memoId,
+  };
+
+  PresetManagerCreatePresetPlRequest asPlRequest(String tag, String owner){
+    return PresetManagerCreatePresetPlRequest()
+      ..regionId = regionId
+      ..presetName = 'Dummy'
+      ..owner = owner
+      ..tag = tag
+      ..keys = StringMap(values: keys);
+  }
 
 }
 
@@ -44,9 +81,9 @@ class DummyPreset extends PresetBase {
 
   DummyPreset(
       this.keys,
-      {BundleKey? plKey, PresetManagerAgent? presetAgent})
+      {PresetManagerAgent? presetAgent})
       : super(presetAgent ?? XcClient().presetManagerAgent(),
-            plKey ?? BundleKey(regionId: 'default', id: slugId()));
+            keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
 
   
   
@@ -99,29 +136,6 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteSetContent(
-    String cnt
-  ) {
-    
-    var el = NoteCoCall()
-      ..setContent = (NoteCoSetContentRequest()
-        ..handle = noteWithNoteCoHandle
-        ..cnt = cnt       
-      );     
-     
-    pushCall("noteSetContent", "NoteCo", note, el);
-    return this;
-  }
-
-  Future<Empty> noteSetContentCall(
-    String cnt
-  ) async {
-    noteSetContent(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
-    return Empty.getDefault();
-  }
-
-  
   DummyPreset noteAttachToParty(
     String partyId
   ) {
@@ -140,6 +154,29 @@ class DummyPreset extends PresetBase {
     String partyId
   ) async {
     noteAttachToParty(partyId);
+    await presetAgent.dispatch(plKey.id, toProto());
+    return Empty.getDefault();
+  }
+
+  
+  DummyPreset noteSetContent(
+    String cnt
+  ) {
+    
+    var el = NoteCoCall()
+      ..setContent = (NoteCoSetContentRequest()
+        ..handle = noteWithNoteCoHandle
+        ..cnt = cnt       
+      );     
+     
+    pushCall("noteSetContent", "NoteCo", note, el);
+    return this;
+  }
+
+  Future<Empty> noteSetContentCall(
+    String cnt
+  ) async {
+    noteSetContent(cnt);
     await presetAgent.dispatch(plKey.id, toProto());
     return Empty.getDefault();
   }
@@ -242,29 +279,6 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset memoSetContent(
-    String cnt
-  ) {
-    
-    var el = NoteCoCall()
-      ..setContent = (NoteCoSetContentRequest()
-        ..handle = memoWithNoteCoHandle
-        ..cnt = cnt       
-      );     
-     
-    pushCall("memoSetContent", "NoteCo", memo, el);
-    return this;
-  }
-
-  Future<Empty> memoSetContentCall(
-    String cnt
-  ) async {
-    memoSetContent(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
-    return Empty.getDefault();
-  }
-
-  
   DummyPreset memoAttachToParty(
     String partyId
   ) {
@@ -283,6 +297,29 @@ class DummyPreset extends PresetBase {
     String partyId
   ) async {
     memoAttachToParty(partyId);
+    await presetAgent.dispatch(plKey.id, toProto());
+    return Empty.getDefault();
+  }
+
+  
+  DummyPreset memoSetContent(
+    String cnt
+  ) {
+    
+    var el = NoteCoCall()
+      ..setContent = (NoteCoSetContentRequest()
+        ..handle = memoWithNoteCoHandle
+        ..cnt = cnt       
+      );     
+     
+    pushCall("memoSetContent", "NoteCo", memo, el);
+    return this;
+  }
+
+  Future<Empty> memoSetContentCall(
+    String cnt
+  ) async {
+    memoSetContent(cnt);
     await presetAgent.dispatch(plKey.id, toProto());
     return Empty.getDefault();
   }

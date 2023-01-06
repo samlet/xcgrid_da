@@ -13,3 +13,5 @@ export 'src/generated/common_data_types.pb.dart';
 // special domain types
 export 'src/generated/ecommerce.pb.dart';
 export 'src/generated/perform_context.pb.dart';
+
+export 'src/proto_util.dart';
