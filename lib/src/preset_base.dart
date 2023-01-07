@@ -3,6 +3,7 @@ import 'package:protobuf/protobuf.dart';
 import '../../common_proto.dart';
 import 'agent/preset_manager.dart';
 import 'generated/call_builder.pb.dart';
+import 'generated/extra/common_slot.pb.dart';
 import 'util.dart';
 
 enum BuilderState { bsCall, bsSaga }
@@ -40,11 +41,12 @@ class PresetBase {
   }
 
   void pushCall(String callNamePrefix, String dispCo, BundleKey key,
-      GeneratedMessage callMsg) {
+      GeneratedMessage callMsg, int domainFieldNumber) {
     var call = CallProto()
       ..callName = callName(callNamePrefix)
       ..dispCo = dispCo
       ..key = key
+      ..domainFieldNumber = domainFieldNumber
       ..callMsg = callMsg.writeToBuffer();
     switch (currentState) {
       case BuilderState.bsCall:
@@ -56,5 +58,10 @@ class PresetBase {
     }
 
     incCallNumber();
+  }
+
+  Future<SlotList> dispatch() async {
+    var result= await presetAgent.dispatch(plKey.id, toProto());
+    return result;
   }
 }

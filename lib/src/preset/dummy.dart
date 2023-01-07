@@ -7,8 +7,11 @@ import '../generated/preset_manager.pb.dart';
 import '../preset_base.dart';
 import '../xcrpc_client.dart';
 
+import '../generated/note_domain.pb.dart';
+
 import '../generated/note_co.pbgrpc.dart';
 import '../generated/note_auto.pb.dart';
+import '../generated/domain/note_defs.pbenum.dart';
 
 import '../generated/fixture_objects.pb.dart';
 import '../generated/pipelines.pb.dart';
@@ -104,7 +107,8 @@ class DummyPreset extends PresetBase {
         ..workEffId = workEffId       
       );     
      
-    pushCall("noteAttachToWorkEffort", "NoteCo", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteAttachToWorkEffort", "NoteCo", note, el, c);
     return this;
   }
 
@@ -112,7 +116,7 @@ class DummyPreset extends PresetBase {
     String workEffId
   ) async {
     noteAttachToWorkEffort(workEffId);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -124,37 +128,15 @@ class DummyPreset extends PresetBase {
       ..revokeContent = noteWithNoteCoHandle;    
        
      
-    pushCall("noteRevokeContent", "NoteCo", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteRevokeContent", "NoteCo", note, el, c);
     return this;
   }
 
   Future<Empty> noteRevokeContentCall(
   ) async {
     noteRevokeContent();
-    await presetAgent.dispatch(plKey.id, toProto());
-    return Empty.getDefault();
-  }
-
-  
-  DummyPreset noteAttachToParty(
-    String partyId
-  ) {
-    
-    var el = NoteCoCall()
-      ..attachToParty = (NoteCoAttachToPartyRequest()
-        ..handle = noteWithNoteCoHandle
-        ..partyId = partyId       
-      );     
-     
-    pushCall("noteAttachToParty", "NoteCo", note, el);
-    return this;
-  }
-
-  Future<Empty> noteAttachToPartyCall(
-    String partyId
-  ) async {
-    noteAttachToParty(partyId);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -169,7 +151,8 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
-    pushCall("noteSetContent", "NoteCo", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteSetContent", "NoteCo", note, el, c);
     return this;
   }
 
@@ -177,7 +160,31 @@ class DummyPreset extends PresetBase {
     String cnt
   ) async {
     noteSetContent(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  DummyPreset noteAttachToParty(
+    String partyId
+  ) {
+    
+    var el = NoteCoCall()
+      ..attachToParty = (NoteCoAttachToPartyRequest()
+        ..handle = noteWithNoteCoHandle
+        ..partyId = partyId       
+      );     
+     
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteAttachToParty", "NoteCo", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteAttachToPartyCall(
+    String partyId
+  ) async {
+    noteAttachToParty(partyId);
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -192,7 +199,8 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
-    pushCall("noteSetContentComp", "NoteCo", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteSetContentComp", "NoteCo", note, el, c);
     return this;
   }
 
@@ -200,7 +208,7 @@ class DummyPreset extends PresetBase {
     String cnt
   ) async {
     noteSetContentComp(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -215,7 +223,8 @@ class DummyPreset extends PresetBase {
         ..slotName = slotName       
       );     
      
-    pushCall("noteDoneSlot", "NoteCo", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteDoneSlot", "NoteCo", note, el, c);
     return this;
   }
 
@@ -223,7 +232,7 @@ class DummyPreset extends PresetBase {
     String slotName
   ) async {
     noteDoneSlot(slotName);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -237,6 +246,26 @@ class DummyPreset extends PresetBase {
   }     
 
   
+  DummyPreset memoGetNoteProto(
+  ) {
+    
+    var el = NoteCoCall()
+      ..getNoteProto = memoWithNoteCoHandle;    
+       
+     
+    final c = NoteDefs.DEFAULT_DOMAIN.value;
+    pushCall("memoGetNoteProto", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<NoteProto> memoGetNoteProtoCall(
+  ) async {
+    memoGetNoteProto();
+    var result= await dispatch();
+    return NoteProto.fromBuffer(result.values.last.slotData);
+  }
+
+  
   DummyPreset memoAttachToWorkEffort(
     String workEffId
   ) {
@@ -247,7 +276,8 @@ class DummyPreset extends PresetBase {
         ..workEffId = workEffId       
       );     
      
-    pushCall("memoAttachToWorkEffort", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoAttachToWorkEffort", "NoteCo", memo, el, c);
     return this;
   }
 
@@ -255,7 +285,7 @@ class DummyPreset extends PresetBase {
     String workEffId
   ) async {
     memoAttachToWorkEffort(workEffId);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -267,37 +297,15 @@ class DummyPreset extends PresetBase {
       ..revokeContent = memoWithNoteCoHandle;    
        
      
-    pushCall("memoRevokeContent", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoRevokeContent", "NoteCo", memo, el, c);
     return this;
   }
 
   Future<Empty> memoRevokeContentCall(
   ) async {
     memoRevokeContent();
-    await presetAgent.dispatch(plKey.id, toProto());
-    return Empty.getDefault();
-  }
-
-  
-  DummyPreset memoAttachToParty(
-    String partyId
-  ) {
-    
-    var el = NoteCoCall()
-      ..attachToParty = (NoteCoAttachToPartyRequest()
-        ..handle = memoWithNoteCoHandle
-        ..partyId = partyId       
-      );     
-     
-    pushCall("memoAttachToParty", "NoteCo", memo, el);
-    return this;
-  }
-
-  Future<Empty> memoAttachToPartyCall(
-    String partyId
-  ) async {
-    memoAttachToParty(partyId);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -312,7 +320,8 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
-    pushCall("memoSetContent", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoSetContent", "NoteCo", memo, el, c);
     return this;
   }
 
@@ -320,27 +329,8 @@ class DummyPreset extends PresetBase {
     String cnt
   ) async {
     memoSetContent(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
-  }
-
-  
-  DummyPreset memoSize(
-  ) {
-    
-    var el = NoteCoCall()
-      ..size = memoWithNoteCoHandle;    
-       
-     
-    pushCall("memoSize", "NoteCo", memo, el);
-    return this;
-  }
-
-  Future<Int32Value> memoSizeCall(
-  ) async {
-    memoSize();
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    return Int32Value.fromBuffer(result.values.last.slotData);
   }
 
   
@@ -354,7 +344,8 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
-    pushCall("memoSetContentComp", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoSetContentComp", "NoteCo", memo, el, c);
     return this;
   }
 
@@ -362,30 +353,7 @@ class DummyPreset extends PresetBase {
     String cnt
   ) async {
     memoSetContentComp(cnt);
-    await presetAgent.dispatch(plKey.id, toProto());
-    return Empty.getDefault();
-  }
-
-  
-  DummyPreset memoDoneSlot(
-    String slotName
-  ) {
-    
-    var el = NoteCoCall()
-      ..doneSlot = (NoteCoDoneSlotRequest()
-        ..handle = memoWithNoteCoHandle
-        ..slotName = slotName       
-      );     
-     
-    pushCall("memoDoneSlot", "NoteCo", memo, el);
-    return this;
-  }
-
-  Future<Empty> memoDoneSlotCall(
-    String slotName
-  ) async {
-    memoDoneSlot(slotName);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -400,7 +368,8 @@ class DummyPreset extends PresetBase {
         ..slotName = slotName       
       );     
      
-    pushCall("memoGetSlotValue", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoGetSlotValue", "NoteCo", memo, el, c);
     return this;
   }
 
@@ -408,8 +377,96 @@ class DummyPreset extends PresetBase {
     String slotName
   ) async {
     memoGetSlotValue(slotName);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return ValueData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset memoGetContent(
+  ) {
+    
+    var el = NoteCoCall()
+      ..getContent = memoWithNoteCoHandle;    
+       
+     
+    final c = NoteDefs.CONTENT.value;
+    pushCall("memoGetContent", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<StringValue> memoGetContentCall(
+  ) async {
+    memoGetContent();
+    var result= await dispatch();
+    return StringValue.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset memoAttachToParty(
+    String partyId
+  ) {
+    
+    var el = NoteCoCall()
+      ..attachToParty = (NoteCoAttachToPartyRequest()
+        ..handle = memoWithNoteCoHandle
+        ..partyId = partyId       
+      );     
+     
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoAttachToParty", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoAttachToPartyCall(
+    String partyId
+  ) async {
+    memoAttachToParty(partyId);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  DummyPreset memoSize(
+  ) {
+    
+    var el = NoteCoCall()
+      ..size = memoWithNoteCoHandle;    
+       
+     
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoSize", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<Int32Value> memoSizeCall(
+  ) async {
+    memoSize();
+    var result= await dispatch();
+    return Int32Value.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset memoDoneSlot(
+    String slotName
+  ) {
+    
+    var el = NoteCoCall()
+      ..doneSlot = (NoteCoDoneSlotRequest()
+        ..handle = memoWithNoteCoHandle
+        ..slotName = slotName       
+      );     
+     
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoDoneSlot", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoDoneSlotCall(
+    String slotName
+  ) async {
+    memoDoneSlot(slotName);
+    await dispatch();
+    return Empty.getDefault();
   }
 
   
@@ -423,7 +480,8 @@ class DummyPreset extends PresetBase {
         ..slotName = slotName       
       );     
      
-    pushCall("memoHasSlotValue", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoHasSlotValue", "NoteCo", memo, el, c);
     return this;
   }
 
@@ -431,27 +489,8 @@ class DummyPreset extends PresetBase {
     String slotName
   ) async {
     memoHasSlotValue(slotName);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return BoolValue.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset memoGetContent(
-  ) {
-    
-    var el = NoteCoCall()
-      ..getContent = memoWithNoteCoHandle;    
-       
-     
-    pushCall("memoGetContent", "NoteCo", memo, el);
-    return this;
-  }
-
-  Future<StringValue> memoGetContentCall(
-  ) async {
-    memoGetContent();
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    return StringValue.fromBuffer(result.values.last.slotData);
   }
 
   
@@ -462,15 +501,36 @@ class DummyPreset extends PresetBase {
       ..getDecimals = memoWithNoteCoHandle;    
        
      
-    pushCall("memoGetDecimals", "NoteCo", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoGetDecimals", "NoteCo", memo, el, c);
     return this;
   }
 
   Future<DecimalMap> memoGetDecimalsCall(
   ) async {
     memoGetDecimals();
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return DecimalMap.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset memoName(
+  ) {
+    
+    var el = NoteCoCall()
+      ..name = memoWithNoteCoHandle;    
+       
+     
+    final c = NoteDefs.TITLE.value;
+    pushCall("memoName", "NoteCo", memo, el, c);
+    return this;
+  }
+
+  Future<StringValue> memoNameCall(
+  ) async {
+    memoName();
+    var result= await dispatch();
+    return StringValue.fromBuffer(result.values.last.slotData);
   }
 
           
@@ -495,7 +555,8 @@ class DummyPreset extends PresetBase {
         ..author = author       
       );     
      
-    pushCall("noteUpdateNote", "NoteAuto", note, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteUpdateNote", "NoteAuto", note, el, c);
     return this;
   }
 
@@ -504,7 +565,7 @@ class DummyPreset extends PresetBase {
     String author
   ) async {
     noteUpdateNote(content, author);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -530,7 +591,8 @@ class DummyPreset extends PresetBase {
         ..author = author       
       );     
      
-    pushCall("memoUpdateNote", "NoteAuto", memo, el);
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("memoUpdateNote", "NoteAuto", memo, el, c);
     return this;
   }
 
@@ -539,7 +601,7 @@ class DummyPreset extends PresetBase {
     String author
   ) async {
     memoUpdateNote(content, author);
-    await presetAgent.dispatch(plKey.id, toProto());
+    await dispatch();
     return Empty.getDefault();
   }
 
@@ -562,7 +624,8 @@ class DummyPreset extends PresetBase {
         ..totalSupply = totalSupply       
       );     
      
-    pushCall("merchantCreateMarketplace", "MerchantOnChain", merchant, el);
+    final c = 0;
+    pushCall("merchantCreateMarketplace", "MerchantOnChain", merchant, el, c);
     return this;
   }
 
@@ -570,53 +633,13 @@ class DummyPreset extends PresetBase {
     FixedPoint totalSupply
   ) async {
     merchantCreateMarketplace(totalSupply);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
           
   
        
-
-  
-  DummyPreset fixturesEcho(
-    StructData input
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..echo=input;    
-
-         
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el);
-    return this;
-  }
-
-  Future<StructData> fixturesEchoCall(
-    StructData input
-  ) async {
-    fixturesEcho(input);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    return XcRefId.fromBuffer(result.values.last.slotData);
-  }
 
   
   DummyPreset fixturesSomeNotes(
@@ -627,7 +650,8 @@ class DummyPreset extends PresetBase {
         ..someNotes=Int32Value(value: total);    
 
          
-    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el);
+    final c = 0;
+    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
     return this;
   }
 
@@ -635,34 +659,55 @@ class DummyPreset extends PresetBase {
     int total
   ) async {
     fixturesSomeNotes(total);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+    final c = 0;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset fixturesEcho(
+    StructData input
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..echo=input;    
+
+         
+    final c = 0;
+    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<StructData> fixturesEchoCall(
+    StructData input
+  ) async {
+    fixturesEcho(input);
+    var result= await dispatch();
+    return StructData.fromBuffer(result.values.last.slotData);
   }
 
           
   
        
-
-  
-  DummyPreset plsIsDone(
-    String plId
-  ) {
-    
-    var el= PipelinesCall()
-        ..isDone=StringValue(value: plId);    
-
-         
-    pushCall("plsIsDone", "Pipelines", pls, el);
-    return this;
-  }
-
-  Future<BoolValue> plsIsDoneCall(
-    String plId
-  ) async {
-    plsIsDone(plId);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    return BoolValue.fromBuffer(result.values.last.slotData);
-  }
 
   
   DummyPreset plsCreateArchivePl(
@@ -683,7 +728,8 @@ class DummyPreset extends PresetBase {
     
 
          
-    pushCall("plsCreateArchivePl", "Pipelines", pls, el);
+    final c = 0;
+    pushCall("plsCreateArchivePl", "Pipelines", pls, el, c);
     return this;
   }
 
@@ -694,8 +740,30 @@ class DummyPreset extends PresetBase {
     StructData bindArgs
   ) async {
     plsCreateArchivePl(token, assetName, regionId, bindArgs);
-    var result= await presetAgent.dispatch(plKey.id, toProto());
+    var result= await dispatch();
     return StructData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  DummyPreset plsIsDone(
+    String plId
+  ) {
+    
+    var el= PipelinesCall()
+        ..isDone=StringValue(value: plId);    
+
+         
+    final c = 0;
+    pushCall("plsIsDone", "Pipelines", pls, el, c);
+    return this;
+  }
+
+  Future<BoolValue> plsIsDoneCall(
+    String plId
+  ) async {
+    plsIsDone(plId);
+    var result= await dispatch();
+    return BoolValue.fromBuffer(result.values.last.slotData);
   }
 
           

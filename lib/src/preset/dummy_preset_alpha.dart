@@ -31,7 +31,7 @@ class DummyPreset extends PresetBase {
         ..handle = noteHandle
         ..cnt = cnt
       );
-    pushCall("noteSetContent", "NoteCo", note, el);
+    pushCall("noteSetContent", "NoteCo", note, el, 0);
     return el;
   }
 

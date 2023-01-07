@@ -13,8 +13,10 @@ gen_base_proto file:
                 -I{{env_var('PROTOBUF')}}/src \
                 -I/opt/app/apiset/proto/src/main/proto \
                 -I/opt/app/apiset/tokenspec/src/main/proto \
+                -I/opt/app/apiset/tokenspec/src/main/proto/domain \
                 -I/opt/app/apiset/domain/src/main/proto \
                 -I/opt/app/apiset/mods/src/main/proto \
+                -I/opt/app/apiset/xcspec/src/main/proto \
                 -I/opt/app/apiset/facade/src/main/proto {{file}}
 
 fund:
@@ -33,7 +35,11 @@ mods:
 
 tokens:
     just gen_base_proto "/opt/app/apiset/tokenspec/src/main/proto/*.proto"
+    just gen_base_proto "/opt/app/apiset/tokenspec/src/main/proto/domain/*.proto"
 
 domain:
     just gen_base_proto "/opt/app/apiset/domain/src/main/proto/*.proto"
+
+xc:
+    just gen_base_proto "/opt/app/apiset/xcspec/src/main/proto/*.proto"
 

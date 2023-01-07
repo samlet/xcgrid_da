@@ -2,6 +2,7 @@ import '../../common_proto.dart';
 import '../xcrpc_client.dart';
 import '../generated/note_co.pbgrpc.dart';
 
+import '../generated/note_domain.pb.dart';
 
 extension NoteCoSet on XcClient {
   NoteCoServiceClient noteCo(){
@@ -25,6 +26,12 @@ class NoteCoAgent {
 
   NoteCoAgent(this.client, this.handle);
 
+
+  /// query::name -> String
+  Future<StringValue> name() async {
+    return await client.name(handle);
+  }    
+       
 
   /// query::size -> Integer
   Future<Int32Value> size() async {
@@ -60,6 +67,18 @@ class NoteCoAgent {
   }
      
 
+  /// revokeContent -> void
+  Future<Empty> revokeContent() async {
+    return await client.revokeContent(handle);
+  }    
+       
+
+  /// query::getNoteProto -> NoteProto
+  Future<NoteProto> getNoteProto() async {
+    return await client.getNoteProto(handle);
+  }    
+       
+
   /// setContentComp -> void
   Future<Empty> setContentComp(
     String cnt
@@ -70,12 +89,6 @@ class NoteCoAgent {
     );
   }
      
-
-  /// revokeContent -> void
-  Future<Empty> revokeContent() async {
-    return await client.revokeContent(handle);
-  }    
-       
 
   /// setContent -> void
   Future<Empty> setContent(
