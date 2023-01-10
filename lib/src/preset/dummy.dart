@@ -141,30 +141,6 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteSetContent(
-    String cnt
-  ) {
-    
-    var el = NoteCoCall()
-      ..setContent = (NoteCoSetContentRequest()
-        ..handle = noteWithNoteCoHandle
-        ..cnt = cnt       
-      );     
-     
-    final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    pushCall("noteSetContent", "NoteCo", note, el, c);
-    return this;
-  }
-
-  Future<Empty> noteSetContentCall(
-    String cnt
-  ) async {
-    noteSetContent(cnt);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-  
   DummyPreset noteAttachToParty(
     String partyId
   ) {
@@ -184,6 +160,30 @@ class DummyPreset extends PresetBase {
     String partyId
   ) async {
     noteAttachToParty(partyId);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  DummyPreset noteSetContent(
+    String cnt
+  ) {
+    
+    var el = NoteCoCall()
+      ..setContent = (NoteCoSetContentRequest()
+        ..handle = noteWithNoteCoHandle
+        ..cnt = cnt       
+      );     
+     
+    final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    pushCall("noteSetContent", "NoteCo", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetContentCall(
+    String cnt
+  ) async {
+    noteSetContent(cnt);
     await dispatch();
     return Empty.getDefault();
   }
@@ -642,25 +642,25 @@ class DummyPreset extends PresetBase {
        
 
   
-  DummyPreset fixturesSomeNotes(
-    int total
+  DummyPreset fixturesEcho(
+    StructData input
   ) {
     
     var el= FixtureObjectsCall()
-        ..someNotes=Int32Value(value: total);    
+        ..echo=input;    
 
          
     final c = 0;
-    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
+    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
     return this;
   }
 
-  Future<Strings> fixturesSomeNotesCall(
-    int total
+  Future<StructData> fixturesEchoCall(
+    StructData input
   ) async {
-    fixturesSomeNotes(total);
+    fixturesEcho(input);
     var result= await dispatch();
-    return Strings.fromBuffer(result.values.last.slotData);
+    return StructData.fromBuffer(result.values.last.slotData);
   }
 
   
@@ -684,30 +684,52 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset fixturesEcho(
-    StructData input
+  DummyPreset fixturesSomeNotes(
+    int total
   ) {
     
     var el= FixtureObjectsCall()
-        ..echo=input;    
+        ..someNotes=Int32Value(value: total);    
 
          
     final c = 0;
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
+    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
     return this;
   }
 
-  Future<StructData> fixturesEchoCall(
-    StructData input
+  Future<Strings> fixturesSomeNotesCall(
+    int total
   ) async {
-    fixturesEcho(input);
+    fixturesSomeNotes(total);
     var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
+    return Strings.fromBuffer(result.values.last.slotData);
   }
 
           
   
        
+
+  
+  DummyPreset plsIsDone(
+    String plId
+  ) {
+    
+    var el= PipelinesCall()
+        ..isDone=StringValue(value: plId);    
+
+         
+    final c = 0;
+    pushCall("plsIsDone", "Pipelines", pls, el, c);
+    return this;
+  }
+
+  Future<BoolValue> plsIsDoneCall(
+    String plId
+  ) async {
+    plsIsDone(plId);
+    var result= await dispatch();
+    return BoolValue.fromBuffer(result.values.last.slotData);
+  }
 
   
   DummyPreset plsCreateArchivePl(
@@ -742,28 +764,6 @@ class DummyPreset extends PresetBase {
     plsCreateArchivePl(token, assetName, regionId, bindArgs);
     var result= await dispatch();
     return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset plsIsDone(
-    String plId
-  ) {
-    
-    var el= PipelinesCall()
-        ..isDone=StringValue(value: plId);    
-
-         
-    final c = 0;
-    pushCall("plsIsDone", "Pipelines", pls, el, c);
-    return this;
-  }
-
-  Future<BoolValue> plsIsDoneCall(
-    String plId
-  ) async {
-    plsIsDone(plId);
-    var result= await dispatch();
-    return BoolValue.fromBuffer(result.values.last.slotData);
   }
 
           

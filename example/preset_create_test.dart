@@ -51,10 +51,10 @@ Future<void> testDispatch(DummyPreset preset) async {
 Future<void> testCubit(PresetManagerAgent pm) async {
   initBlocObserver();
 
-  var cubit=NoteCubit(pm);
+  var cubit = NoteCubit(pm);
   print("init: ${cubit.state}");
 
-  var presetKeys=DummyPresetKeys(noteId: 'note_1', memoId: 'note_2');
+  var presetKeys = DummyPresetKeys(noteId: 'note_1', memoId: 'note_2');
   await cubit.loadPreset(presetKeys, 'store:Demo', 'samlet');
   print("after load-preset: ${cubit.state}");
   await cubit.memoSetContent('hi, cubit');
@@ -163,31 +163,65 @@ class NoteState extends Equatable {
 
   final String content;
   final String title;
-  final ContentAndAuthor contentAndAuthor;
-  final NoteProto note;
+  final String author;
+
+  // set contentAndAuthor(ContentAndAuthor)
+  // set note(NoteProto proto)
 
   NoteState({
     this.status = NoteStatus.initial,
     this.content = '',
     this.title = '',
-    ContentAndAuthor? contentAndAuthor,
-    NoteProto? note,
-  })  : contentAndAuthor = contentAndAuthor ?? ContentAndAuthor.getDefault(),
-        note = note ?? NoteProto.getDefault();
+    this.author = '',
+    // ContentAndAuthor? contentAndAuthor,
+    // NoteProto? note,
+  });
+
+  // : contentAndAuthor = contentAndAuthor ?? ContentAndAuthor.getDefault(),
+  //   note = note ?? NoteProto.getDefault();
 
   NoteState copyWith({NoteStatus? status, SlotsWrapper? slots}) {
+    String? content;
+    String? title;
+    String? author;
+
+    // from complicated
+    ContentAndAuthor? contentAndAuthor = slots?.asProto(
+        NoteDefs.CONTENT_AND_AUTHOR.value, ContentAndAuthor.fromBuffer);
+    if (contentAndAuthor != null) {
+      content = contentAndAuthor.content;
+      author = contentAndAuthor.author;
+    }
+
+    NoteProto? note =
+        slots?.asProto(NoteDefs.DEFAULT_DOMAIN.value, NoteProto.fromBuffer);
+    if (note != null) {
+      title = note.title;
+      content = note.content;
+      author = note.author;
+    }
+
+    // from scalar
+    content = slots?.asString(NoteDefs.CONTENT.value) ?? content;
+    title = slots?.asString(NoteDefs.TITLE.value) ?? title;
+
     return NoteState(
-        status: status ?? this.status,
-        content: slots?.asString(NoteDefs.CONTENT.value) ?? this.content,
-        title: slots?.asString(NoteDefs.TITLE.value) ?? this.title,
-        contentAndAuthor: slots?.asProto(NoteDefs.CONTENT_AND_AUTHOR.value,
-                ContentAndAuthor.fromBuffer) ??
-            this.contentAndAuthor,
-        note: slots?.asProto(
-                NoteDefs.DEFAULT_DOMAIN.value, NoteProto.fromBuffer) ??
-            this.note);
+      status: status ?? this.status,
+      content: content ?? this.content,
+      title: title ?? this.title,
+      author: author ?? this.author,
+      // contentAndAuthor: slots?.asProto(NoteDefs.CONTENT_AND_AUTHOR.value,
+      //         ContentAndAuthor.fromBuffer) ??
+      //     this.contentAndAuthor,
+      // note: slots?.asProto(
+      //         NoteDefs.DEFAULT_DOMAIN.value, NoteProto.fromBuffer) ??
+      //     this.note
+    );
   }
 
   @override
-  List<Object?> get props => [status, content, title, contentAndAuthor, note];
+  List<Object?> get props => [
+        status, content, title, author
+        // contentAndAuthor, note
+      ];
 }

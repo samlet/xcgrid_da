@@ -67,6 +67,17 @@ class NoteCoAgent {
   }
      
 
+  /// setContentComp -> void
+  Future<Empty> setContentComp(
+    String cnt
+  ) async {
+    return await client.setContentComp(NoteCoSetContentCompRequest()
+      ..handle = handle
+      ..cnt = cnt
+    );
+  }
+     
+
   /// revokeContent -> void
   Future<Empty> revokeContent() async {
     return await client.revokeContent(handle);
@@ -78,17 +89,6 @@ class NoteCoAgent {
     return await client.getNoteProto(handle);
   }    
        
-
-  /// setContentComp -> void
-  Future<Empty> setContentComp(
-    String cnt
-  ) async {
-    return await client.setContentComp(NoteCoSetContentCompRequest()
-      ..handle = handle
-      ..cnt = cnt
-    );
-  }
-     
 
   /// setContent -> void
   Future<Empty> setContent(

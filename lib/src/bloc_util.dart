@@ -4,7 +4,7 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    print('onCreate -- bloc: ${bloc.runtimeType}');
+    print('🆙 onCreate -- bloc: ${bloc.runtimeType}');
   }
 
   @override
@@ -16,7 +16,7 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    print('onChange -- bloc: ${bloc.runtimeType}, change: $change');
+    print('🔁 onChange -- bloc: ${bloc.runtimeType}, change: $change');
   }
 
   @override
@@ -27,14 +27,14 @@ class SimpleBlocObserver extends BlocObserver {
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('onError -- bloc: ${bloc.runtimeType}, error: $error');
+    print('🚫 onError -- bloc: ${bloc.runtimeType}, error: $error');
     super.onError(bloc, error, stackTrace);
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print('onClose -- bloc: ${bloc.runtimeType}');
+    print('⏹ onClose -- bloc: ${bloc.runtimeType}');
   }
 }
 
