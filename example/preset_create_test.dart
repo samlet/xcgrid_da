@@ -12,6 +12,7 @@ import 'package:xcgrid_da/src/generated/extra/common_slot.pb.dart';
 import 'package:xcgrid_da/src/generated/google/protobuf/wrappers.pb.dart';
 import 'package:xcgrid_da/src/generated/note_domain.pb.dart';
 import 'package:xcgrid_da/src/preset/dummy.dart';
+import 'package:xcgrid_da/src/preset_base.dart';
 import 'package:xcgrid_da/src/xcrpc_client.dart';
 
 Future<void> main(List<String> arguments) async {
@@ -64,11 +65,18 @@ Future<void> testCubit(PresetManagerAgent pm) async {
   cubit.close();
 }
 
-class NoteCubit extends Cubit<NoteState> {
+abstract class PresetCubit<State> extends Cubit<State>{
   final PresetManagerAgent _presetAgent;
-  DummyPreset? preset;
+  PresetCubit(super.initialState, this._presetAgent);
+  PresetBase? get preset;
+}
 
-  NoteCubit(this._presetAgent) : super(NoteState());
+class NoteCubit extends PresetCubit<NoteState> {
+
+  @override
+  DummyPreset? preset;
+  // NoteCubit(super.initialState, super.presetAgent);
+  NoteCubit(PresetManagerAgent presetAgent) : super(NoteState(), presetAgent);
 
   Future<void> loadPreset(
       DummyPresetKeys presetKeys, String tag, String owner) async {
@@ -91,17 +99,40 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
+  // Future<void> memoSetContent(String cnt) async {
+  //   if (preset == null) return;
+  //
+  //   emit(state.copyWith(status: NoteStatus.loading));
+  //   try {
+  //     preset!.memoSetContent(cnt).memoGetContent().memoGetNoteProto();
+  //     var slots = await preset!.dispatch();
+  //     var wrapper = SlotsWrapper(slots);
+  //     emit(state.copyWith(status: NoteStatus.success, slots: wrapper));
+  //   } on Exception {
+  //     emit(state.copyWith(status: NoteStatus.failure));
+  //   }
+  // }
+
   Future<void> memoSetContent(String cnt) async {
+    await mut(() => preset!.memoSetContent(cnt).memoGetContent());
+  }
+
+  Future<void> mut(Function() builder) async {
+    if (!state.status.isSuccess) return;
     if (preset == null) return;
 
-    emit(state.copyWith(status: NoteStatus.loading));
+    // emit(state.copyWith(status: NoteStatus.loading));
     try {
-      preset!.memoSetContent(cnt).memoGetContent().memoGetNoteProto();
+      // preset!.memoSetContent(cnt).memoGetContent().memoGetNoteProto();
+      builder();
       var slots = await preset!.dispatch();
       var wrapper = SlotsWrapper(slots);
-      emit(state.copyWith(status: NoteStatus.success, slots: wrapper));
-    } on Exception {
-      emit(state.copyWith(status: NoteStatus.failure));
+      // emit(state.copyWith(status: NoteStatus.success, slots: wrapper));
+      emit(state.copyWith(slots: wrapper));
+    } on Exception catch(e){
+      // emit(state.copyWith(status: NoteStatus.failure));
+      print("fail: $e");
+      emit(state);
     }
   }
 }
@@ -157,6 +188,12 @@ class SlotsWrapper {
 }
 
 enum NoteStatus { initial, loading, success, failure }
+extension NoteStatusX on NoteStatus {
+  bool get isInitial => this == NoteStatus.initial;
+  bool get isLoading => this == NoteStatus.loading;
+  bool get isSuccess => this == NoteStatus.success;
+  bool get isFailure => this == NoteStatus.failure;
+}
 
 class NoteState extends Equatable {
   final NoteStatus status;
