@@ -25,7 +25,7 @@ Future<void> main(List<String> arguments) async {
           .asPlRequest(tag, owner));
 
   DummyPreset preset = await pm.loadDummyPreset(plOr);
-  var cnt = await preset.memoSetContent('hi').memoGetNoteProtoCall();
+  var cnt = await preset.memoSetContentComp('hi').memoGetNoteProtoCall();
   print('result -> ${cnt}');
 
   await testDispatch(preset);
@@ -44,7 +44,7 @@ extension DummyLoader on PresetManagerAgent {
 }
 
 Future<void> testDispatch(DummyPreset preset) async {
-  preset.memoSetContent('hi').memoGetContent().memoGetNoteProto();
+  preset.memoSetContentComp('hi').memoGetContent().memoGetNoteProto();
   var slots = await preset.dispatch();
   processSlotList(slots);
 }
@@ -114,7 +114,7 @@ class NoteCubit extends PresetCubit<NoteState> {
   // }
 
   Future<void> memoSetContent(String cnt) async {
-    await mut(() => preset!.memoSetContent(cnt).memoGetContent());
+    await mut(() => preset!.memoSetContentComp(cnt).memoGetContent());
   }
 
   Future<void> mut(Function() builder) async {
@@ -199,6 +199,7 @@ class NoteState extends Equatable {
   final NoteStatus status;
 
   final String content;
+  // final String noteContent;
   final String title;
   final String author;
 
@@ -225,6 +226,8 @@ class NoteState extends Equatable {
     // from complicated
     ContentAndAuthor? contentAndAuthor = slots?.asProto(
         NoteDefs.CONTENT_AND_AUTHOR.value, ContentAndAuthor.fromBuffer);
+    // ContentAndAuthor? contentAndAuthor = slots?.asProto(
+    //         DummyDefs.NOTE_CONTENT_AND_AUTHOR.value, ContentAndAuthor.fromBuffer);
     if (contentAndAuthor != null) {
       content = contentAndAuthor.content;
       author = contentAndAuthor.author;

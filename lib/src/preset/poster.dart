@@ -20,13 +20,13 @@ import '../generated/pipelines.pb.dart';
 import '../generated/merchant_on_chain.pb.dart';
 
 import '../util.dart';
-import 'dummy_defs.dart';
+import 'poster_defs.dart';
 
 
 
 
 
-class DummyPresetKeys{
+class PosterPresetKeys{
   final String regionId;
   BundleKey get regionKey => BundleKey(regionId: regionId);
   final String? plId;
@@ -36,14 +36,14 @@ class DummyPresetKeys{
   final String memoId;
   BundleKey get memoKey => BundleKey(regionId: regionId, id: memoId);
 
-  DummyPresetKeys({
+  PosterPresetKeys({
     required this.noteId,
     required this.memoId,
     this.plId,
     this.regionId='default'});
 
-  factory DummyPresetKeys.fromMap(Map<String, String> keysMap){
-    return DummyPresetKeys(
+  factory PosterPresetKeys.fromMap(Map<String, String> keysMap){
+    return PosterPresetKeys(
         noteId: keysMap['noteId']!,
         memoId: keysMap['memoId']!,
         plId: keysMap['plId'],
@@ -51,9 +51,9 @@ class DummyPresetKeys{
     );
   }
 
-  factory DummyPresetKeys.fromMeta(CallBuilderContextProto meta){
+  factory PosterPresetKeys.fromMeta(CallBuilderContextProto meta){
     Map<String, BundleKey> keysMap = meta.keys;
-    return DummyPresetKeys(
+    return PosterPresetKeys(
         noteId: keysMap['note']!.id,
         memoId: keysMap['memo']!.id,
         plId: meta.plId,
@@ -69,7 +69,7 @@ class DummyPresetKeys{
   PresetManagerCreatePresetPlRequest asPlRequest(String tag, String owner){
     return PresetManagerCreatePresetPlRequest()
       ..regionId = regionId
-      ..presetName = 'Dummy'
+      ..presetName = 'Poster'
       ..owner = owner
       ..tag = tag
       ..keys = StringMap(values: keys);
@@ -77,15 +77,13 @@ class DummyPresetKeys{
 
 }
 
-class DummyPreset extends PresetBase {
-  final DummyPresetKeys keys;
+class PosterPreset extends PresetBase {
+  final PosterPresetKeys keys;
   BundleKey get note => keys.noteKey;
   BundleKey get memo => keys.memoKey;
-  BundleKey get pls => keys.regionKey;
-  BundleKey get merchant => keys.regionKey;
   BundleKey get fixtures => keys.regionKey;       
 
-  DummyPreset(
+  PosterPreset(
       this.keys,
       {PresetManagerAgent? presetAgent})
       : super(presetAgent ?? XcClient().presetManagerAgent(),
@@ -100,7 +98,7 @@ class DummyPreset extends PresetBase {
   }     
 
   
-  DummyPreset noteGetNoteProto(
+  PosterPreset noteGetNoteProto(
   ) {
     
     var el = NoteCoCall()
@@ -108,7 +106,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.DEFAULT_DOMAIN.value;
-    final c = DummyDomainDefs.noteDefaultDomain.index;
+    final c = PosterDomainDefs.noteDefaultDomain.index;
     pushCall("noteGetNoteProto", "NoteCo", note, el, c);
     return this;
   }
@@ -121,7 +119,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteRevokeContent(
+  PosterPreset noteRevokeContent(
   ) {
     
     var el = NoteCoCall()
@@ -129,7 +127,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("noteRevokeContent", "NoteCo", note, el, c);
     return this;
   }
@@ -142,7 +140,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteSetContentComp(
+  PosterPreset noteSetContentComp(
     String cnt
   ) {
     
@@ -153,7 +151,7 @@ class DummyPreset extends PresetBase {
       );     
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("noteSetContentComp", "NoteCo", note, el, c);
     return this;
   }
@@ -167,7 +165,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteGetContent(
+  PosterPreset noteGetContent(
   ) {
     
     var el = NoteCoCall()
@@ -175,7 +173,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.CONTENT.value;
-    final c = DummyDomainDefs.noteContent.index;
+    final c = PosterDomainDefs.noteContent.index;
     pushCall("noteGetContent", "NoteCo", note, el, c);
     return this;
   }
@@ -188,7 +186,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteName(
+  PosterPreset noteName(
   ) {
     
     var el = NoteCoCall()
@@ -196,7 +194,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.TITLE.value;
-    final c = DummyDomainDefs.noteTitle.index;
+    final c = PosterDomainDefs.noteTitle.index;
     pushCall("noteName", "NoteCo", note, el, c);
     return this;
   }
@@ -218,7 +216,7 @@ class DummyPreset extends PresetBase {
   }     
 
   
-  DummyPreset noteUpdateNote(
+  PosterPreset noteUpdateNote(
     String content,
     String author
   ) {
@@ -231,7 +229,7 @@ class DummyPreset extends PresetBase {
       );     
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("noteUpdateNote", "NoteAuto", note, el, c);
     return this;
   }
@@ -246,7 +244,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset noteUpdateNoteContent(
+  PosterPreset noteUpdateNoteContent(
     String content
   ) {
     
@@ -257,7 +255,7 @@ class DummyPreset extends PresetBase {
       );     
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("noteUpdateNoteContent", "NoteAuto", note, el, c);
     return this;
   }
@@ -271,7 +269,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset notePersistSlotsExistent(
+  PosterPreset notePersistSlotsExistent(
   ) {
     
     var el = NoteAutoCall()
@@ -279,7 +277,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
-    final c = DummyDomainDefs.noteAvailablePersistSlots.index;
+    final c = PosterDomainDefs.noteAvailablePersistSlots.index;
     pushCall("notePersistSlotsExistent", "NoteAuto", note, el, c);
     return this;
   }
@@ -292,7 +290,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset notePersistSlotValues(
+  PosterPreset notePersistSlotValues(
   ) {
     
     var el = NoteAutoCall()
@@ -300,7 +298,7 @@ class DummyPreset extends PresetBase {
        
      
     // final c = NoteDefs.PERSIST_SLOTS.value;
-    final c = DummyDomainDefs.notePersistSlots.index;
+    final c = PosterDomainDefs.notePersistSlots.index;
     pushCall("notePersistSlotValues", "NoteAuto", note, el, c);
     return this;
   }
@@ -315,146 +313,49 @@ class DummyPreset extends PresetBase {
           
   
   
-  NoteCoHandle get memoWithNoteCoHandle {
-    return NoteCoHandle()
+  WhiteBoardHandle get memoWithWhiteBoardHandle {
+    return WhiteBoardHandle()
       ..regionId = memo.regionId
       ..bundleId = memo.id;
   }     
 
   
-  DummyPreset memoGetNoteProto(
+  PosterPreset memoGetLastAuthor(
   ) {
     
-    var el = NoteCoCall()
-      ..getNoteProto = memoWithNoteCoHandle;    
+    var el = WhiteBoardCall()
+      ..getLastAuthor = memoWithWhiteBoardHandle;    
        
      
-    // final c = NoteDefs.DEFAULT_DOMAIN.value;
-    final c = DummyDomainDefs.memoDefaultDomain.index;
-    pushCall("memoGetNoteProto", "NoteCo", memo, el, c);
+    // final c = NoteDefs.LAST_AUTHOR.value;
+    final c = PosterDomainDefs.memoLastAuthor.index;
+    pushCall("memoGetLastAuthor", "WhiteBoard", memo, el, c);
     return this;
   }
 
-  Future<NoteProto> memoGetNoteProtoCall(
+  Future<StringValue> memoGetLastAuthorCall(
   ) async {
-    memoGetNoteProto();
-    var result= await dispatch();
-    return NoteProto.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset memoRevokeContent(
-  ) {
-    
-    var el = NoteCoCall()
-      ..revokeContent = memoWithNoteCoHandle;    
-       
-     
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoRevokeContent", "NoteCo", memo, el, c);
-    return this;
-  }
-
-  Future<Empty> memoRevokeContentCall(
-  ) async {
-    memoRevokeContent();
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-  
-  DummyPreset memoSetContentComp(
-    String cnt
-  ) {
-    
-    var el = NoteCoCall()
-      ..setContentComp = (NoteCoSetContentCompRequest()
-        ..handle = memoWithNoteCoHandle
-        ..cnt = cnt       
-      );     
-     
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoSetContentComp", "NoteCo", memo, el, c);
-    return this;
-  }
-
-  Future<Empty> memoSetContentCompCall(
-    String cnt
-  ) async {
-    memoSetContentComp(cnt);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-  
-  DummyPreset memoGetContent(
-  ) {
-    
-    var el = NoteCoCall()
-      ..getContent = memoWithNoteCoHandle;    
-       
-     
-    // final c = NoteDefs.CONTENT.value;
-    final c = DummyDomainDefs.memoContent.index;
-    pushCall("memoGetContent", "NoteCo", memo, el, c);
-    return this;
-  }
-
-  Future<StringValue> memoGetContentCall(
-  ) async {
-    memoGetContent();
+    memoGetLastAuthor();
     var result= await dispatch();
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
   
-  DummyPreset memoName(
-  ) {
-    
-    var el = NoteCoCall()
-      ..name = memoWithNoteCoHandle;    
-       
-     
-    // final c = NoteDefs.TITLE.value;
-    final c = DummyDomainDefs.memoTitle.index;
-    pushCall("memoName", "NoteCo", memo, el, c);
-    return this;
-  }
-
-  Future<StringValue> memoNameCall(
-  ) async {
-    memoName();
-    var result= await dispatch();
-    return StringValue.fromBuffer(result.values.last.slotData);
-  }
-
-          
-  
-  
-  NoteAutoHandle get memoWithNoteAutoHandle {
-    return NoteAutoHandle()
-      ..regionId = memo.regionId
-      ..bundleId = memo.id;
-  }     
-
-  
-  DummyPreset memoUpdateNote(
+  PosterPreset memoUpdateNote(
     String content,
     String author
   ) {
     
-    var el = NoteAutoCall()
-      ..updateNote = (NoteAutoUpdateNoteRequest()
-        ..handle = memoWithNoteAutoHandle
+    var el = WhiteBoardCall()
+      ..updateNote = (WhiteBoardUpdateNoteRequest()
+        ..handle = memoWithWhiteBoardHandle
         ..content = content
         ..author = author       
       );     
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoUpdateNote", "NoteAuto", memo, el, c);
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoUpdateNote", "WhiteBoard", memo, el, c);
     return this;
   }
 
@@ -468,19 +369,40 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset memoUpdateNoteContent(
+  PosterPreset memoGetLastContent(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getLastContent = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.LAST_CONTENT.value;
+    final c = PosterDomainDefs.memoLastContent.index;
+    pushCall("memoGetLastContent", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<StringValue> memoGetLastContentCall(
+  ) async {
+    memoGetLastContent();
+    var result= await dispatch();
+    return StringValue.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset memoUpdateNoteContent(
     String content
   ) {
     
-    var el = NoteAutoCall()
-      ..updateNoteContent = (NoteAutoUpdateNoteContentRequest()
-        ..handle = memoWithNoteAutoHandle
+    var el = WhiteBoardCall()
+      ..updateNoteContent = (WhiteBoardUpdateNoteContentRequest()
+        ..handle = memoWithWhiteBoardHandle
         ..content = content       
       );     
      
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoUpdateNoteContent", "NoteAuto", memo, el, c);
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoUpdateNoteContent", "WhiteBoard", memo, el, c);
     return this;
   }
 
@@ -493,16 +415,44 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset memoPersistSlotsExistent(
+  PosterPreset memoPutContent(
+    String content,
+    String partyId
   ) {
     
-    var el = NoteAutoCall()
-      ..persistSlotsExistent = memoWithNoteAutoHandle;    
+    var el = WhiteBoardCall()
+      ..putContent = (WhiteBoardPutContentRequest()
+        ..handle = memoWithWhiteBoardHandle
+        ..content = content
+        ..partyId = partyId       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoPutContent", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoPutContentCall(
+    String content,
+    String partyId
+  ) async {
+    memoPutContent(content, partyId);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset memoPersistSlotsExistent(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..persistSlotsExistent = memoWithWhiteBoardHandle;    
        
      
     // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
-    final c = DummyDomainDefs.memoAvailablePersistSlots.index;
-    pushCall("memoPersistSlotsExistent", "NoteAuto", memo, el, c);
+    final c = PosterDomainDefs.memoAvailablePersistSlots.index;
+    pushCall("memoPersistSlotsExistent", "WhiteBoard", memo, el, c);
     return this;
   }
 
@@ -514,16 +464,16 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset memoPersistSlotValues(
+  PosterPreset memoPersistSlotValues(
   ) {
     
-    var el = NoteAutoCall()
-      ..persistSlotValues = memoWithNoteAutoHandle;    
+    var el = WhiteBoardCall()
+      ..persistSlotValues = memoWithWhiteBoardHandle;    
        
      
     // final c = NoteDefs.PERSIST_SLOTS.value;
-    final c = DummyDomainDefs.memoPersistSlots.index;
-    pushCall("memoPersistSlotValues", "NoteAuto", memo, el, c);
+    final c = PosterDomainDefs.memoPersistSlots.index;
+    pushCall("memoPersistSlotValues", "WhiteBoard", memo, el, c);
     return this;
   }
 
@@ -534,100 +484,25 @@ class DummyPreset extends PresetBase {
     return BytesMap.fromBuffer(result.values.last.slotData);
   }
 
-          
   
+  PosterPreset memoGetContentAndAuthor(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getContentAndAuthor = memoWithWhiteBoardHandle;    
        
-
-  
-  DummyPreset plsIsDone(
-    String plId
-  ) {
-    
-    var el= PipelinesCall()
-        ..isDone=StringValue(value: plId);    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("plsIsDone", "Pipelines", pls, el, c);
-    return this;
-  }
-
-  Future<BoolValue> plsIsDoneCall(
-    String plId
-  ) async {
-    plsIsDone(plId);
-    var result= await dispatch();
-    return BoolValue.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset plsCreateArchivePl(
-    String token,
-    String assetName,
-    String regionId,
-    StructData bindArgs
-  ) {
-    
-    
-    var el = PipelinesCall()
-      ..createArchivePl = (PipelinesCreateArchivePlRequest()
-        ..token = token
-        ..assetName = assetName
-        ..regionId = regionId
-        ..bindArgs = bindArgs       
-      );     
-    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("plsCreateArchivePl", "Pipelines", pls, el, c);
-    return this;
-  }
-
-  Future<StructData> plsCreateArchivePlCall(
-    String token,
-    String assetName,
-    String regionId,
-    StructData bindArgs
-  ) async {
-    plsCreateArchivePl(token, assetName, regionId, bindArgs);
-    var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-          
-  
-  
-  ChainHandle get merchantWithMerchantOnChainHandle {
-    return ChainHandle()
-      ..regionId = merchant.regionId;
-  }     
-
-  
-  DummyPreset merchantCreateMarketplace(
-    FixedPoint totalSupply
-  ) {
-    
-    var el = MerchantOnChainCall()
-      ..createMarketplace = (MerchantOnChainCreateMarketplaceRequest()
-        ..handle = merchantWithMerchantOnChainHandle
-        ..totalSupply = totalSupply       
-      );     
      
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("merchantCreateMarketplace", "MerchantOnChain", merchant, el, c);
+    // final c = NoteDefs.CONTENT_AND_AUTHOR.value;
+    final c = PosterDomainDefs.memoContentAndAuthor.index;
+    pushCall("memoGetContentAndAuthor", "WhiteBoard", memo, el, c);
     return this;
   }
 
-  Future<StringValue> merchantCreateMarketplaceCall(
-    FixedPoint totalSupply
+  Future<ContentAndAuthor> memoGetContentAndAuthorCall(
   ) async {
-    merchantCreateMarketplace(totalSupply);
+    memoGetContentAndAuthor();
     var result= await dispatch();
-    return StringValue.fromBuffer(result.values.last.slotData);
+    return ContentAndAuthor.fromBuffer(result.values.last.slotData);
   }
 
           
@@ -635,7 +510,7 @@ class DummyPreset extends PresetBase {
        
 
   
-  DummyPreset fixturesSomeNotes(
+  PosterPreset fixturesSomeNotes(
     int total
   ) {
     
@@ -644,7 +519,7 @@ class DummyPreset extends PresetBase {
 
          
     // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
     return this;
   }
@@ -658,30 +533,7 @@ class DummyPreset extends PresetBase {
   }
 
   
-  DummyPreset fixturesEcho(
-    StructData input
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..echo=input;    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<StructData> fixturesEchoCall(
-    StructData input
-  ) async {
-    fixturesEcho(input);
-    var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  DummyPreset fixturesOneNote(
+  PosterPreset fixturesOneNote(
   ) {
     
     var el= FixtureObjectsCall()
@@ -689,7 +541,7 @@ class DummyPreset extends PresetBase {
 
          
     // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
+    final c = PosterDomainDefs.nonDomainField.index;
     pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
     return this;
   }

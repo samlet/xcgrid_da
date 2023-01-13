@@ -40,6 +40,9 @@ void main(List<String> arguments) {
 
   //
   print('empty-default: (${Empty.getDefault()})');
+
+  //
+  print(Indicator.values);
 }
 
 Decimal asDecimal(FixedPoint fp) {

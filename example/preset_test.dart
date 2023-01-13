@@ -7,7 +7,7 @@ Future<void> main(List<String> arguments) async {
   DummyPresetKeys keys = presetKeys();
 
   var preset = DummyPreset(keys);
-  var callMeta = preset.memoSetContent('hi').memoGetContent().toProto();
+  var callMeta = preset.memoSetContentComp('hi').memoGetContent().toProto();
   print('result -> $callMeta');
   exit(0);
 }
