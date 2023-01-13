@@ -1,6 +1,8 @@
 import 'package:power_extensions/power_extensions.dart';
 
 void main() {
+  // float x=5.5;
+  double x=5.5;
   BigInt bigInt = BigInt.from(-1000000000);
   BigInt bigInt2 = BigInt.from(-1000000001);
 
