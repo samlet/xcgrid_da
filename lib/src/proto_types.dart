@@ -1,0 +1,84 @@
+import 'dart:convert';
+
+import '../common_proto.dart';
+import 'package:decimal/decimal.dart';
+import 'package:fixnum/fixnum.dart';
+import 'package:duration/duration.dart';
+import 'package:protobuf/protobuf.dart';
+import 'package:intl/intl.dart';
+
+FixedPoint asFixedPoint(String numVal) {
+  var num = Decimal.parse(numVal);
+  var intVal = num.shift(num.scale).toBigInt().toInt();
+  return FixedPoint(value: Int64(intVal), scalingPosition: num.scale);
+}
+
+Decimal asDecimal(FixedPoint fp) {
+  var d = Decimal.fromInt(fp.value.toInt()).shift(-fp.scalingPosition);
+  return d;
+}
+
+extension DecimalEx on FixedPoint{
+  Decimal get decimal => asDecimal(this);
+}
+
+Currency asCurrency(String numVal) {
+  return Currency(value: numVal, currencyUomId: "CNY");
+}
+
+var timeFormat = DateFormat("HH:mm:ss");
+var dateFormat = DateFormat("yyyy-MM-dd");
+TimeOfDay asTimeOfDay(String timeStr) {
+  var time = timeFormat.parse(timeStr);
+  return TimeOfDay(
+      hours: time.hour, minutes: time.minute, seconds: time.second);
+}
+
+Date asDate(String dateStr){
+  var date=dateFormat.parse(dateStr);
+  return Date(year: date.year, month: date.month, day: date.day);
+}
+
+Timestamp asTimestamp(String ts){
+  var dt=DateTime.parse(ts);
+  return Timestamp.fromDateTime(dt);
+}
+
+getProtoJsonValue(argResult, String fldType) {
+  if(argResult==null){
+    return null;
+  }
+  var data=getProtoValue(argResult, fldType);
+  return data is GeneratedMessage?data.toProto3Json():data;
+}
+
+getProtoValue(argResult, String fldType) {
+  if(argResult==null){
+    return null;
+  }
+  switch(fldType){
+    case "date-time": return asTimestamp(argResult);
+    case "date": return asDate(argResult);
+    case "time": return asTimeOfDay(argResult);
+    case "currency-amount":
+    case "currency-precise":
+      return asCurrency(argResult);
+    case "fixed-point": return asFixedPoint(argResult);
+    default: return argResult;
+  }
+}
+
+T asProto<T extends GeneratedMessage>(String protoString, T instance) {
+  instance.mergeFromBuffer(base64Decode(protoString));
+  return instance;
+}
+
+
+Struct asStruct(Map<String, String> stringMap) {
+  var struct = Struct()
+    ..fields.addEntries(stringMap
+        .map((key, value) => MapEntry(key, Value(stringValue: value)))
+        .entries);
+  return struct;
+}
+

@@ -12,7 +12,10 @@ import 'package:xcgrid_da/src/generated/extra/common_slot.pb.dart';
 import 'package:xcgrid_da/src/generated/google/protobuf/wrappers.pb.dart';
 import 'package:xcgrid_da/src/generated/note_domain.pb.dart';
 import 'package:xcgrid_da/src/preset/dummy.dart';
+import 'package:xcgrid_da/src/preset/dummy_defs.dart';
+import 'package:xcgrid_da/src/preset/dummy_loader.dart';
 import 'package:xcgrid_da/src/preset_base.dart';
+import 'package:xcgrid_da/src/preset_cubit.dart';
 import 'package:xcgrid_da/src/xcrpc_client.dart';
 
 Future<void> main(List<String> arguments) async {
@@ -34,19 +37,22 @@ Future<void> main(List<String> arguments) async {
   exit(0);
 }
 
-extension DummyLoader on PresetManagerAgent {
-  Future<DummyPreset> loadDummyPreset(StringValue plOr) async {
-    var meta = await loadPresetMeta(plOr);
-    var keys = DummyPresetKeys.fromMeta(meta);
-    var preset = DummyPreset(keys, presetAgent: this);
-    return preset;
-  }
-}
-
 Future<void> testDispatch(DummyPreset preset) async {
   preset.memoSetContentComp('hi').memoGetContent().memoGetNoteProto();
   var slots = await preset.dispatch();
   processSlotList(slots);
+}
+
+void processSlotList(SlotList slots) {
+  // var fldsMapper = {};
+  // slots.values.where((element) => element.slotSeq != 0).forEach((element) {
+  //   fldsMapper[element.slotSeq] = element.slotData;
+  // });
+  // fldsMapper[NoteDefs.CONTENT.value]??
+
+  var wrapper = SlotsWrapper(slots);
+  var state = NoteState().copyWith(status: NoteStatus.loading, slots: wrapper);
+  print(state);
 }
 
 Future<void> testCubit(PresetManagerAgent pm) async {
@@ -65,11 +71,6 @@ Future<void> testCubit(PresetManagerAgent pm) async {
   cubit.close();
 }
 
-abstract class PresetCubit<State> extends Cubit<State>{
-  final PresetManagerAgent _presetAgent;
-  PresetCubit(super.initialState, this._presetAgent);
-  PresetBase? get preset;
-}
 
 class NoteCubit extends PresetCubit<NoteState> {
 
@@ -86,8 +87,8 @@ class NoteCubit extends PresetCubit<NoteState> {
 
     try {
       // Init preset
-      var plOr = await _presetAgent.client.createPresetPl(requestKeys);
-      preset = await _presetAgent.loadDummyPreset(plOr);
+      var plOr = await presetAgent.client.createPresetPl(requestKeys);
+      preset = await presetAgent.loadDummyPreset(plOr);
 
       // Init state with loaders
       preset!.memoGetContent().memoGetNoteProto();
@@ -113,8 +114,12 @@ class NoteCubit extends PresetCubit<NoteState> {
   //   }
   // }
 
-  Future<void> memoSetContent(String cnt) async {
-    await mut(() => preset!.memoSetContentComp(cnt).memoGetContent());
+  Future<void> memoSetContent(
+      String cnt
+  ) async {
+    await mut(() => preset!.memoSetContentComp(cnt)
+        .memoGetContent()
+    );
   }
 
   Future<void> mut(Function() builder) async {
@@ -137,56 +142,6 @@ class NoteCubit extends PresetCubit<NoteState> {
   }
 }
 
-void processSlotList(SlotList slots) {
-  // var fldsMapper = {};
-  // slots.values.where((element) => element.slotSeq != 0).forEach((element) {
-  //   fldsMapper[element.slotSeq] = element.slotData;
-  // });
-  // fldsMapper[NoteDefs.CONTENT.value]??
-
-  var wrapper = SlotsWrapper(slots);
-  var state = NoteState().copyWith(status: NoteStatus.loading, slots: wrapper);
-  print(state);
-}
-
-class SlotsWrapper {
-  final SlotList slots;
-  Map<int, List<int>>? _values;
-
-  Map<int, List<int>> get values => _values ??= buildValues();
-
-  SlotsWrapper(this.slots);
-
-  Map<int, List<int>> buildValues() {
-    Map<int, List<int>> fldsMapper = {};
-    slots.values.where((element) => element.slotSeq != 0).forEach((element) {
-      fldsMapper[element.slotSeq] = element.slotData;
-    });
-    return fldsMapper;
-  }
-
-  String? asString(int fldNumber) {
-    if (values.containsKey(fldNumber)) {
-      return StringValue.fromBuffer(values[fldNumber]!).value;
-    }
-    return null;
-  }
-
-  int? asInt(int fldNumber) {
-    if (values.containsKey(fldNumber)) {
-      return Int32Value.fromBuffer(values[fldNumber]!).value;
-    }
-    return null;
-  }
-
-  T? asProto<T>(int fldNumber, Function(List<int>) prototype) {
-    if (values.containsKey(fldNumber)) {
-      return prototype(values[fldNumber]!);
-    }
-    return null;
-  }
-}
-
 enum NoteStatus { initial, loading, success, failure }
 extension NoteStatusX on NoteStatus {
   bool get isInitial => this == NoteStatus.initial;
@@ -202,6 +157,7 @@ class NoteState extends Equatable {
   // final String noteContent;
   final String title;
   final String author;
+  // final List<int> bytes;
 
   // set contentAndAuthor(ContentAndAuthor)
   // set note(NoteProto proto)
@@ -211,6 +167,7 @@ class NoteState extends Equatable {
     this.content = '',
     this.title = '',
     this.author = '',
+    // this.bytes = const [],
     // ContentAndAuthor? contentAndAuthor,
     // NoteProto? note,
   });
@@ -243,6 +200,7 @@ class NoteState extends Equatable {
 
     // from scalar
     content = slots?.asString(NoteDefs.CONTENT.value) ?? content;
+    // content = slots?.asString(DummyDomainDefs.noteContent.index) ?? content;
     title = slots?.asString(NoteDefs.TITLE.value) ?? title;
 
     return NoteState(

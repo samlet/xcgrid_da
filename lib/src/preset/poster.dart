@@ -91,6 +91,248 @@ class PosterPreset extends PresetBase {
 
   
   
+  NoteAutoHandle get noteWithNoteAutoHandle {
+    return NoteAutoHandle()
+      ..regionId = note.regionId
+      ..bundleId = note.id;
+  }     
+
+  
+  PosterPreset noteGetAttachments(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..getAttachments = noteWithNoteAutoHandle;    
+       
+     
+    // final c = NoteDefs.ATTACHMENTS.value;
+    final c = PosterDomainDefs.noteAttachments.index;
+    pushCall("noteGetAttachments", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<BuffersData> noteGetAttachmentsCall(
+  ) async {
+    noteGetAttachments();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset noteSetAttachments(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setAttachments = (NoteAutoSetAttachmentsRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteSetAttachments", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetAttachmentsCall(
+    BuffersData data
+  ) async {
+    noteSetAttachments(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset noteUpdateNote(
+    String content,
+    String author
+  ) {
+    
+    var el = NoteAutoCall()
+      ..updateNote = (NoteAutoUpdateNoteRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..content = content
+        ..author = author       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteUpdateNote", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteUpdateNoteCall(
+    String content,
+    String author
+  ) async {
+    noteUpdateNote(content, author);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset noteSetClob(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setClob = (NoteAutoSetClobRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteSetClob", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetClobCall(
+    BuffersData data
+  ) async {
+    noteSetClob(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset noteUpdateNoteContent(
+    String content
+  ) {
+    
+    var el = NoteAutoCall()
+      ..updateNoteContent = (NoteAutoUpdateNoteContentRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..content = content       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteUpdateNoteContent", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteUpdateNoteContentCall(
+    String content
+  ) async {
+    noteUpdateNoteContent(content);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset notePersistSlotsExistent(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..persistSlotsExistent = noteWithNoteAutoHandle;    
+       
+     
+    // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
+    final c = PosterDomainDefs.noteAvailablePersistSlots.index;
+    pushCall("notePersistSlotsExistent", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<StructData> notePersistSlotsExistentCall(
+  ) async {
+    notePersistSlotsExistent();
+    var result= await dispatch();
+    return StructData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset notePersistSlotValues(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..persistSlotValues = noteWithNoteAutoHandle;    
+       
+     
+    // final c = NoteDefs.PERSIST_SLOTS.value;
+    final c = PosterDomainDefs.notePersistSlots.index;
+    pushCall("notePersistSlotValues", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<BuffersMap> notePersistSlotValuesCall(
+  ) async {
+    notePersistSlotValues();
+    var result= await dispatch();
+    return BuffersMap.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset noteGetClob(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..getClob = noteWithNoteAutoHandle;    
+       
+     
+    // final c = NoteDefs.CLOB.value;
+    final c = PosterDomainDefs.noteClob.index;
+    pushCall("noteGetClob", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<BuffersData> noteGetClobCall(
+  ) async {
+    noteGetClob();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset noteSetImages(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setImages = (NoteAutoSetImagesRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteSetImages", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetImagesCall(
+    BuffersData data
+  ) async {
+    noteSetImages(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset noteGetImages(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..getImages = noteWithNoteAutoHandle;    
+       
+     
+    // final c = NoteDefs.IMAGES.value;
+    final c = PosterDomainDefs.noteImages.index;
+    pushCall("noteGetImages", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<BuffersData> noteGetImagesCall(
+  ) async {
+    noteGetImages();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+          
+  
+  
   NoteCoHandle get noteWithNoteCoHandle {
     return NoteCoHandle()
       ..regionId = note.regionId
@@ -135,6 +377,31 @@ class PosterPreset extends PresetBase {
   Future<Empty> noteRevokeContentCall(
   ) async {
     noteRevokeContent();
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset noteSetContent(
+    String cnt
+  ) {
+    
+    var el = NoteCoCall()
+      ..setContent = (NoteCoSetContentRequest()
+        ..handle = noteWithNoteCoHandle
+        ..cnt = cnt       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteSetContent", "NoteCo", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetContentCall(
+    String cnt
+  ) async {
+    noteSetContent(cnt);
     await dispatch();
     return Empty.getDefault();
   }
@@ -209,110 +476,6 @@ class PosterPreset extends PresetBase {
           
   
   
-  NoteAutoHandle get noteWithNoteAutoHandle {
-    return NoteAutoHandle()
-      ..regionId = note.regionId
-      ..bundleId = note.id;
-  }     
-
-  
-  PosterPreset noteUpdateNote(
-    String content,
-    String author
-  ) {
-    
-    var el = NoteAutoCall()
-      ..updateNote = (NoteAutoUpdateNoteRequest()
-        ..handle = noteWithNoteAutoHandle
-        ..content = content
-        ..author = author       
-      );     
-     
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("noteUpdateNote", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<Empty> noteUpdateNoteCall(
-    String content,
-    String author
-  ) async {
-    noteUpdateNote(content, author);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-  
-  PosterPreset noteUpdateNoteContent(
-    String content
-  ) {
-    
-    var el = NoteAutoCall()
-      ..updateNoteContent = (NoteAutoUpdateNoteContentRequest()
-        ..handle = noteWithNoteAutoHandle
-        ..content = content       
-      );     
-     
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("noteUpdateNoteContent", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<Empty> noteUpdateNoteContentCall(
-    String content
-  ) async {
-    noteUpdateNoteContent(content);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-  
-  PosterPreset notePersistSlotsExistent(
-  ) {
-    
-    var el = NoteAutoCall()
-      ..persistSlotsExistent = noteWithNoteAutoHandle;    
-       
-     
-    // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
-    final c = PosterDomainDefs.noteAvailablePersistSlots.index;
-    pushCall("notePersistSlotsExistent", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<StructData> notePersistSlotsExistentCall(
-  ) async {
-    notePersistSlotsExistent();
-    var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  PosterPreset notePersistSlotValues(
-  ) {
-    
-    var el = NoteAutoCall()
-      ..persistSlotValues = noteWithNoteAutoHandle;    
-       
-     
-    // final c = NoteDefs.PERSIST_SLOTS.value;
-    final c = PosterDomainDefs.notePersistSlots.index;
-    pushCall("notePersistSlotValues", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<BytesMap> notePersistSlotValuesCall(
-  ) async {
-    notePersistSlotValues();
-    var result= await dispatch();
-    return BytesMap.fromBuffer(result.values.last.slotData);
-  }
-
-          
-  
-  
   WhiteBoardHandle get memoWithWhiteBoardHandle {
     return WhiteBoardHandle()
       ..regionId = memo.regionId
@@ -341,6 +504,31 @@ class PosterPreset extends PresetBase {
   }
 
   
+  PosterPreset memoSetAttachments(
+    BuffersData data
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..setAttachments = (WhiteBoardSetAttachmentsRequest()
+        ..handle = memoWithWhiteBoardHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoSetAttachments", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetAttachmentsCall(
+    BuffersData data
+  ) async {
+    memoSetAttachments(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
   PosterPreset memoUpdateNote(
     String content,
     String author
@@ -366,27 +554,6 @@ class PosterPreset extends PresetBase {
     memoUpdateNote(content, author);
     await dispatch();
     return Empty.getDefault();
-  }
-
-  
-  PosterPreset memoGetLastContent(
-  ) {
-    
-    var el = WhiteBoardCall()
-      ..getLastContent = memoWithWhiteBoardHandle;    
-       
-     
-    // final c = NoteDefs.LAST_CONTENT.value;
-    final c = PosterDomainDefs.memoLastContent.index;
-    pushCall("memoGetLastContent", "WhiteBoard", memo, el, c);
-    return this;
-  }
-
-  Future<StringValue> memoGetLastContentCall(
-  ) async {
-    memoGetLastContent();
-    var result= await dispatch();
-    return StringValue.fromBuffer(result.values.last.slotData);
   }
 
   
@@ -464,27 +631,6 @@ class PosterPreset extends PresetBase {
   }
 
   
-  PosterPreset memoPersistSlotValues(
-  ) {
-    
-    var el = WhiteBoardCall()
-      ..persistSlotValues = memoWithWhiteBoardHandle;    
-       
-     
-    // final c = NoteDefs.PERSIST_SLOTS.value;
-    final c = PosterDomainDefs.memoPersistSlots.index;
-    pushCall("memoPersistSlotValues", "WhiteBoard", memo, el, c);
-    return this;
-  }
-
-  Future<BytesMap> memoPersistSlotValuesCall(
-  ) async {
-    memoPersistSlotValues();
-    var result= await dispatch();
-    return BytesMap.fromBuffer(result.values.last.slotData);
-  }
-
-  
   PosterPreset memoGetContentAndAuthor(
   ) {
     
@@ -505,9 +651,185 @@ class PosterPreset extends PresetBase {
     return ContentAndAuthor.fromBuffer(result.values.last.slotData);
   }
 
+  
+  PosterPreset memoGetClob(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getClob = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.CLOB.value;
+    final c = PosterDomainDefs.memoClob.index;
+    pushCall("memoGetClob", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<BuffersData> memoGetClobCall(
+  ) async {
+    memoGetClob();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset memoGetAttachments(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getAttachments = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.ATTACHMENTS.value;
+    final c = PosterDomainDefs.memoAttachments.index;
+    pushCall("memoGetAttachments", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<BuffersData> memoGetAttachmentsCall(
+  ) async {
+    memoGetAttachments();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset memoGetLastContent(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getLastContent = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.LAST_CONTENT.value;
+    final c = PosterDomainDefs.memoLastContent.index;
+    pushCall("memoGetLastContent", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<StringValue> memoGetLastContentCall(
+  ) async {
+    memoGetLastContent();
+    var result= await dispatch();
+    return StringValue.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset memoSetClob(
+    BuffersData data
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..setClob = (WhiteBoardSetClobRequest()
+        ..handle = memoWithWhiteBoardHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoSetClob", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetClobCall(
+    BuffersData data
+  ) async {
+    memoSetClob(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset memoPersistSlotValues(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..persistSlotValues = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.PERSIST_SLOTS.value;
+    final c = PosterDomainDefs.memoPersistSlots.index;
+    pushCall("memoPersistSlotValues", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<BuffersMap> memoPersistSlotValuesCall(
+  ) async {
+    memoPersistSlotValues();
+    var result= await dispatch();
+    return BuffersMap.fromBuffer(result.values.last.slotData);
+  }
+
+  
+  PosterPreset memoSetImages(
+    BuffersData data
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..setImages = (WhiteBoardSetImagesRequest()
+        ..handle = memoWithWhiteBoardHandle
+        ..data = data       
+      );     
+     
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoSetImages", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetImagesCall(
+    BuffersData data
+  ) async {
+    memoSetImages(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+  
+  PosterPreset memoGetImages(
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..getImages = memoWithWhiteBoardHandle;    
+       
+     
+    // final c = NoteDefs.IMAGES.value;
+    final c = PosterDomainDefs.memoImages.index;
+    pushCall("memoGetImages", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<BuffersData> memoGetImagesCall(
+  ) async {
+    memoGetImages();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
           
   
        
+
+  
+  PosterPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+    // final c = 0;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
+  }
 
   
   PosterPreset fixturesSomeNotes(
@@ -530,27 +852,6 @@ class PosterPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
-  }
-
-  
-  PosterPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-    // final c = 0;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
           

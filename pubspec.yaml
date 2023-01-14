@@ -12,6 +12,9 @@ dependencies:
   slugid: ^1.1.0
   tuple: ^2.0.0
   decimal: ^2.2.0
+  duration: ^3.0.11
+  intl: ^0.17.0
+  validators: ^3.0.0
   power_extensions: ^0.2.2
   path: ^1.8.0
   async: ^2.2.0

@@ -16,6 +16,8 @@ void main(List<String> arguments) {
   var dt = DateTime.parse("2002-02-27T14:00:00-0500");
   var releaseDate = Timestamp.fromDateTime(dt);
   print(releaseDate);
+  DateTime newDt=releaseDate.toDateTime();
+  print(newDt);
 
   //
   var quantity = FixedPoint()
@@ -54,4 +56,17 @@ FixedPoint asFixedPoint(String numVal) {
   var num = Decimal.parse(numVal);
   var intVal = num.shift(num.scale).toBigInt().toInt();
   return FixedPoint(value: Int64(intVal), scalingPosition: num.scale);
+}
+
+void emptyProtos(){
+  BuffersData.getDefault();
+  double x = 0.0;
+  var z=Decimal.zero;
+  var ind=Indicator.NO;
+}
+
+void testBuffers(){
+  // BuffersData bd=BuffersData();
+  BuffersMap bm=BuffersMap();
+  var bd=bm.values['na'];
 }
