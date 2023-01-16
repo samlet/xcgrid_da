@@ -32,29 +32,56 @@ enum DummyMethodDefs {
     memoSetImages,    // NoteAuto.setImages
     memoUpdateNote,    // NoteAuto.updateNote
     memoUpdateNoteContent,    // NoteAuto.updateNoteContent
+    todosAddTodo,    // Todos.addTodo
+    todosAddTodoById,    // Todos.addTodoById
+    todosGetPercentComplete,    // Todos.getPercentComplete
+    todosGetTodoProtoList,    // Todos.getTodoProtoList
+    todosGetTodosProto,    // Todos.getTodosProto
+    todosMarkComplete,    // Todos.markComplete
+    todosRemoveTodo,    // Todos.removeTodo
+    todosUpdateTodo,    // Todos.updateTodo
 }
 
 enum DummyDomainDefs {
     nonDomainField, // 0
-    // note: [NoteAuto, NoteCo]
-    noteClob,   // proto.BuffersData, NoteAuto.getClob
-    noteImages,   // proto.BuffersData, NoteAuto.getImages
-    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments
-    noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent
-    notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues
-    noteTitle,   // google.protobuf.StringValue, NoteCo.name
-    noteContent,   // google.protobuf.StringValue, NoteCo.getContent
+    // note: [NoteAuto, NoteCo]  
+    noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
+    notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
+    noteClob,   // proto.BuffersData, NoteAuto.getClob  
+    noteImages,   // proto.BuffersData, NoteAuto.getImages  
+    noteTitle,   // google.protobuf.StringValue, NoteCo.name  
+    noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
     noteDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
-    // memo: [NoteAuto, NoteCo]
-    memoClob,   // proto.BuffersData, NoteAuto.getClob
-    memoImages,   // proto.BuffersData, NoteAuto.getImages
-    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments
-    memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent
-    memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues
-    memoTitle,   // google.protobuf.StringValue, NoteCo.name
-    memoContent,   // google.protobuf.StringValue, NoteCo.getContent
+    // memo: [NoteAuto, NoteCo]  
+    memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
+    memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
+    memoClob,   // proto.BuffersData, NoteAuto.getClob  
+    memoImages,   // proto.BuffersData, NoteAuto.getImages  
+    memoTitle,   // google.protobuf.StringValue, NoteCo.name  
+    memoContent,   // google.protobuf.StringValue, NoteCo.getContent  
     memoDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
+    // todos: [WorkEffortAuto, Todos]  
+    todosPercentComplete,   // google.protobuf.Int64Value, Todos.getPercentComplete  
+    todosDefaultDomain,   // domain.TodosProto, Todos.getTodosProto    
+    // enum values for list query
+
+    // enum values for list muts    
+    // enum values for list query
+
+    // enum values for list muts    
+    // enum values for list query   
+    todosGetTodoProtoList,
+
+    // enum values for list muts   
+    todosAddTodoById,   
+    todosMarkComplete,   
+    todosAddTodo,   
+    todosRemoveTodo,   
+    todosUpdateTodo,       
 }
+
 
 
 

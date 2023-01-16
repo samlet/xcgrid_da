@@ -1,22 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:decimal/decimal.dart';
+import 'package:equatable/equatable.dart';
 import 'package:xcgrid_da/common_proto.dart';
+import 'agent/preset_dispatcher.dart';
 import 'proto_types.dart';
 
-import 'agent/preset_manager.dart';
 import 'generated/extra/common_slot.pb.dart';
 import 'generated/google/protobuf/wrappers.pb.dart';
 import 'preset_base.dart';
 
 abstract class PresetCubit<State> extends Cubit<State>{
-  final PresetManagerAgent _presetAgent;
-  PresetManagerAgent get presetAgent => _presetAgent;
+  final PresetDispatcherAgent _presetAgent;
+  PresetDispatcherAgent get presetAgent => _presetAgent;
 
   PresetCubit(super.initialState, this._presetAgent);
   PresetBase? get preset;
 }
 
-class SlotsWrapper {
+class SlotsWrapper extends Equatable{
   final SlotList slots;
   Map<int, List<int>>? _values;
 
@@ -136,5 +137,8 @@ class SlotsWrapper {
     }
     return null;
   }
+
+  @override
+  List<Object?> get props => [slots];
 }
 

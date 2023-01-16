@@ -1,19 +1,23 @@
 import 'package:protobuf/protobuf.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../common_proto.dart';
-import '../agent/preset_manager.dart';
+// import '../agent/preset_manager.dart';
+import '../agent/preset_dispatcher.dart';
 import '../generated/call_builder.pb.dart';
 import '../generated/preset_manager.pb.dart';
 import '../preset_base.dart';
 import '../xcrpc_client.dart';
 
 import '../generated/note_domain.pb.dart';
+import '../generated/workeff_domain.pb.dart';
 
 import '../generated/note_co.pbgrpc.dart';
 import '../generated/note_auto.pb.dart';
 import '../generated/domain/note_defs.pbenum.dart';
 
 import '../generated/white_board.pb.dart';
+import '../generated/todos.pb.dart';
 
 import '../generated/fixture_objects.pb.dart';
 import '../generated/pipelines.pb.dart';
@@ -26,7 +30,7 @@ import 'poster_defs.dart';
 
 
 
-class PosterPresetKeys{
+class PosterPresetKeys extends Equatable {
   final String regionId;
   BundleKey get regionKey => BundleKey(regionId: regionId);
   final String? plId;
@@ -41,6 +45,11 @@ class PosterPresetKeys{
     required this.memoId,
     this.plId,
     this.regionId='default'});
+
+  static final empty = PosterPresetKeys(
+      noteId: '',
+      memoId: '',
+  );
 
   factory PosterPresetKeys.fromMap(Map<String, String> keysMap){
     return PosterPresetKeys(
@@ -66,6 +75,12 @@ class PosterPresetKeys{
     'memoId': memoId,
   };
 
+  Map<String, BundleKey> get bundleKeys => {
+    'note': noteKey,
+    'memo': memoKey,
+    'fixtures': regionKey,       
+  };
+
   PresetManagerCreatePresetPlRequest asPlRequest(String tag, String owner){
     return PresetManagerCreatePresetPlRequest()
       ..regionId = regionId
@@ -75,6 +90,22 @@ class PosterPresetKeys{
       ..keys = StringMap(values: keys);
   }
 
+  CallBuilderContextProto asCallBuilderProto(String tag, String owner){
+    return CallBuilderContextProto()
+      ..regionId = regionId
+      ..presetName = "Poster"
+      ..owner = owner
+      ..tag = tag
+      ..keys.addAll(bundleKeys);
+  }
+
+  @override
+  List<Object?> get props => [
+    regionId, 
+    plId,
+    noteId,
+    memoId,
+  ];
 }
 
 class PosterPreset extends PresetBase {
@@ -85,8 +116,8 @@ class PosterPreset extends PresetBase {
 
   PosterPreset(
       this.keys,
-      {PresetManagerAgent? presetAgent})
-      : super(presetAgent ?? XcClient().presetManagerAgent(),
+      {PresetDispatcherAgent? presetAgent})
+      : super(presetAgent ?? XcClient().presetDispatcherAgent(),
             keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
 
   
@@ -97,7 +128,7 @@ class PosterPreset extends PresetBase {
       ..bundleId = note.id;
   }     
 
-  
+     
   PosterPreset noteGetAttachments(
   ) {
     
@@ -118,7 +149,7 @@ class PosterPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset noteSetAttachments(
     BuffersData data
   ) {
@@ -143,7 +174,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteUpdateNote(
     String content,
     String author
@@ -171,7 +202,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteSetClob(
     BuffersData data
   ) {
@@ -196,7 +227,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteUpdateNoteContent(
     String content
   ) {
@@ -221,7 +252,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset notePersistSlotsExistent(
   ) {
     
@@ -242,7 +273,7 @@ class PosterPreset extends PresetBase {
     return StructData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset notePersistSlotValues(
   ) {
     
@@ -263,7 +294,7 @@ class PosterPreset extends PresetBase {
     return BuffersMap.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset noteGetClob(
   ) {
     
@@ -284,7 +315,7 @@ class PosterPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset noteSetImages(
     BuffersData data
   ) {
@@ -309,7 +340,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteGetImages(
   ) {
     
@@ -339,7 +370,7 @@ class PosterPreset extends PresetBase {
       ..bundleId = note.id;
   }     
 
-  
+     
   PosterPreset noteGetNoteProto(
   ) {
     
@@ -360,7 +391,7 @@ class PosterPreset extends PresetBase {
     return NoteProto.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset noteRevokeContent(
   ) {
     
@@ -381,7 +412,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteSetContent(
     String cnt
   ) {
@@ -406,7 +437,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteSetContentComp(
     String cnt
   ) {
@@ -431,7 +462,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset noteGetContent(
   ) {
     
@@ -452,7 +483,7 @@ class PosterPreset extends PresetBase {
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset noteName(
   ) {
     
@@ -482,7 +513,7 @@ class PosterPreset extends PresetBase {
       ..bundleId = memo.id;
   }     
 
-  
+     
   PosterPreset memoGetLastAuthor(
   ) {
     
@@ -503,7 +534,7 @@ class PosterPreset extends PresetBase {
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoSetAttachments(
     BuffersData data
   ) {
@@ -528,7 +559,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoUpdateNote(
     String content,
     String author
@@ -556,7 +587,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoUpdateNoteContent(
     String content
   ) {
@@ -581,7 +612,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoPutContent(
     String content,
     String partyId
@@ -609,7 +640,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoPersistSlotsExistent(
   ) {
     
@@ -630,7 +661,7 @@ class PosterPreset extends PresetBase {
     return StructData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoGetContentAndAuthor(
   ) {
     
@@ -651,7 +682,7 @@ class PosterPreset extends PresetBase {
     return ContentAndAuthor.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoGetClob(
   ) {
     
@@ -672,7 +703,7 @@ class PosterPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoGetAttachments(
   ) {
     
@@ -693,7 +724,7 @@ class PosterPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoGetLastContent(
   ) {
     
@@ -714,7 +745,7 @@ class PosterPreset extends PresetBase {
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoSetClob(
     BuffersData data
   ) {
@@ -739,7 +770,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoPersistSlotValues(
   ) {
     
@@ -760,7 +791,7 @@ class PosterPreset extends PresetBase {
     return BuffersMap.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset memoSetImages(
     BuffersData data
   ) {
@@ -785,7 +816,7 @@ class PosterPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   PosterPreset memoGetImages(
   ) {
     
@@ -810,7 +841,7 @@ class PosterPreset extends PresetBase {
   
        
 
-  
+     
   PosterPreset fixturesOneNote(
   ) {
     
@@ -831,7 +862,7 @@ class PosterPreset extends PresetBase {
     return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   PosterPreset fixturesSomeNotes(
     int total
   ) {

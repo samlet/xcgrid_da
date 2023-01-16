@@ -38,9 +38,9 @@ Future<void> main(List<String> arguments) async {
   // var keys=DummyPresetKeys.fromMap(keysMap);
   var keys = DummyPresetKeys.fromMeta(meta);
   // var preset = DummyPreset(keys, presetAgent: pm, plKey: plKey);
-  var preset = DummyPreset(keys, presetAgent: pm);
-  var cnt = await preset.memoSetContentComp('hi').memoGetContentCall();
-  print('result -> ${cnt.value}');
+  // var preset = DummyPreset(keys, presetAgent: pm);
+  // var cnt = await preset.memoSetContentComp('hi').memoGetContentCall();
+  // print('result -> ${cnt.value}');
 
   exit(0);
 }

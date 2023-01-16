@@ -24,6 +24,8 @@ dependencies:
   bloc: ^8.0.1
   hydrated_bloc: ^9.0.0
   get_it: ^7.2.0
+  dart_jsonwebtoken: ^2.6.2
+  rxdart: ^0.27.5
 
 dev_dependencies:
   lints: ^2.0.0

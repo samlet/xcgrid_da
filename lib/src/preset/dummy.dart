@@ -1,19 +1,23 @@
 import 'package:protobuf/protobuf.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../common_proto.dart';
-import '../agent/preset_manager.dart';
+// import '../agent/preset_manager.dart';
+import '../agent/preset_dispatcher.dart';
 import '../generated/call_builder.pb.dart';
 import '../generated/preset_manager.pb.dart';
 import '../preset_base.dart';
 import '../xcrpc_client.dart';
 
 import '../generated/note_domain.pb.dart';
+import '../generated/workeff_domain.pb.dart';
 
 import '../generated/note_co.pbgrpc.dart';
 import '../generated/note_auto.pb.dart';
 import '../generated/domain/note_defs.pbenum.dart';
 
 import '../generated/white_board.pb.dart';
+import '../generated/todos.pb.dart';
 
 import '../generated/fixture_objects.pb.dart';
 import '../generated/pipelines.pb.dart';
@@ -26,7 +30,7 @@ import 'dummy_defs.dart';
 
 
 
-class DummyPresetKeys{
+class DummyPresetKeys extends Equatable {
   final String regionId;
   BundleKey get regionKey => BundleKey(regionId: regionId);
   final String? plId;
@@ -35,17 +39,27 @@ class DummyPresetKeys{
   BundleKey get noteKey => BundleKey(regionId: regionId, id: noteId);
   final String memoId;
   BundleKey get memoKey => BundleKey(regionId: regionId, id: memoId);
+  final String todosId;
+  BundleKey get todosKey => BundleKey(regionId: regionId, id: todosId);
 
   DummyPresetKeys({
     required this.noteId,
     required this.memoId,
+    required this.todosId,
     this.plId,
     this.regionId='default'});
+
+  static final empty = DummyPresetKeys(
+      noteId: '',
+      memoId: '',
+      todosId: '',
+  );
 
   factory DummyPresetKeys.fromMap(Map<String, String> keysMap){
     return DummyPresetKeys(
         noteId: keysMap['noteId']!,
         memoId: keysMap['memoId']!,
+        todosId: keysMap['todosId']!,
         plId: keysMap['plId'],
         regionId: keysMap['regionId']??'default'
     );
@@ -56,6 +70,7 @@ class DummyPresetKeys{
     return DummyPresetKeys(
         noteId: keysMap['note']!.id,
         memoId: keysMap['memo']!.id,
+        todosId: keysMap['todos']!.id,
         plId: meta.plId,
         regionId: meta.regionId
     );
@@ -64,6 +79,16 @@ class DummyPresetKeys{
   Map<String, String> get keys => {
     'noteId': noteId,
     'memoId': memoId,
+    'todosId': todosId,
+  };
+
+  Map<String, BundleKey> get bundleKeys => {
+    'note': noteKey,
+    'memo': memoKey,
+    'todos': todosKey,
+    'pls': regionKey,
+    'merchant': regionKey,
+    'fixtures': regionKey,       
   };
 
   PresetManagerCreatePresetPlRequest asPlRequest(String tag, String owner){
@@ -75,20 +100,38 @@ class DummyPresetKeys{
       ..keys = StringMap(values: keys);
   }
 
+  CallBuilderContextProto asCallBuilderProto(String tag, String owner){
+    return CallBuilderContextProto()
+      ..regionId = regionId
+      ..presetName = "Dummy"
+      ..owner = owner
+      ..tag = tag
+      ..keys.addAll(bundleKeys);
+  }
+
+  @override
+  List<Object?> get props => [
+    regionId, 
+    plId,
+    noteId,
+    memoId,
+    todosId,
+  ];
 }
 
 class DummyPreset extends PresetBase {
   final DummyPresetKeys keys;
   BundleKey get note => keys.noteKey;
   BundleKey get memo => keys.memoKey;
+  BundleKey get todos => keys.todosKey;
   BundleKey get pls => keys.regionKey;
   BundleKey get merchant => keys.regionKey;
   BundleKey get fixtures => keys.regionKey;       
 
   DummyPreset(
       this.keys,
-      {PresetManagerAgent? presetAgent})
-      : super(presetAgent ?? XcClient().presetManagerAgent(),
+      {PresetDispatcherAgent? presetAgent})
+      : super(presetAgent ?? XcClient().presetDispatcherAgent(),
             keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
 
   
@@ -99,7 +142,7 @@ class DummyPreset extends PresetBase {
       ..bundleId = note.id;
   }     
 
-  
+     
   DummyPreset noteGetAttachments(
   ) {
     
@@ -120,7 +163,7 @@ class DummyPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset noteSetAttachments(
     BuffersData data
   ) {
@@ -145,7 +188,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteUpdateNote(
     String content,
     String author
@@ -173,7 +216,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteSetClob(
     BuffersData data
   ) {
@@ -198,7 +241,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteUpdateNoteContent(
     String content
   ) {
@@ -223,7 +266,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset notePersistSlotsExistent(
   ) {
     
@@ -244,7 +287,7 @@ class DummyPreset extends PresetBase {
     return StructData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset notePersistSlotValues(
   ) {
     
@@ -265,7 +308,7 @@ class DummyPreset extends PresetBase {
     return BuffersMap.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset noteGetClob(
   ) {
     
@@ -286,7 +329,7 @@ class DummyPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset noteSetImages(
     BuffersData data
   ) {
@@ -311,7 +354,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteGetImages(
   ) {
     
@@ -341,7 +384,7 @@ class DummyPreset extends PresetBase {
       ..bundleId = note.id;
   }     
 
-  
+     
   DummyPreset noteGetNoteProto(
   ) {
     
@@ -362,7 +405,7 @@ class DummyPreset extends PresetBase {
     return NoteProto.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset noteRevokeContent(
   ) {
     
@@ -383,7 +426,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteSetContent(
     String cnt
   ) {
@@ -408,7 +451,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteSetContentComp(
     String cnt
   ) {
@@ -433,7 +476,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset noteGetContent(
   ) {
     
@@ -454,7 +497,7 @@ class DummyPreset extends PresetBase {
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset noteName(
   ) {
     
@@ -484,7 +527,7 @@ class DummyPreset extends PresetBase {
       ..bundleId = memo.id;
   }     
 
-  
+     
   DummyPreset memoGetAttachments(
   ) {
     
@@ -505,7 +548,7 @@ class DummyPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoSetAttachments(
     BuffersData data
   ) {
@@ -530,7 +573,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoUpdateNote(
     String content,
     String author
@@ -558,7 +601,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoSetClob(
     BuffersData data
   ) {
@@ -583,7 +626,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoUpdateNoteContent(
     String content
   ) {
@@ -608,7 +651,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoPersistSlotsExistent(
   ) {
     
@@ -629,7 +672,7 @@ class DummyPreset extends PresetBase {
     return StructData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoPersistSlotValues(
   ) {
     
@@ -650,7 +693,7 @@ class DummyPreset extends PresetBase {
     return BuffersMap.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoGetClob(
   ) {
     
@@ -671,7 +714,7 @@ class DummyPreset extends PresetBase {
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoSetImages(
     BuffersData data
   ) {
@@ -696,7 +739,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoGetImages(
   ) {
     
@@ -726,7 +769,7 @@ class DummyPreset extends PresetBase {
       ..bundleId = memo.id;
   }     
 
-  
+     
   DummyPreset memoGetNoteProto(
   ) {
     
@@ -747,7 +790,7 @@ class DummyPreset extends PresetBase {
     return NoteProto.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoRevokeContent(
   ) {
     
@@ -768,7 +811,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoSetContent(
     String cnt
   ) {
@@ -793,7 +836,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoSetContentComp(
     String cnt
   ) {
@@ -818,7 +861,7 @@ class DummyPreset extends PresetBase {
     return Empty.getDefault();
   }
 
-  
+     
   DummyPreset memoGetContent(
   ) {
     
@@ -839,7 +882,7 @@ class DummyPreset extends PresetBase {
     return StringValue.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset memoName(
   ) {
     
@@ -862,9 +905,215 @@ class DummyPreset extends PresetBase {
 
           
   
+  
+  TodosHandle get todosWithTodosHandle {
+    return TodosHandle()
+      ..regionId = todos.regionId
+      ..bundleId = todos.id;
+  }     
+
+     
+  DummyPreset todosRemoveTodo(
+    String assocId
+  ) {
+    
+    var el = TodosCall()
+      ..removeTodo = (TodosRemoveTodoRequest()
+        ..handle = todosWithTodosHandle
+        ..assocId = assocId       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosRemoveTodo.index;
+    pushCall("todosRemoveTodo", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosRemoveTodoCall(
+    String assocId
+  ) async {
+    todosRemoveTodo(assocId);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosUpdateTodo(
+    String assocId,
+    String title,
+    String description
+  ) {
+    
+    var el = TodosCall()
+      ..updateTodo = (TodosUpdateTodoRequest()
+        ..handle = todosWithTodosHandle
+        ..assocId = assocId
+        ..title = title
+        ..description = description       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosUpdateTodo.index;
+    pushCall("todosUpdateTodo", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosUpdateTodoCall(
+    String assocId,
+    String title,
+    String description
+  ) async {
+    todosUpdateTodo(assocId, title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosGetTodosProto(
+  ) {
+    
+    var el = TodosCall()
+      ..getTodosProto = todosWithTodosHandle;    
+       
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosDefaultDomain.index;
+    pushCall("todosGetTodosProto", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodosProto> todosGetTodosProtoCall(
+  ) async {
+    todosGetTodosProto();
+    var result= await dispatch();
+    return TodosProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosGetTodoProtoList(
+  ) {
+    
+    var el = TodosCall()
+      ..getTodoProtoList = todosWithTodosHandle;    
+       
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosGetTodoProtoList.index;
+    pushCall("todosGetTodoProtoList", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProtoList> todosGetTodoProtoListCall(
+  ) async {
+    todosGetTodoProtoList();
+    var result= await dispatch();
+    return TodoProtoList.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosAddTodo(
+    String title,
+    String description
+  ) {
+    
+    var el = TodosCall()
+      ..addTodo = (TodosAddTodoRequest()
+        ..handle = todosWithTodosHandle
+        ..title = title
+        ..description = description       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosAddTodo.index;
+    pushCall("todosAddTodo", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoCall(
+    String title,
+    String description
+  ) async {
+    todosAddTodo(title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosGetPercentComplete(
+  ) {
+    
+    var el = TodosCall()
+      ..getPercentComplete = todosWithTodosHandle;    
+       
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosPercentComplete.index;
+    pushCall("todosGetPercentComplete", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<Int64Value> todosGetPercentCompleteCall(
+  ) async {
+    todosGetPercentComplete();
+    var result= await dispatch();
+    return Int64Value.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosMarkComplete(
+    String assocId
+  ) {
+    
+    var el = TodosCall()
+      ..markComplete = (TodosMarkCompleteRequest()
+        ..handle = todosWithTodosHandle
+        ..assocId = assocId       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosMarkComplete.index;
+    pushCall("todosMarkComplete", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosMarkCompleteCall(
+    String assocId
+  ) async {
+    todosMarkComplete(assocId);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+          
+  
        
 
-  
+     
   DummyPreset plsCreateArchivePl(
     String token,
     String assetName,
@@ -900,7 +1149,7 @@ class DummyPreset extends PresetBase {
     return StructData.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset plsIsDone(
     String plId
   ) {
@@ -931,7 +1180,7 @@ class DummyPreset extends PresetBase {
       ..regionId = merchant.regionId;
   }     
 
-  
+     
   DummyPreset merchantCreateMarketplace(
     FixedPoint totalSupply
   ) {
@@ -960,7 +1209,7 @@ class DummyPreset extends PresetBase {
   
        
 
-  
+     
   DummyPreset fixturesSomeNotes(
     int total
   ) {
@@ -983,7 +1232,7 @@ class DummyPreset extends PresetBase {
     return Strings.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset fixturesOneNote(
   ) {
     
@@ -1004,7 +1253,7 @@ class DummyPreset extends PresetBase {
     return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
-  
+     
   DummyPreset fixturesEcho(
     StructData input
   ) {

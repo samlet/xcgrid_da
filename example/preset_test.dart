@@ -13,7 +13,7 @@ Future<void> main(List<String> arguments) async {
 }
 
 DummyPresetKeys presetKeys() {
-  var keys = DummyPresetKeys(noteId: 'note_1', memoId: 'note_2');
+  var keys = DummyPresetKeys(noteId: 'note_1', memoId: 'note_2', todosId: 'todos_1');
   String tag='store:Demo';
   String owner='samlet';
   print('keys-proto: ${keys.asPlRequest(tag, owner)}');

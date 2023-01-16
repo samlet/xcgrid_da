@@ -1,7 +1,7 @@
 import 'package:protobuf/protobuf.dart';
 
 import '../../common_proto.dart';
-import 'agent/preset_manager.dart';
+import 'agent/preset_dispatcher.dart';
 import 'generated/call_builder.pb.dart';
 import 'generated/extra/common_slot.pb.dart';
 import 'util.dart';
@@ -20,7 +20,8 @@ class PresetBase {
   }
 
   BuilderState currentState = BuilderState.bsCall;
-  final PresetManagerAgent presetAgent;
+
+  final PresetDispatcherAgent presetAgent;
   final BundleKey plKey;
 
   PresetBase(this.presetAgent, this.plKey);
@@ -62,6 +63,14 @@ class PresetBase {
 
   Future<SlotList> dispatch() async {
     var result= await presetAgent.dispatch(plKey.id, toProto());
+    reset();
     return result;
+  }
+
+  void reset(){
+    currentState = BuilderState.bsCall;
+    callNumber = 1;
+    calls.clear();
+    sagas.clear();
   }
 }
