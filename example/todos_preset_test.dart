@@ -17,8 +17,13 @@ Future<void> main(List<String> arguments) async {
 
   MilestonesPreset preset = await pm.loadMilestonesPreset(plOr);
   print(preset.keys);
-  var result=await preset.todosAddTodoCall("title", "cnt");
+  var result = await preset.todosAddTodoCall("title", "cnt");
   print("add todo result: $result");
+
+  var todos = await preset.todosGetTodoProtoListCall();
+  todos.items.forEach((element) {
+    print(element);
+  });
 
   exit(0);
 }

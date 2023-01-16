@@ -36,7 +36,8 @@ Future<void> main(List<String> arguments) async {
   print('result -> ${cnt}');
 
   await testDispatch(preset);
-  await testCubit(pm);
+  // await testCubit(pm);
+  await testCubitWithList(pm);
 
   exit(0);
 }
@@ -71,6 +72,29 @@ Future<void> testCubit(PresetDispatcherAgent pm) async {
   print("after load-preset: ${cubit.state}");
   await cubit.memoSetContent('hi, cubit');
   print("after set-cnt: ${cubit.state}");
+
+  /// Close the `cubit` when it is no longer needed.
+  cubit.close();
+}
+
+Future<void> testCubitWithList(PresetDispatcherAgent pm) async {
+  initBlocObserver();
+
+  var repos=DummyRepository(pm);
+  var cubit = NoteCubit(repos);
+  var listCubit=TodoListCubit(repository: repos);
+  print("init: ${cubit.state}");
+
+  var presetKeys =
+  DummyPresetKeys(noteId: 'note_1', memoId: 'note_2', todosId: 'todos_1');
+  await cubit.loadPreset(presetKeys, 'store:Demo', 'samlet');
+  print("after load-preset: ${cubit.state}");
+  await cubit.memoSetContent('hi, cubit');
+  print("after set-cnt: ${cubit.state}");
+
+  // await listCubit.todosGetTodoProtoList(); // 已经由事件触发自动加载
+  sleep(const Duration(seconds: 1));
+  print("state.items: ${listCubit.state}");
 
   /// Close the `cubit` when it is no longer needed.
   cubit.close();
@@ -329,7 +353,9 @@ class TodoListCubit extends Cubit<TodoListState> {
       : super(const TodoListState.loading()) {
     _presetStatusSubscription = repository.presetController.listen((ev) {
       if (ev is LoadDummyPresetKeysEvent) {
+        print("receive load-preset event: ${ev.presetKeys}");
         preset = DummyPreset(ev.presetKeys, presetAgent: repository.presetAgent);
+        unawaited(todosGetTodoProtoList());
       }
     });
   }
