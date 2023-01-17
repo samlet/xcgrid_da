@@ -1,3 +1,5 @@
+part of 'poster.dart';
+
 enum PosterMethodDefs {
     noname, // 0
     noteGetAttachments,    // NoteAuto.getAttachments
@@ -35,29 +37,29 @@ enum PosterMethodDefs {
 enum PosterDomainDefs {
     nonDomainField, // 0
     // note: [NoteAuto, NoteCo]  
-    noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
-    notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
-    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     noteClob,   // proto.BuffersData, NoteAuto.getClob  
     noteImages,   // proto.BuffersData, NoteAuto.getImages  
+    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
+    noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
+    notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     noteTitle,   // google.protobuf.StringValue, NoteCo.name  
     noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
     noteDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
     // memo: [NoteAuto, WhiteBoard]  
-    memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
-    memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
-    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     memoClob,   // proto.BuffersData, NoteAuto.getClob  
     memoImages,   // proto.BuffersData, NoteAuto.getImages  
+    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
+    memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
+    memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     memoLastContent,   // google.protobuf.StringValue, WhiteBoard.getLastContent  
     memoLastAuthor,   // google.protobuf.StringValue, WhiteBoard.getLastAuthor  
     memoContentAndAuthor,   // domain.ContentAndAuthor, WhiteBoard.getContentAndAuthor    
-    // enum values for list query
+    // note: enum values for list query
 
-    // enum values for list muts    
-    // enum values for list query
+    // note: enum values for list muts    
+    // memo: enum values for list query
 
-    // enum values for list muts       
+    // memo: enum values for list muts       
 }
 
 

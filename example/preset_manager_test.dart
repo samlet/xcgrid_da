@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:logging/logging.dart';
 
 import 'package:xcgrid_da/src/agent/preset_manager.dart';
-import 'package:xcgrid_da/src/preset/dummy.dart';
+import 'package:xcgrid_da/src/preset/dummy/dummy.dart';
 import 'package:xcgrid_da/xcrpc_api.dart';
 
 final _log = Logger('presetManagerMain');

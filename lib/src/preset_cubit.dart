@@ -6,8 +6,17 @@ import 'agent/preset_dispatcher.dart';
 import 'proto_types.dart';
 
 import 'generated/extra/common_slot.pb.dart';
-import 'generated/google/protobuf/wrappers.pb.dart';
 import 'preset_base.dart';
+
+abstract class PresetEvent {
+  const PresetEvent();
+}
+
+class AffectsEvent extends PresetEvent{
+  final SlotsWrapper slots;
+
+  AffectsEvent(this.slots);
+}
 
 abstract class PresetCubit<State> extends Cubit<State>{
   final PresetDispatcherAgent _presetAgent;
@@ -19,13 +28,12 @@ abstract class PresetCubit<State> extends Cubit<State>{
 
 class SlotsWrapper extends Equatable{
   final SlotList slots;
-  Map<int, List<int>>? _values;
+  final Map<int, List<int>> _values;
+  Map<int, List<int>> get values => _values;
 
-  Map<int, List<int>> get values => _values ??= buildValues();
+  SlotsWrapper(this.slots): _values=buildValues(slots);
 
-  SlotsWrapper(this.slots);
-
-  Map<int, List<int>> buildValues() {
+  static Map<int, List<int>> buildValues(SlotList slots) {
     Map<int, List<int>> fldsMapper = {};
     slots.values.where((element) => element.slotSeq != 0).forEach((element) {
       fldsMapper[element.slotSeq] = element.slotData;

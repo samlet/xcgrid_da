@@ -22,6 +22,10 @@ extension DecimalEx on FixedPoint{
   Decimal get decimal => asDecimal(this);
 }
 
+extension DateTimeEx on Timestamp{
+  DateTime get dt => toDateTime();
+}
+
 Currency asCurrency(String numVal) {
   return Currency(value: numVal, currencyUomId: "CNY");
 }

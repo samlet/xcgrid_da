@@ -18,3 +18,4 @@ export 'src/generated/ecommerce.pb.dart';
 export 'src/generated/perform_context.pb.dart';
 
 export 'src/proto_util.dart';
+export 'src/proto_types.dart';

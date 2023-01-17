@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:xcgrid_da/src/generated/common_data_types.pb.dart';
-import 'package:xcgrid_da/src/preset/dummy.dart';
+import 'package:xcgrid_da/src/preset/dummy/dummy.dart';
 
 Future<void> main(List<String> arguments) async {
   DummyPresetKeys keys = presetKeys();

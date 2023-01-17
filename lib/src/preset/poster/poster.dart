@@ -1,30 +1,43 @@
+import 'dart:async';
+import 'package:bloc/bloc.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rxdart/rxdart.dart';
 
-import '../../common_proto.dart';
+import '../../../common_proto.dart';
 // import '../agent/preset_manager.dart';
-import '../agent/preset_dispatcher.dart';
-import '../generated/call_builder.pb.dart';
-import '../generated/preset_manager.pb.dart';
-import '../preset_base.dart';
-import '../xcrpc_client.dart';
+import '../../agent/preset_dispatcher.dart';
+import '../../generated/call_builder.pb.dart';
+import '../../generated/preset_manager.pb.dart';
+import '../../preset_base.dart';
+import '../../preset_cubit.dart';
+import '../../xcrpc_client.dart';
 
-import '../generated/note_domain.pb.dart';
-import '../generated/workeff_domain.pb.dart';
+import '../../generated/note_domain.pb.dart';
+import '../../generated/workeff_domain.pb.dart';
 
-import '../generated/note_co.pbgrpc.dart';
-import '../generated/note_auto.pb.dart';
-import '../generated/domain/note_defs.pbenum.dart';
+import '../../generated/note_co.pbgrpc.dart';
+import '../../generated/note_auto.pb.dart';
+import '../../generated/domain/note_defs.pbenum.dart';
 
-import '../generated/white_board.pb.dart';
-import '../generated/todos.pb.dart';
+import '../../generated/white_board.pb.dart';
+import '../../generated/todos.pb.dart';
 
-import '../generated/fixture_objects.pb.dart';
-import '../generated/pipelines.pb.dart';
-import '../generated/merchant_on_chain.pb.dart';
+import '../../generated/fixture_objects.pb.dart';
+import '../../generated/pipelines.pb.dart';
+import '../../generated/merchant_on_chain.pb.dart';
 
-import '../util.dart';
-import 'poster_defs.dart';
+import '../../util.dart';
+
+part 'poster_defs.dart';
+part 'poster_loader.dart';
+part 'poster_repository.dart';
+
+// for domain
+part 'poster_state.dart';
+part 'poster_cubit.dart';
+
+// for list
 
 
 
@@ -842,27 +855,6 @@ class PosterPreset extends PresetBase {
        
 
      
-  PosterPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-    // final c = 0;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
-  }
-
-     
   PosterPreset fixturesSomeNotes(
     int total
   ) {
@@ -883,6 +875,27 @@ class PosterPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  PosterPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+    // final c = 0;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
           

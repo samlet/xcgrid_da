@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:xcgrid_da/src/agent/preset_dispatcher.dart';
 import 'package:xcgrid_da/src/agent/preset_manager.dart';
-import 'package:xcgrid_da/src/preset/milestones.dart';
+import 'package:xcgrid_da/src/preset/milestones/milestones.dart';
 import 'package:xcgrid_da/xcrpc_api.dart';
-import 'package:xcgrid_da/src/preset/milestones_loader.dart';
 
 Future<void> main(List<String> arguments) async {
   var pm = XcClient().presetDispatcherAgent();

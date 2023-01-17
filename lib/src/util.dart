@@ -70,3 +70,7 @@ void printTuples(List<Tuple2<String, String>>? years) {
     print(element);
   });
 }
+
+Future<void> waitSecs(int seconds) async {
+  await Future<void>.delayed(Duration(seconds: seconds));
+}

@@ -1,7 +1,4 @@
-// import '../agent/preset_manager.dart';
-import '../agent/preset_dispatcher.dart';
-import '../generated/google/protobuf/wrappers.pb.dart';
-import 'dummy.dart';
+part of 'dummy.dart';
 
 extension DummyLoader on PresetDispatcherAgent {
   Future<DummyPreset> loadDummyPreset(StringValue plOr) async {

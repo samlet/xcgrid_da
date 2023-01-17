@@ -1,30 +1,45 @@
+import 'dart:async';
+import 'package:bloc/bloc.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rxdart/rxdart.dart';
 
-import '../../common_proto.dart';
+import '../../../common_proto.dart';
 // import '../agent/preset_manager.dart';
-import '../agent/preset_dispatcher.dart';
-import '../generated/call_builder.pb.dart';
-import '../generated/preset_manager.pb.dart';
-import '../preset_base.dart';
-import '../xcrpc_client.dart';
+import '../../agent/preset_dispatcher.dart';
+import '../../generated/call_builder.pb.dart';
+import '../../generated/preset_manager.pb.dart';
+import '../../preset_base.dart';
+import '../../preset_cubit.dart';
+import '../../xcrpc_client.dart';
 
-import '../generated/note_domain.pb.dart';
-import '../generated/workeff_domain.pb.dart';
+import '../../generated/note_domain.pb.dart';
+import '../../generated/workeff_domain.pb.dart';
 
-import '../generated/note_co.pbgrpc.dart';
-import '../generated/note_auto.pb.dart';
-import '../generated/domain/note_defs.pbenum.dart';
+import '../../generated/note_co.pbgrpc.dart';
+import '../../generated/note_auto.pb.dart';
+import '../../generated/domain/note_defs.pbenum.dart';
 
-import '../generated/white_board.pb.dart';
-import '../generated/todos.pb.dart';
+import '../../generated/white_board.pb.dart';
+import '../../generated/todos.pb.dart';
 
-import '../generated/fixture_objects.pb.dart';
-import '../generated/pipelines.pb.dart';
-import '../generated/merchant_on_chain.pb.dart';
+import '../../generated/fixture_objects.pb.dart';
+import '../../generated/pipelines.pb.dart';
+import '../../generated/merchant_on_chain.pb.dart';
 
-import '../util.dart';
-import 'dummy_defs.dart';
+import '../../util.dart';
+
+part 'dummy_defs.dart';
+part 'dummy_loader.dart';
+part 'dummy_repository.dart';
+
+// for domain
+part 'dummy_state.dart';
+part 'dummy_cubit.dart';
+
+// for list
+part 'dummy_todo_list_state.dart';
+part 'dummy_todos__todo_list_cubit.dart';
 
 
 
@@ -938,31 +953,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-    // final c = 0;
-    final c = DummyDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset todosUpdateTodo(
     String assocId,
     String title,
@@ -989,6 +979,31 @@ class DummyPreset extends PresetBase {
     String description
   ) async {
     todosUpdateTodo(assocId, title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+    // final c = 0;
+    final c = DummyDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -1114,6 +1129,29 @@ class DummyPreset extends PresetBase {
        
 
      
+  DummyPreset plsIsDone(
+    String plId
+  ) {
+    
+    var el= PipelinesCall()
+        ..isDone=StringValue(value: plId);    
+
+         
+    // final c = 0;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("plsIsDone", "Pipelines", pls, el, c);
+    return this;
+  }
+
+  Future<BoolValue> plsIsDoneCall(
+    String plId
+  ) async {
+    plsIsDone(plId);
+    var result= await dispatch();
+    return BoolValue.fromBuffer(result.values.last.slotData);
+  }
+
+     
   DummyPreset plsCreateArchivePl(
     String token,
     String assetName,
@@ -1147,29 +1185,6 @@ class DummyPreset extends PresetBase {
     plsCreateArchivePl(token, assetName, regionId, bindArgs);
     var result= await dispatch();
     return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  DummyPreset plsIsDone(
-    String plId
-  ) {
-    
-    var el= PipelinesCall()
-        ..isDone=StringValue(value: plId);    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("plsIsDone", "Pipelines", pls, el, c);
-    return this;
-  }
-
-  Future<BoolValue> plsIsDoneCall(
-    String plId
-  ) async {
-    plsIsDone(plId);
-    var result= await dispatch();
-    return BoolValue.fromBuffer(result.values.last.slotData);
   }
 
           
@@ -1210,26 +1225,26 @@ class DummyPreset extends PresetBase {
        
 
      
-  DummyPreset fixturesSomeNotes(
-    int total
+  DummyPreset fixturesEcho(
+    StructData input
   ) {
     
     var el= FixtureObjectsCall()
-        ..someNotes=Int32Value(value: total);    
+        ..echo=input;    
 
          
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
+    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
     return this;
   }
 
-  Future<Strings> fixturesSomeNotesCall(
-    int total
+  Future<StructData> fixturesEchoCall(
+    StructData input
   ) async {
-    fixturesSomeNotes(total);
+    fixturesEcho(input);
     var result= await dispatch();
-    return Strings.fromBuffer(result.values.last.slotData);
+    return StructData.fromBuffer(result.values.last.slotData);
   }
 
      
@@ -1254,26 +1269,26 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset fixturesEcho(
-    StructData input
+  DummyPreset fixturesSomeNotes(
+    int total
   ) {
     
     var el= FixtureObjectsCall()
-        ..echo=input;    
+        ..someNotes=Int32Value(value: total);    
 
          
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
+    pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
     return this;
   }
 
-  Future<StructData> fixturesEchoCall(
-    StructData input
+  Future<Strings> fixturesSomeNotesCall(
+    int total
   ) async {
-    fixturesEcho(input);
+    fixturesSomeNotes(total);
     var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
+    return Strings.fromBuffer(result.values.last.slotData);
   }
 
           

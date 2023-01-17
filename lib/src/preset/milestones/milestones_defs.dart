@@ -1,3 +1,5 @@
+part of 'milestones.dart';
+
 enum MilestonesMethodDefs {
     noname, // 0
     todosAddTodo,    // Todos.addTodo
@@ -15,15 +17,15 @@ enum MilestonesDomainDefs {
     // todos: [WorkEffortAuto, Todos]  
     todosPercentComplete,   // google.protobuf.Int64Value, Todos.getPercentComplete  
     todosDefaultDomain,   // domain.TodosProto, Todos.getTodosProto    
-    // enum values for list query   
+    // todos: enum values for list query   
     todosGetTodoProtoList,
 
-    // enum values for list muts   
-    todosAddTodoById,   
-    todosMarkComplete,   
+    // todos: enum values for list muts   
     todosAddTodo,   
     todosRemoveTodo,   
-    todosUpdateTodo,       
+    todosUpdateTodo,   
+    todosAddTodoById,   
+    todosMarkComplete,       
 }
 
 

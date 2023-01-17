@@ -15,11 +15,10 @@ import 'package:xcgrid_da/src/generated/extra/common_slot.pb.dart';
 import 'package:xcgrid_da/src/generated/google/protobuf/wrappers.pb.dart';
 import 'package:xcgrid_da/src/generated/note_domain.pb.dart';
 import 'package:xcgrid_da/src/generated/workeff_domain.pb.dart';
-import 'package:xcgrid_da/src/preset/dummy.dart';
-import 'package:xcgrid_da/src/preset/dummy_defs.dart';
-import 'package:xcgrid_da/src/preset/dummy_loader.dart';
+import 'package:xcgrid_da/src/preset/dummy/dummy.dart';
 import 'package:xcgrid_da/src/preset_base.dart';
 import 'package:xcgrid_da/src/preset_cubit.dart';
+import 'package:xcgrid_da/src/util.dart';
 import 'package:xcgrid_da/src/xcrpc_client.dart';
 
 Future<void> main(List<String> arguments) async {
@@ -100,65 +99,20 @@ Future<void> testCubitWithList(PresetDispatcherAgent pm) async {
   // get and update
   var firstItem=listCubit.state.items.first.id;
   print("get and update $firstItem");
-  await listCubit.todosUpdateTodo(firstItem, 'new title', 'new desc');
+  await listCubit.updateTodo(firstItem, 'new title', 'new desc');
   print("after update, state.items: ${listCubit.state}");
 
-  await listCubit.todosRemoveTodo(firstItem);
+  await listCubit.removeTodo(firstItem);
   print("wait a second");
   // sleep(const Duration(seconds: 1));
   await waitSecs(1);
   print("after remove, state.items: ${listCubit.state}");
 
-  await listCubit.todosAddTodo('another title', 'another desc');
+  await listCubit.addTodo('another title', 'another desc');
   print("after add, state.items: ${listCubit.state}");
 
   /// Close the `cubit` when it is no longer needed.
   cubit.close();
-}
-
-Future<void> waitSecs(int seconds) async {
-  await Future<void>.delayed(Duration(seconds: seconds));
-}
-
-abstract class PresetEvent {
-  const PresetEvent();
-}
-
-class LoadDummyPresetKeysEvent extends PresetEvent {
-  final DummyPresetKeys presetKeys;
-
-  LoadDummyPresetKeysEvent(this.presetKeys);
-}
-
-class AffectsEvent extends PresetEvent{
-  final SlotsWrapper slots;
-
-  AffectsEvent(this.slots);
-}
-
-class DummyRepository {
-  final PresetDispatcherAgent presetAgent;
-  DummyPreset? _preset;
-
-  DummyRepository(this.presetAgent);
-
-  final presetController = BehaviorSubject<PresetEvent>();
-
-  Future<DummyPreset?> loadPreset(
-      DummyPresetKeys presetKeys, String tag, String owner) async {
-    if (_preset != null) return _preset;
-
-    var requestKeys = presetKeys.asCallBuilderProto(tag, owner);
-    var plOr = await presetAgent.client.createPresetPl(requestKeys);
-    _preset = await presetAgent.loadDummyPreset(plOr);
-    emit(LoadDummyPresetKeysEvent(_preset!.keys));
-    return _preset;
-  }
-
-  void emit(PresetEvent e) {
-    presetController.add(e);
-  }
-  void dispose() => presetController.close();
 }
 
 class NoteCubit extends PresetCubit<NoteState> {
@@ -173,6 +127,7 @@ class NoteCubit extends PresetCubit<NoteState> {
       if (ev is AffectsEvent) {
         var trans=translateEventKeys(ev.slots.values.keys);
         print("receive affects event: $trans");
+        emit(state.copyWith(slots: ev.slots));
       }
     });
   }
@@ -393,7 +348,7 @@ class DummyTodoListState extends Equatable {
 }
 
 // 每个list-query一个cubit, 因为每个list-cubit实例都需要有自己的load状态.
-// TodoProto => TodoListCubit
+// TodoProto => TodoListCubit => DummyTodos_TodoListCubit
 class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   DummyTodoListCubit({required this.repository})
       : super(const DummyTodoListState.loading()) {
@@ -402,7 +357,7 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
         print("receive load-preset event: ${ev.presetKeys}");
         preset = DummyPreset(ev.presetKeys, presetAgent: repository.presetAgent);
         // unawaited(todosGetTodoProtoList());
-        await todosGetTodoProtoList();
+        await getTodoProtoList();
       }
     });
   }
@@ -419,7 +374,7 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   }
 
   // fetch list
-  Future<void> todosGetTodoProtoList() async {
+  Future<void> getTodoProtoList() async {
     // if(preset==null) return;
     try {
       final protoList = await preset!.todosGetTodoProtoListCall();
@@ -430,7 +385,7 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   }
 
   // remove item
-  Future<void> todosRemoveTodo(String assocId) async {
+  Future<void> removeTodo(String assocId) async {
     final deleteInProgress = state.items.map((item) {
       return item.id == assocId ? item.copyWith(isDeleting: true) : item;
     }).toList();
@@ -452,7 +407,7 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   }
 
   // add item
-  Future<void> todosAddTodo(String title, String description) async {
+  Future<void> addTodo(String title, String description) async {
     if(state.status==DummyTodoListStatus.success){
       preset!.todosAddTodo(title, description)
           .todosGetPercentComplete();
@@ -471,7 +426,7 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   }
 
   // modify item
-  Future<void> todosUpdateTodo(String assocId,
+  Future<void> updateTodo(String assocId,
       String title,
       String description) async {
     if(state.status==DummyTodoListStatus.success){

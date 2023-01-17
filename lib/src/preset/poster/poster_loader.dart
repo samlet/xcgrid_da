@@ -1,7 +1,4 @@
-// import '../agent/preset_manager.dart';
-import '../agent/preset_dispatcher.dart';
-import '../generated/google/protobuf/wrappers.pb.dart';
-import 'poster.dart';
+part of 'poster.dart';
 
 extension PosterLoader on PresetDispatcherAgent {
   Future<PosterPreset> loadPosterPreset(StringValue plOr) async {

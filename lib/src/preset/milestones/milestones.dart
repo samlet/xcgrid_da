@@ -1,30 +1,45 @@
+import 'dart:async';
+import 'package:bloc/bloc.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rxdart/rxdart.dart';
 
-import '../../common_proto.dart';
+import '../../../common_proto.dart';
 // import '../agent/preset_manager.dart';
-import '../agent/preset_dispatcher.dart';
-import '../generated/call_builder.pb.dart';
-import '../generated/preset_manager.pb.dart';
-import '../preset_base.dart';
-import '../xcrpc_client.dart';
+import '../../agent/preset_dispatcher.dart';
+import '../../generated/call_builder.pb.dart';
+import '../../generated/preset_manager.pb.dart';
+import '../../preset_base.dart';
+import '../../preset_cubit.dart';
+import '../../xcrpc_client.dart';
 
-import '../generated/note_domain.pb.dart';
-import '../generated/workeff_domain.pb.dart';
+import '../../generated/note_domain.pb.dart';
+import '../../generated/workeff_domain.pb.dart';
 
-import '../generated/note_co.pbgrpc.dart';
-import '../generated/note_auto.pb.dart';
-import '../generated/domain/note_defs.pbenum.dart';
+import '../../generated/note_co.pbgrpc.dart';
+import '../../generated/note_auto.pb.dart';
+import '../../generated/domain/note_defs.pbenum.dart';
 
-import '../generated/white_board.pb.dart';
-import '../generated/todos.pb.dart';
+import '../../generated/white_board.pb.dart';
+import '../../generated/todos.pb.dart';
 
-import '../generated/fixture_objects.pb.dart';
-import '../generated/pipelines.pb.dart';
-import '../generated/merchant_on_chain.pb.dart';
+import '../../generated/fixture_objects.pb.dart';
+import '../../generated/pipelines.pb.dart';
+import '../../generated/merchant_on_chain.pb.dart';
 
-import '../util.dart';
-import 'milestones_defs.dart';
+import '../../util.dart';
+
+part 'milestones_defs.dart';
+part 'milestones_loader.dart';
+part 'milestones_repository.dart';
+
+// for domain
+part 'milestones_state.dart';
+part 'milestones_cubit.dart';
+
+// for list
+part 'milestones_todo_list_state.dart';
+part 'milestones_todos__todo_list_cubit.dart';
 
 
 
@@ -144,31 +159,6 @@ class MilestonesPreset extends PresetBase {
   }
 
      
-  MilestonesPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-    // final c = 0;
-    final c = MilestonesDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   MilestonesPreset todosUpdateTodo(
     String assocId,
     String title,
@@ -195,6 +185,31 @@ class MilestonesPreset extends PresetBase {
     String description
   ) async {
     todosUpdateTodo(assocId, title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  MilestonesPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+    // final c = 0;
+    final c = MilestonesDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -320,27 +335,6 @@ class MilestonesPreset extends PresetBase {
        
 
      
-  MilestonesPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-    // final c = 0;
-    final c = MilestonesDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
-  }
-
-     
   MilestonesPreset fixturesSomeNotes(
     int total
   ) {
@@ -361,6 +355,27 @@ class MilestonesPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  MilestonesPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+    // final c = 0;
+    final c = MilestonesDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
           
