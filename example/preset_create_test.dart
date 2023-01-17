@@ -78,7 +78,7 @@ Future<void> testCubit(PresetDispatcherAgent pm) async {
 }
 
 Future<void> testCubitWithList(PresetDispatcherAgent pm) async {
-  initBlocObserver();
+  // initBlocObserver();
 
   var repos=DummyRepository(pm);
   var cubit = NoteCubit(repos);
@@ -93,11 +93,31 @@ Future<void> testCubitWithList(PresetDispatcherAgent pm) async {
   print("after set-cnt: ${cubit.state}");
 
   // await listCubit.todosGetTodoProtoList(); // 已经由事件触发自动加载
-  sleep(const Duration(seconds: 1));
+  // sleep(const Duration(seconds: 1));
+  await waitSecs(1);
   print("state.items: ${listCubit.state}");
+
+  // get and update
+  var firstItem=listCubit.state.items.first.id;
+  print("get and update $firstItem");
+  await listCubit.todosUpdateTodo(firstItem, 'new title', 'new desc');
+  print("after update, state.items: ${listCubit.state}");
+
+  await listCubit.todosRemoveTodo(firstItem);
+  print("wait a second");
+  // sleep(const Duration(seconds: 1));
+  await waitSecs(1);
+  print("after remove, state.items: ${listCubit.state}");
+
+  await listCubit.todosAddTodo('another title', 'another desc');
+  print("after add, state.items: ${listCubit.state}");
 
   /// Close the `cubit` when it is no longer needed.
   cubit.close();
+}
+
+Future<void> waitSecs(int seconds) async {
+  await Future<void>.delayed(Duration(seconds: seconds));
 }
 
 abstract class PresetEvent {
@@ -148,7 +168,22 @@ class NoteCubit extends PresetCubit<NoteState> {
 
   // NoteCubit(super.initialState, super.presetAgent);
   NoteCubit(this.presetRepository)
-      : super(NoteState(), presetRepository.presetAgent);
+      : super(NoteState(), presetRepository.presetAgent){
+    _presetStatusSubscription = presetRepository.presetController.listen((ev) async{
+      if (ev is AffectsEvent) {
+        var trans=translateEventKeys(ev.slots.values.keys);
+        print("receive affects event: $trans");
+      }
+    });
+  }
+
+  // PresetEvent
+  late StreamSubscription<PresetEvent> _presetStatusSubscription;
+  @override
+  Future<void> close() {
+    _presetStatusSubscription.cancel();
+    return super.close();
+  }
 
   Future<void> loadPreset(
       DummyPresetKeys presetKeys, String tag, String owner) async {
@@ -210,6 +245,11 @@ class NoteCubit extends PresetCubit<NoteState> {
       print("fail: $e");
       emit(state);
     }
+  }
+
+  List<DummyDomainDefs> translateEventKeys(Iterable<int> keys) {
+    return keys.map((e) => DummyDomainDefs.values.elementAt(e))
+        .toList();
   }
 }
 
@@ -357,11 +397,12 @@ class DummyTodoListState extends Equatable {
 class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   DummyTodoListCubit({required this.repository})
       : super(const DummyTodoListState.loading()) {
-    _presetStatusSubscription = repository.presetController.listen((ev) {
+    _presetStatusSubscription = repository.presetController.listen((ev) async{
       if (ev is LoadDummyPresetKeysEvent) {
         print("receive load-preset event: ${ev.presetKeys}");
         preset = DummyPreset(ev.presetKeys, presetAgent: repository.presetAgent);
-        unawaited(todosGetTodoProtoList());
+        // unawaited(todosGetTodoProtoList());
+        await todosGetTodoProtoList();
       }
     });
   }
@@ -389,19 +430,19 @@ class DummyTodoListCubit extends Cubit<DummyTodoListState> {
   }
 
   // remove item
-  Future<void> todosRemoveTodo(String id) async {
+  Future<void> todosRemoveTodo(String assocId) async {
     final deleteInProgress = state.items.map((item) {
-      return item.id == id ? item.copyWith(isDeleting: true) : item;
+      return item.id == assocId ? item.copyWith(isDeleting: true) : item;
     }).toList();
 
     emit(DummyTodoListState.success(deleteInProgress));
 
-    preset!.todosRemoveTodo(id)
+    preset!.todosRemoveTodo(assocId)
         .todosGetPercentComplete();
     unawaited(
       preset!.dispatch().then((slots) {
         final deleteSuccess = List.of(state.items)
-          ..removeWhere((element) => element.id == id);
+          ..removeWhere((element) => element.id == assocId);
         emit(DummyTodoListState.success(deleteSuccess));
 
         // notify domain cubit
