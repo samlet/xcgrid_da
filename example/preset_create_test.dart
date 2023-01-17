@@ -82,7 +82,7 @@ Future<void> testCubitWithList(PresetDispatcherAgent pm) async {
 
   var repos=DummyRepository(pm);
   var cubit = NoteCubit(repos);
-  var listCubit=TodoListCubit(repository: repos);
+  var listCubit=DummyTodoListCubit(repository: repos);
   print("init: ${cubit.state}");
 
   var presetKeys =
@@ -108,6 +108,12 @@ class LoadDummyPresetKeysEvent extends PresetEvent {
   final DummyPresetKeys presetKeys;
 
   LoadDummyPresetKeysEvent(this.presetKeys);
+}
+
+class AffectsEvent extends PresetEvent{
+  final SlotsWrapper slots;
+
+  AffectsEvent(this.slots);
 }
 
 class DummyRepository {
@@ -302,9 +308,9 @@ class NoteState extends Equatable {
 
 // list muts --------
 
-// TodoProto => TodoItem
-class TodoItem extends Equatable {
-  const TodoItem({
+// TodoProto => {builder}TodoItem
+class DummyTodoItem extends Equatable {
+  const DummyTodoItem({
     required this.value,
     this.isDeleting = false,
   });
@@ -313,8 +319,8 @@ class TodoItem extends Equatable {
   final TodoProto value;
   final bool isDeleting;
 
-  TodoItem copyWith({TodoProto? value, bool? isDeleting}) {
-    return TodoItem(
+  DummyTodoItem copyWith({TodoProto? value, bool? isDeleting}) {
+    return DummyTodoItem(
       value: value ?? this.value,
       isDeleting: isDeleting ?? this.isDeleting,
     );
@@ -324,23 +330,23 @@ class TodoItem extends Equatable {
   List<Object> get props => [id, value, isDeleting];
 }
 
-enum TodoListStatus { loading, success, failure }
+enum DummyTodoListStatus { loading, success, failure }
 
-class TodoListState extends Equatable {
-  const TodoListState._({
-    this.status = TodoListStatus.loading,
-    this.items = const <TodoItem>[],
+class DummyTodoListState extends Equatable {
+  const DummyTodoListState._({
+    this.status = DummyTodoListStatus.loading,
+    this.items = const <DummyTodoItem>[],
   });
 
-  const TodoListState.loading() : this._();
+  const DummyTodoListState.loading() : this._();
 
-  const TodoListState.success(List<TodoItem> items)
-      : this._(status: TodoListStatus.success, items: items);
+  const DummyTodoListState.success(List<DummyTodoItem> items)
+      : this._(status: DummyTodoListStatus.success, items: items);
 
-  const TodoListState.failure() : this._(status: TodoListStatus.failure);
+  const DummyTodoListState.failure() : this._(status: DummyTodoListStatus.failure);
 
-  final TodoListStatus status;
-  final List<TodoItem> items;
+  final DummyTodoListStatus status;
+  final List<DummyTodoItem> items;
 
   @override
   List<Object> get props => [status, items];
@@ -348,9 +354,9 @@ class TodoListState extends Equatable {
 
 // 每个list-query一个cubit, 因为每个list-cubit实例都需要有自己的load状态.
 // TodoProto => TodoListCubit
-class TodoListCubit extends Cubit<TodoListState> {
-  TodoListCubit({required this.repository})
-      : super(const TodoListState.loading()) {
+class DummyTodoListCubit extends Cubit<DummyTodoListState> {
+  DummyTodoListCubit({required this.repository})
+      : super(const DummyTodoListState.loading()) {
     _presetStatusSubscription = repository.presetController.listen((ev) {
       if (ev is LoadDummyPresetKeysEvent) {
         print("receive load-preset event: ${ev.presetKeys}");
@@ -376,9 +382,9 @@ class TodoListCubit extends Cubit<TodoListState> {
     // if(preset==null) return;
     try {
       final protoList = await preset!.todosGetTodoProtoListCall();
-      emit(TodoListState.success(asItems(protoList)));
+      emit(DummyTodoListState.success(asItems(protoList)));
     } on Exception {
-      emit(const TodoListState.failure());
+      emit(const DummyTodoListState.failure());
     }
   }
 
@@ -388,19 +394,76 @@ class TodoListCubit extends Cubit<TodoListState> {
       return item.id == id ? item.copyWith(isDeleting: true) : item;
     }).toList();
 
-    emit(TodoListState.success(deleteInProgress));
+    emit(DummyTodoListState.success(deleteInProgress));
 
+    preset!.todosRemoveTodo(id)
+        .todosGetPercentComplete();
     unawaited(
-      preset!.todosRemoveTodoCall(id).then((_) {
+      preset!.dispatch().then((slots) {
         final deleteSuccess = List.of(state.items)
           ..removeWhere((element) => element.id == id);
-        emit(TodoListState.success(deleteSuccess));
+        emit(DummyTodoListState.success(deleteSuccess));
+
+        // notify domain cubit
+        repository.emit(AffectsEvent(SlotsWrapper(slots)));
       }),
     );
   }
 
-  List<TodoItem> asItems(TodoProtoList protoList) {
-    return protoList.items.map((e) => TodoItem(value: e)).toList();
+  // add item
+  Future<void> todosAddTodo(String title, String description) async {
+    if(state.status==DummyTodoListStatus.success){
+      preset!.todosAddTodo(title, description)
+          .todosGetPercentComplete();
+      var slots = await preset!.dispatch();
+      var wrapper = SlotsWrapper(slots);
+
+      TodoProto? result = wrapper.asProto(
+          DummyDomainDefs.todosAddTodo.index,
+          TodoProto.fromBuffer);
+      emit(DummyTodoListState.success([...state.items,
+        DummyTodoItem(value: result!)]));
+
+      // notify domain cubit
+      repository.emit(AffectsEvent(wrapper));
+    }
+  }
+
+  // modify item
+  Future<void> todosUpdateTodo(String assocId,
+      String title,
+      String description) async {
+    if(state.status==DummyTodoListStatus.success){
+      // update remote item
+      preset!.todosUpdateTodo(assocId, title, description)
+          .todosGetPercentComplete();
+      var slots = await preset!.dispatch();
+      var wrapper = SlotsWrapper(slots);
+
+      TodoProto? result = wrapper.asProto(
+          DummyDomainDefs.todosUpdateTodo.index,
+          TodoProto.fromBuffer);
+
+      // update local items
+      final items = [...state.items];
+      final itemIndex = items.indexWhere((t) => t.id == assocId);
+      if (itemIndex >= 0) {
+        items[itemIndex] = DummyTodoItem(value: result!);
+      } else {
+        print("error, not found $assocId in items");
+        return;
+      }
+
+      emit(DummyTodoListState.success(items));
+
+      // notify domain cubit
+      repository.emit(AffectsEvent(wrapper));
+    }
+  }
+
+  List<DummyTodoItem> asItems(TodoProtoList protoList) {
+    return protoList.items.map((e) => DummyTodoItem(value: e)).toList();
   }
 }
+
 
