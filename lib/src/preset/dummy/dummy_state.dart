@@ -14,8 +14,8 @@ class DummyState extends Equatable {
   // Fields for note
   final BuffersData noteClob;
   final BuffersData noteImages;
-  final BuffersData noteAttachments;
   final StructData noteAvailablePersistSlots;
+  final BuffersData noteAttachments;
   final String noteTitle;
   final String noteContent;
   final String noteAuthor;
@@ -23,19 +23,19 @@ class DummyState extends Equatable {
   // Fields for memo
   final BuffersData memoClob;
   final BuffersData memoImages;
-  final BuffersData memoAttachments;
   final StructData memoAvailablePersistSlots;
+  final BuffersData memoAttachments;
   final String memoTitle;
   final String memoContent;
   final String memoAuthor;
   
   // Fields for todos
   final int todosPercentComplete;
-  final String todosDescription;
-  final String todosName;
   final String todosTypeId;
   final String todosId;
   final DateTime todosLastStatusUpdate;
+  final String todosName;
+  final String todosDescription;
   final String todosStatus;
   
 
@@ -43,39 +43,39 @@ class DummyState extends Equatable {
     this.status = DummyStatus.initial,
     BuffersData? noteClob,
     BuffersData? noteImages,
-    BuffersData? noteAttachments,
     StructData? noteAvailablePersistSlots,
+    BuffersData? noteAttachments,
     this.noteTitle = '',
     this.noteContent = '',
     this.noteAuthor = '',   
     
     BuffersData? memoClob,
     BuffersData? memoImages,
-    BuffersData? memoAttachments,
     StructData? memoAvailablePersistSlots,
+    BuffersData? memoAttachments,
     this.memoTitle = '',
     this.memoContent = '',
     this.memoAuthor = '',   
     
     this.todosPercentComplete = 0,
-    this.todosDescription = '',
-    this.todosName = '',
     this.todosTypeId = '',
     this.todosId = '',
     DateTime? todosLastStatusUpdate,
+    this.todosName = '',
+    this.todosDescription = '',
     this.todosStatus = '',   
     
     DummyPresetKeys? presetKeys
   }):
       noteClob = noteClob??BuffersData.getDefault(),
       noteImages = noteImages??BuffersData.getDefault(),
-      noteAttachments = noteAttachments??BuffersData.getDefault(),
-      noteAvailablePersistSlots = noteAvailablePersistSlots??StructData.getDefault(),   
+      noteAvailablePersistSlots = noteAvailablePersistSlots??StructData.getDefault(),
+      noteAttachments = noteAttachments??BuffersData.getDefault(),   
       
       memoClob = memoClob??BuffersData.getDefault(),
       memoImages = memoImages??BuffersData.getDefault(),
-      memoAttachments = memoAttachments??BuffersData.getDefault(),
-      memoAvailablePersistSlots = memoAvailablePersistSlots??StructData.getDefault(),   
+      memoAvailablePersistSlots = memoAvailablePersistSlots??StructData.getDefault(),
+      memoAttachments = memoAttachments??BuffersData.getDefault(),   
       
       todosLastStatusUpdate = todosLastStatusUpdate??DateTime(0),   
       
@@ -86,26 +86,26 @@ class DummyState extends Equatable {
     SlotsWrapper? slots}) {
     BuffersData? noteClob;
     BuffersData? noteImages;
-    BuffersData? noteAttachments;
     StructData? noteAvailablePersistSlots;
+    BuffersData? noteAttachments;
     String? noteTitle;
     String? noteContent;
     String? noteAuthor;
     
     BuffersData? memoClob;
     BuffersData? memoImages;
-    BuffersData? memoAttachments;
     StructData? memoAvailablePersistSlots;
+    BuffersData? memoAttachments;
     String? memoTitle;
     String? memoContent;
     String? memoAuthor;
     
     int? todosPercentComplete;
-    String? todosDescription;
-    String? todosName;
     String? todosTypeId;
     String? todosId;
     DateTime? todosLastStatusUpdate;
+    String? todosName;
+    String? todosDescription;
     String? todosStatus;
     
 
@@ -115,9 +115,9 @@ class DummyState extends Equatable {
         DummyDomainDefs.notePersistSlots.index, BuffersMap.fromBuffer);    
     if (notePersistSlots != null) {
       
-      noteAttachments = notePersistSlots.values['attachments'];
+      noteImages = notePersistSlots.values['images'];
       noteClob = notePersistSlots.values['clob'];
-      noteImages = notePersistSlots.values['images'];  
+      noteAttachments = notePersistSlots.values['attachments'];  
          
     }
       
@@ -125,9 +125,9 @@ class DummyState extends Equatable {
         DummyDomainDefs.noteDefaultDomain.index, NoteProto.fromBuffer);    
     if (noteDefaultDomain != null) {
       
-      noteAuthor = noteDefaultDomain.author;
       noteTitle = noteDefaultDomain.title;
       noteContent = noteDefaultDomain.content;
+      noteAuthor = noteDefaultDomain.author;
          
     }
         
@@ -137,9 +137,9 @@ class DummyState extends Equatable {
         DummyDomainDefs.memoPersistSlots.index, BuffersMap.fromBuffer);    
     if (memoPersistSlots != null) {
       
-      memoAttachments = memoPersistSlots.values['attachments'];
+      memoImages = memoPersistSlots.values['images'];
       memoClob = memoPersistSlots.values['clob'];
-      memoImages = memoPersistSlots.values['images'];  
+      memoAttachments = memoPersistSlots.values['attachments'];  
          
     }
       
@@ -147,9 +147,9 @@ class DummyState extends Equatable {
         DummyDomainDefs.memoDefaultDomain.index, NoteProto.fromBuffer);    
     if (memoDefaultDomain != null) {
       
-      memoAuthor = memoDefaultDomain.author;
       memoTitle = memoDefaultDomain.title;
       memoContent = memoDefaultDomain.content;
+      memoAuthor = memoDefaultDomain.author;
          
     }
         
@@ -159,12 +159,12 @@ class DummyState extends Equatable {
         DummyDomainDefs.todosDefaultDomain.index, TodosProto.fromBuffer);    
     if (todosDefaultDomain != null) {
       
-      todosPercentComplete = todosDefaultDomain.percentComplete.toInt();
-      todosDescription = todosDefaultDomain.description;
-      todosName = todosDefaultDomain.name;
       todosTypeId = todosDefaultDomain.typeId;
       todosId = todosDefaultDomain.id;
       todosLastStatusUpdate = todosDefaultDomain.lastStatusUpdate.dt;
+      todosPercentComplete = todosDefaultDomain.percentComplete.toInt();
+      todosName = todosDefaultDomain.name;
+      todosDescription = todosDefaultDomain.description;
       todosStatus = todosDefaultDomain.status;
          
     }
@@ -174,14 +174,14 @@ class DummyState extends Equatable {
     // From scalars  
     noteClob = slots?.asBuffers(DummyDomainDefs.noteClob.index) ?? noteClob;  
     noteImages = slots?.asBuffers(DummyDomainDefs.noteImages.index) ?? noteImages;  
-    noteAttachments = slots?.asBuffers(DummyDomainDefs.noteAttachments.index) ?? noteAttachments;  
     noteAvailablePersistSlots = slots?.asStruct(DummyDomainDefs.noteAvailablePersistSlots.index) ?? noteAvailablePersistSlots;  
+    noteAttachments = slots?.asBuffers(DummyDomainDefs.noteAttachments.index) ?? noteAttachments;  
     noteTitle = slots?.asString(DummyDomainDefs.noteTitle.index) ?? noteTitle;  
     noteContent = slots?.asString(DummyDomainDefs.noteContent.index) ?? noteContent;  
     memoClob = slots?.asBuffers(DummyDomainDefs.memoClob.index) ?? memoClob;  
     memoImages = slots?.asBuffers(DummyDomainDefs.memoImages.index) ?? memoImages;  
-    memoAttachments = slots?.asBuffers(DummyDomainDefs.memoAttachments.index) ?? memoAttachments;  
     memoAvailablePersistSlots = slots?.asStruct(DummyDomainDefs.memoAvailablePersistSlots.index) ?? memoAvailablePersistSlots;  
+    memoAttachments = slots?.asBuffers(DummyDomainDefs.memoAttachments.index) ?? memoAttachments;  
     memoTitle = slots?.asString(DummyDomainDefs.memoTitle.index) ?? memoTitle;  
     memoContent = slots?.asString(DummyDomainDefs.memoContent.index) ?? memoContent;  
     todosPercentComplete = slots?.asLong(DummyDomainDefs.todosPercentComplete.index) ?? todosPercentComplete;
@@ -191,26 +191,26 @@ class DummyState extends Equatable {
       presetKeys: presetKeys ?? this.presetKeys,
       noteClob: noteClob ?? this.noteClob,
       noteImages: noteImages ?? this.noteImages,
-      noteAttachments: noteAttachments ?? this.noteAttachments,
       noteAvailablePersistSlots: noteAvailablePersistSlots ?? this.noteAvailablePersistSlots,
+      noteAttachments: noteAttachments ?? this.noteAttachments,
       noteTitle: noteTitle ?? this.noteTitle,
       noteContent: noteContent ?? this.noteContent,
       noteAuthor: noteAuthor ?? this.noteAuthor,
       
       memoClob: memoClob ?? this.memoClob,
       memoImages: memoImages ?? this.memoImages,
-      memoAttachments: memoAttachments ?? this.memoAttachments,
       memoAvailablePersistSlots: memoAvailablePersistSlots ?? this.memoAvailablePersistSlots,
+      memoAttachments: memoAttachments ?? this.memoAttachments,
       memoTitle: memoTitle ?? this.memoTitle,
       memoContent: memoContent ?? this.memoContent,
       memoAuthor: memoAuthor ?? this.memoAuthor,
       
       todosPercentComplete: todosPercentComplete ?? this.todosPercentComplete,
-      todosDescription: todosDescription ?? this.todosDescription,
-      todosName: todosName ?? this.todosName,
       todosTypeId: todosTypeId ?? this.todosTypeId,
       todosId: todosId ?? this.todosId,
       todosLastStatusUpdate: todosLastStatusUpdate ?? this.todosLastStatusUpdate,
+      todosName: todosName ?? this.todosName,
+      todosDescription: todosDescription ?? this.todosDescription,
       todosStatus: todosStatus ?? this.todosStatus,
       
     );
@@ -222,24 +222,24 @@ class DummyState extends Equatable {
         presetKeys,
         noteClob,
         noteImages,
-        noteAttachments,
         noteAvailablePersistSlots,
+        noteAttachments,
         noteTitle,
         noteContent,
         noteAuthor,
         memoClob,
         memoImages,
-        memoAttachments,
         memoAvailablePersistSlots,
+        memoAttachments,
         memoTitle,
         memoContent,
         memoAuthor,
         todosPercentComplete,
-        todosDescription,
-        todosName,
         todosTypeId,
         todosId,
         todosLastStatusUpdate,
+        todosName,
+        todosDescription,
         todosStatus,
       ];
 }

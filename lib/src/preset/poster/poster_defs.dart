@@ -39,18 +39,18 @@ enum PosterDomainDefs {
     // note: [NoteAuto, NoteCo]  
     noteClob,   // proto.BuffersData, NoteAuto.getClob  
     noteImages,   // proto.BuffersData, NoteAuto.getImages  
-    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     noteTitle,   // google.protobuf.StringValue, NoteCo.name  
     noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
     noteDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
     // memo: [NoteAuto, WhiteBoard]  
     memoClob,   // proto.BuffersData, NoteAuto.getClob  
     memoImages,   // proto.BuffersData, NoteAuto.getImages  
-    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     memoLastContent,   // google.protobuf.StringValue, WhiteBoard.getLastContent  
     memoLastAuthor,   // google.protobuf.StringValue, WhiteBoard.getLastAuthor  
     memoContentAndAuthor,   // domain.ContentAndAuthor, WhiteBoard.getContentAndAuthor    
