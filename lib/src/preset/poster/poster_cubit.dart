@@ -51,6 +51,15 @@ class PosterCubit extends PresetCubit<PosterState> {
   }
 
     
+  Future<void> noteUpdateNote(
+      String content,
+      String author   
+  ) async {
+    await mut(() => preset!.noteUpdateNote(content, author)
+        .noteGetNoteProto()
+    );
+  }
+    
   Future<void> noteSetClob(
       BuffersData data   
   ) async {
@@ -64,15 +73,6 @@ class PosterCubit extends PresetCubit<PosterState> {
   ) async {
     await mut(() => preset!.noteSetImages(data)
         .noteGetImages()
-    );
-  }
-    
-  Future<void> noteUpdateNote(
-      String content,
-      String author   
-  ) async {
-    await mut(() => preset!.noteUpdateNote(content, author)
-        .noteGetNoteProto()
     );
   }
     
@@ -116,6 +116,15 @@ class PosterCubit extends PresetCubit<PosterState> {
   }
       
     
+  Future<void> memoUpdateNote(
+      String content,
+      String author   
+  ) async {
+    await mut(() => preset!.memoUpdateNote(content, author)
+        .memoGetContentAndAuthor()
+    );
+  }
+    
   Future<void> memoSetClob(
       BuffersData data   
   ) async {
@@ -129,15 +138,6 @@ class PosterCubit extends PresetCubit<PosterState> {
   ) async {
     await mut(() => preset!.memoSetImages(data)
         .memoGetImages()
-    );
-  }
-    
-  Future<void> memoUpdateNote(
-      String content,
-      String author   
-  ) async {
-    await mut(() => preset!.memoUpdateNote(content, author)
-        .memoGetContentAndAuthor()
     );
   }
     

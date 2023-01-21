@@ -1,5 +1,4 @@
 part of 'milestones.dart';
-
 enum MilestonesMethodDefs {
     noname, // 0
     todosAddTodo,    // Todos.addTodo
@@ -25,7 +24,8 @@ enum MilestonesDomainDefs {
     todosRemoveTodo,   
     todosUpdateTodo,   
     todosAddTodoById,   
-    todosMarkComplete,       
+    todosMarkComplete,           
+
 }
 
 

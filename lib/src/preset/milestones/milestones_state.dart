@@ -11,25 +11,25 @@ extension MilestonesStatusX on MilestonesStatus {
 class MilestonesState extends Equatable {
   final MilestonesStatus status;
   final MilestonesPresetKeys presetKeys;
-  // Fields for todos
-  final int todosPercentComplete;
-  final String todosTypeId;
-  final String todosId;
+  // Fields for todos   
+  final int todosPercentComplete;   
+  final String todosDescription;   
+  final String todosName;   
+  final String todosId;   
+  final String todosStatus;   
+  final String todosTypeId;   
   final DateTime todosLastStatusUpdate;
-  final String todosName;
-  final String todosDescription;
-  final String todosStatus;
   
 
   MilestonesState({
     this.status = MilestonesStatus.initial,
     this.todosPercentComplete = 0,
-    this.todosTypeId = '',
-    this.todosId = '',
-    DateTime? todosLastStatusUpdate,
-    this.todosName = '',
     this.todosDescription = '',
-    this.todosStatus = '',   
+    this.todosName = '',
+    this.todosId = '',
+    this.todosStatus = '',
+    this.todosTypeId = '',
+    DateTime? todosLastStatusUpdate,   
     
     MilestonesPresetKeys? presetKeys
   }):
@@ -41,12 +41,12 @@ class MilestonesState extends Equatable {
     MilestonesPresetKeys? presetKeys,
     SlotsWrapper? slots}) {
     int? todosPercentComplete;
-    String? todosTypeId;
-    String? todosId;
-    DateTime? todosLastStatusUpdate;
-    String? todosName;
     String? todosDescription;
+    String? todosName;
+    String? todosId;
     String? todosStatus;
+    String? todosTypeId;
+    DateTime? todosLastStatusUpdate;
     
 
     // From complicated fields
@@ -55,13 +55,13 @@ class MilestonesState extends Equatable {
         MilestonesDomainDefs.todosDefaultDomain.index, TodosProto.fromBuffer);    
     if (todosDefaultDomain != null) {
       
-      todosTypeId = todosDefaultDomain.typeId;
-      todosId = todosDefaultDomain.id;
-      todosLastStatusUpdate = todosDefaultDomain.lastStatusUpdate.dt;
-      todosPercentComplete = todosDefaultDomain.percentComplete.toInt();
-      todosName = todosDefaultDomain.name;
       todosDescription = todosDefaultDomain.description;
+      todosName = todosDefaultDomain.name;
+      todosPercentComplete = todosDefaultDomain.percentComplete.toInt();
+      todosId = todosDefaultDomain.id;
       todosStatus = todosDefaultDomain.status;
+      todosTypeId = todosDefaultDomain.typeId;
+      todosLastStatusUpdate = todosDefaultDomain.lastStatusUpdate.dt;
          
     }
         
@@ -74,12 +74,12 @@ class MilestonesState extends Equatable {
       status: status ?? this.status,
       presetKeys: presetKeys ?? this.presetKeys,
       todosPercentComplete: todosPercentComplete ?? this.todosPercentComplete,
-      todosTypeId: todosTypeId ?? this.todosTypeId,
-      todosId: todosId ?? this.todosId,
-      todosLastStatusUpdate: todosLastStatusUpdate ?? this.todosLastStatusUpdate,
-      todosName: todosName ?? this.todosName,
       todosDescription: todosDescription ?? this.todosDescription,
+      todosName: todosName ?? this.todosName,
+      todosId: todosId ?? this.todosId,
       todosStatus: todosStatus ?? this.todosStatus,
+      todosTypeId: todosTypeId ?? this.todosTypeId,
+      todosLastStatusUpdate: todosLastStatusUpdate ?? this.todosLastStatusUpdate,
       
     );
   }
@@ -89,12 +89,12 @@ class MilestonesState extends Equatable {
         status, 
         presetKeys,
         todosPercentComplete,
-        todosTypeId,
-        todosId,
-        todosLastStatusUpdate,
-        todosName,
         todosDescription,
+        todosName,
+        todosId,
         todosStatus,
+        todosTypeId,
+        todosLastStatusUpdate,
       ];
 }
 

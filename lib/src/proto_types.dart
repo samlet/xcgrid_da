@@ -26,6 +26,10 @@ extension DateTimeEx on Timestamp{
   DateTime get dt => toDateTime();
 }
 
+extension StringProto on String{
+  StringValue get proto => StringValue(value: this);
+}
+
 Currency asCurrency(String numVal) {
   return Currency(value: numVal, currencyUomId: "CNY");
 }

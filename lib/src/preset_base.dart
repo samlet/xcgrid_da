@@ -41,6 +41,12 @@ class PresetBase {
       ..sagas.addAll(sagas);
   }
 
+  CallBuilderProto build(){
+    var proto=toProto();
+    reset();
+    return proto;
+  }
+
   void pushCall(String callNamePrefix, String dispCo, BundleKey key,
       GeneratedMessage callMsg, int domainFieldNumber) {
     var call = CallProto()
@@ -62,14 +68,15 @@ class PresetBase {
   }
 
   Future<SlotList> dispatch() async {
-    var result= await presetAgent.dispatch(plKey.id, toProto());
-    reset();
+    var result= await presetAgent.dispatch(plKey.id, build());
     return result;
   }
 
   void reset(){
     currentState = BuilderState.bsCall;
     callNumber = 1;
+    _name = slugId();
+
     calls.clear();
     sagas.clear();
   }

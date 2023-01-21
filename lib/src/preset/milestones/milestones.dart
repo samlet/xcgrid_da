@@ -99,6 +99,11 @@ class MilestonesPreset extends PresetBase {
       : super(presetAgent ?? XcClient().presetDispatcherAgent(),
             keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
 
+  MilestonesPreset saga(){
+    currentState=BuilderState.bsSaga;
+    return this;
+  }
+
   
   
   TodosHandle get todosWithTodosHandle {

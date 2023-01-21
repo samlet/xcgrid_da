@@ -109,6 +109,11 @@ class PosterPreset extends PresetBase {
       : super(presetAgent ?? XcClient().presetDispatcherAgent(),
             keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
 
+  PosterPreset saga(){
+    currentState=BuilderState.bsSaga;
+    return this;
+  }
+
   
   
   NoteAutoHandle get noteWithNoteAutoHandle {

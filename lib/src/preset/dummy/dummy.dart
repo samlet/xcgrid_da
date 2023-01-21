@@ -1,33 +1,13 @@
-import 'dart:async';
-import 'package:bloc/bloc.dart';
-import 'package:protobuf/protobuf.dart';
-import 'package:equatable/equatable.dart';
-import 'package:rxdart/rxdart.dart';
-
-import '../../../common_proto.dart';
-// import '../agent/preset_manager.dart';
-import '../../agent/preset_dispatcher.dart';
+import 'package:xcgrid_da/preset_common.dart';
 import '../../generated/call_builder.pb.dart';
-import '../../generated/preset_manager.pb.dart';
-import '../../preset_base.dart';
-import '../../preset_cubit.dart';
-import '../../xcrpc_client.dart';
-
 import '../../generated/note_domain.pb.dart';
 import '../../generated/workeff_domain.pb.dart';
-
-import '../../generated/note_co.pbgrpc.dart';
+import '../../generated/note_co.pb.dart';
 import '../../generated/note_auto.pb.dart';
-import '../../generated/domain/note_defs.pbenum.dart';
-
-import '../../generated/white_board.pb.dart';
-import '../../generated/todos.pb.dart';
-
-import '../../generated/fixture_objects.pb.dart';
 import '../../generated/pipelines.pb.dart';
+import '../../generated/fixture_objects.pb.dart';
+import '../../generated/todos.pb.dart';
 import '../../generated/merchant_on_chain.pb.dart';
-
-import '../../util.dart';
 
 part 'dummy_defs.dart';
 part 'dummy_loader.dart';
@@ -148,6 +128,11 @@ class DummyPreset extends PresetBase {
       {PresetDispatcherAgent? presetAgent})
       : super(presetAgent ?? XcClient().presetDispatcherAgent(),
             keys.plKey ?? BundleKey(regionId: 'default', id: slugId()));
+
+  DummyPreset saga(){
+    currentState=BuilderState.bsSaga;
+    return this;
+  }
 
   
   
@@ -1225,29 +1210,6 @@ class DummyPreset extends PresetBase {
        
 
      
-  DummyPreset fixturesEcho(
-    StructData input
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..echo=input;    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<StructData> fixturesEchoCall(
-    StructData input
-  ) async {
-    fixturesEcho(input);
-    var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset fixturesOneNote(
   ) {
     
@@ -1289,6 +1251,29 @@ class DummyPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset fixturesEcho(
+    StructData input
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..echo=input;    
+
+         
+    // final c = 0;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<StructData> fixturesEchoCall(
+    StructData input
+  ) async {
+    fixturesEcho(input);
+    var result= await dispatch();
+    return StructData.fromBuffer(result.values.last.slotData);
   }
 
           
