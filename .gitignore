@@ -11,3 +11,5 @@ pubspec.lock
 *.iml
 lib/src/generated/
 lib/src/agent/
+lib/src/webagents/
+#lib/*_on_web.dart
