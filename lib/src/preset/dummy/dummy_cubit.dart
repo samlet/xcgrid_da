@@ -37,8 +37,11 @@ class DummyCubit extends PresetCubit<DummyState> {
 
       // Init state with loaders
       preset!  
+        .noteGetNote()  
         .noteGetNoteProto()  
+        .memoGetNote()  
         .memoGetNoteProto()  
+        .todosGetWorkEffort()  
         .todosGetTodosProto();
 
       var slots = await preset!.dispatch();
@@ -52,31 +55,6 @@ class DummyCubit extends PresetCubit<DummyState> {
   }
 
     
-  Future<void> noteUpdateNote(
-      String content,
-      String author   
-  ) async {
-    await mut(() => preset!.noteUpdateNote(content, author)
-        .noteGetNoteProto()
-    );
-  }
-    
-  Future<void> noteSetClob(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.noteSetClob(data)
-        .noteGetClob()
-    );
-  }
-    
-  Future<void> noteSetImages(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.noteSetImages(data)
-        .noteGetImages()
-    );
-  }
-    
   Future<void> noteUpdateNoteContent(
       String content   
   ) async {
@@ -85,19 +63,36 @@ class DummyCubit extends PresetCubit<DummyState> {
     );
   }
     
-  Future<void> noteSetAttachments(
+  Future<void> noteSetClobSlot(
       BuffersData data   
   ) async {
-    await mut(() => preset!.noteSetAttachments(data)
-        .noteGetAttachments()
+    await mut(() => preset!.noteSetClobSlot(data)
+        .noteGetClobSlot()
     );
   }
     
-  Future<void> noteSetContent(
-      String cnt   
+  Future<void> noteSetImagesSlot(
+      BuffersData data   
   ) async {
-    await mut(() => preset!.noteSetContent(cnt)
-        .noteGetContent()
+    await mut(() => preset!.noteSetImagesSlot(data)
+        .noteGetImagesSlot()
+    );
+  }
+    
+  Future<void> noteSetAttachmentsSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.noteSetAttachmentsSlot(data)
+        .noteGetAttachmentsSlot()
+    );
+  }
+    
+  Future<void> noteUpdateNote(
+      String content,
+      String author   
+  ) async {
+    await mut(() => preset!.noteUpdateNote(content, author)
+        .noteGetNote()
     );
   }
     
@@ -115,32 +110,15 @@ class DummyCubit extends PresetCubit<DummyState> {
         .noteGetContent()
     );
   }
+    
+  Future<void> noteSetContent(
+      String cnt   
+  ) async {
+    await mut(() => preset!.noteSetContent(cnt)
+        .noteGetContent()
+    );
+  }
       
-    
-  Future<void> memoUpdateNote(
-      String content,
-      String author   
-  ) async {
-    await mut(() => preset!.memoUpdateNote(content, author)
-        .memoGetNoteProto()
-    );
-  }
-    
-  Future<void> memoSetClob(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.memoSetClob(data)
-        .memoGetClob()
-    );
-  }
-    
-  Future<void> memoSetImages(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.memoSetImages(data)
-        .memoGetImages()
-    );
-  }
     
   Future<void> memoUpdateNoteContent(
       String content   
@@ -150,19 +128,36 @@ class DummyCubit extends PresetCubit<DummyState> {
     );
   }
     
-  Future<void> memoSetAttachments(
+  Future<void> memoSetClobSlot(
       BuffersData data   
   ) async {
-    await mut(() => preset!.memoSetAttachments(data)
-        .memoGetAttachments()
+    await mut(() => preset!.memoSetClobSlot(data)
+        .memoGetClobSlot()
     );
   }
     
-  Future<void> memoSetContent(
-      String cnt   
+  Future<void> memoSetImagesSlot(
+      BuffersData data   
   ) async {
-    await mut(() => preset!.memoSetContent(cnt)
-        .memoGetContent()
+    await mut(() => preset!.memoSetImagesSlot(data)
+        .memoGetImagesSlot()
+    );
+  }
+    
+  Future<void> memoSetAttachmentsSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.memoSetAttachmentsSlot(data)
+        .memoGetAttachmentsSlot()
+    );
+  }
+    
+  Future<void> memoUpdateNote(
+      String content,
+      String author   
+  ) async {
+    await mut(() => preset!.memoUpdateNote(content, author)
+        .memoGetNote()
     );
   }
     
@@ -180,7 +175,31 @@ class DummyCubit extends PresetCubit<DummyState> {
         .memoGetContent()
     );
   }
+    
+  Future<void> memoSetContent(
+      String cnt   
+  ) async {
+    await mut(() => preset!.memoSetContent(cnt)
+        .memoGetContent()
+    );
+  }
       
+    
+  Future<void> todosAddTodoById(
+      String todoId   
+  ) async {
+    await mut(() => preset!.todosAddTodoById(todoId)
+        .todosGetPercentComplete()
+    );
+  }
+    
+  Future<void> todosMarkComplete(
+      String assocId   
+  ) async {
+    await mut(() => preset!.todosMarkComplete(assocId)
+        .todosGetPercentComplete()
+    );
+  }
     
   Future<void> todosAddTodo(
       String title,
@@ -205,22 +224,6 @@ class DummyCubit extends PresetCubit<DummyState> {
       String description   
   ) async {
     await mut(() => preset!.todosUpdateTodo(assocId, title, description)
-    );
-  }
-    
-  Future<void> todosAddTodoById(
-      String todoId   
-  ) async {
-    await mut(() => preset!.todosAddTodoById(todoId)
-        .todosGetPercentComplete()
-    );
-  }
-    
-  Future<void> todosMarkComplete(
-      String assocId   
-  ) async {
-    await mut(() => preset!.todosMarkComplete(assocId)
-        .todosGetPercentComplete()
     );
   }
       

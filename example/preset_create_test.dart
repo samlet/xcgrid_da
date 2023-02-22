@@ -13,6 +13,7 @@ import 'package:xcgrid_da/src/bloc_util.dart';
 import 'package:xcgrid_da/src/generated/domain/note_defs.pbenum.dart';
 import 'package:xcgrid_da/src/generated/extra/common_slot.pb.dart';
 import 'package:xcgrid_da/src/generated/google/protobuf/wrappers.pb.dart';
+import 'package:xcgrid_da/src/generated/note.pb.dart';
 import 'package:xcgrid_da/src/generated/note_domain.pb.dart';
 import 'package:xcgrid_da/src/generated/workeff_domain.pb.dart';
 import 'package:xcgrid_da/src/preset/dummy/dummy.dart';

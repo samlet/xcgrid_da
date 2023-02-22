@@ -37,6 +37,7 @@ class MilestonesCubit extends PresetCubit<MilestonesState> {
 
       // Init state with loaders
       preset!  
+        .todosGetWorkEffort()  
         .todosGetTodosProto();
 
       var slots = await preset!.dispatch();
@@ -49,6 +50,22 @@ class MilestonesCubit extends PresetCubit<MilestonesState> {
     }
   }
 
+    
+  Future<void> todosAddTodoById(
+      String todoId   
+  ) async {
+    await mut(() => preset!.todosAddTodoById(todoId)
+        .todosGetPercentComplete()
+    );
+  }
+    
+  Future<void> todosMarkComplete(
+      String assocId   
+  ) async {
+    await mut(() => preset!.todosMarkComplete(assocId)
+        .todosGetPercentComplete()
+    );
+  }
     
   Future<void> todosAddTodo(
       String title,
@@ -73,22 +90,6 @@ class MilestonesCubit extends PresetCubit<MilestonesState> {
       String description   
   ) async {
     await mut(() => preset!.todosUpdateTodo(assocId, title, description)
-    );
-  }
-    
-  Future<void> todosAddTodoById(
-      String todoId   
-  ) async {
-    await mut(() => preset!.todosAddTodoById(todoId)
-        .todosGetPercentComplete()
-    );
-  }
-    
-  Future<void> todosMarkComplete(
-      String assocId   
-  ) async {
-    await mut(() => preset!.todosMarkComplete(assocId)
-        .todosGetPercentComplete()
     );
   }
       

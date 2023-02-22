@@ -18,8 +18,17 @@ Decimal asDecimal(FixedPoint fp) {
   return d;
 }
 
-extension DecimalEx on FixedPoint{
+Decimal currencyAsDecimal(Currency c) {
+  var d = Decimal.parse(c.value);
+  return d;
+}
+
+extension DecimalExForFixedPoint on FixedPoint{
   Decimal get decimal => asDecimal(this);
+}
+
+extension DecimalExForCurrency on Currency{
+  Decimal get decimal => currencyAsDecimal(this);
 }
 
 extension DateTimeEx on Timestamp{

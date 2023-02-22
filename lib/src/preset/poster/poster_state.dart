@@ -12,88 +12,162 @@ class PosterState extends Equatable {
   final PosterStatus status;
   final PosterPresetKeys presetKeys;
   // Fields for note   
-  final BuffersData noteClob;   
-  final BuffersData noteImages;   
-  final BuffersData noteAttachments;   
   final StructData noteAvailablePersistSlots;   
-  final String noteTitle;   
+  final BuffersData noteImages;   
+  final BuffersData noteClob;   
+  final BuffersData noteAttachments;   
+  final BuffersData noteClobSlot;   
+  final BuffersData noteImagesSlot;   
+  final BuffersData noteAttachmentsSlot;   
+  final String noteNoteId;   
   final String noteContent;   
-  final String noteAuthor;
+  final String noteMoreInfoItemName;   
+  final DateTime noteNoteDateTime;   
+  final String noteMoreInfoItemId;   
+  final String noteTitle;   
+  final String noteAuthor;   
+  final String noteMoreInfoUrl;
   
   // Fields for memo   
-  final BuffersData memoClob;   
-  final BuffersData memoImages;   
-  final BuffersData memoAttachments;   
   final StructData memoAvailablePersistSlots;   
-  final String memoLastContent;   
-  final String memoLastAuthor;   
+  final BuffersData memoImages;   
+  final BuffersData memoClob;   
+  final BuffersData memoAttachments;   
+  final BuffersData memoClobSlot;   
+  final BuffersData memoImagesSlot;   
+  final BuffersData memoAttachmentsSlot;   
+  final String memoNoteId;   
+  final String memoContent;   
+  final String memoMoreInfoItemName;   
+  final DateTime memoNoteDateTime;   
+  final String memoMoreInfoItemId;   
+  final String memoTitle;   
   final String memoAuthor;   
-  final String memoContent;
+  final String memoMoreInfoUrl;   
+  final String memoLastContent;   
+  final String memoLastAuthor;
   
 
   PosterState({
     this.status = PosterStatus.initial,
-    BuffersData? noteClob,
-    BuffersData? noteImages,
-    BuffersData? noteAttachments,
     StructData? noteAvailablePersistSlots,
-    this.noteTitle = '',
+    BuffersData? noteImages,
+    BuffersData? noteClob,
+    BuffersData? noteAttachments,
+    BuffersData? noteClobSlot,
+    BuffersData? noteImagesSlot,
+    BuffersData? noteAttachmentsSlot,
+    this.noteNoteId = '',
     this.noteContent = '',
-    this.noteAuthor = '',   
+    this.noteMoreInfoItemName = '',
+    DateTime? noteNoteDateTime,
+    this.noteMoreInfoItemId = '',
+    this.noteTitle = '',
+    this.noteAuthor = '',
+    this.noteMoreInfoUrl = '',   
     
-    BuffersData? memoClob,
-    BuffersData? memoImages,
-    BuffersData? memoAttachments,
     StructData? memoAvailablePersistSlots,
-    this.memoLastContent = '',
-    this.memoLastAuthor = '',
+    BuffersData? memoImages,
+    BuffersData? memoClob,
+    BuffersData? memoAttachments,
+    BuffersData? memoClobSlot,
+    BuffersData? memoImagesSlot,
+    BuffersData? memoAttachmentsSlot,
+    this.memoNoteId = '',
+    this.memoContent = '',
+    this.memoMoreInfoItemName = '',
+    DateTime? memoNoteDateTime,
+    this.memoMoreInfoItemId = '',
+    this.memoTitle = '',
     this.memoAuthor = '',
-    this.memoContent = '',   
+    this.memoMoreInfoUrl = '',
+    this.memoLastContent = '',
+    this.memoLastAuthor = '',   
     
     PosterPresetKeys? presetKeys
   }):
-      noteClob = noteClob??BuffersData.getDefault(),
+      noteAvailablePersistSlots = noteAvailablePersistSlots??StructData.getDefault(),
       noteImages = noteImages??BuffersData.getDefault(),
+      noteClob = noteClob??BuffersData.getDefault(),
       noteAttachments = noteAttachments??BuffersData.getDefault(),
-      noteAvailablePersistSlots = noteAvailablePersistSlots??StructData.getDefault(),   
+      noteClobSlot = noteClobSlot??BuffersData.getDefault(),
+      noteImagesSlot = noteImagesSlot??BuffersData.getDefault(),
+      noteAttachmentsSlot = noteAttachmentsSlot??BuffersData.getDefault(),
+      noteNoteDateTime = noteNoteDateTime??DateTime(0),   
       
-      memoClob = memoClob??BuffersData.getDefault(),
+      memoAvailablePersistSlots = memoAvailablePersistSlots??StructData.getDefault(),
       memoImages = memoImages??BuffersData.getDefault(),
+      memoClob = memoClob??BuffersData.getDefault(),
       memoAttachments = memoAttachments??BuffersData.getDefault(),
-      memoAvailablePersistSlots = memoAvailablePersistSlots??StructData.getDefault(),   
+      memoClobSlot = memoClobSlot??BuffersData.getDefault(),
+      memoImagesSlot = memoImagesSlot??BuffersData.getDefault(),
+      memoAttachmentsSlot = memoAttachmentsSlot??BuffersData.getDefault(),
+      memoNoteDateTime = memoNoteDateTime??DateTime(0),   
       
       presetKeys=presetKeys??PosterPresetKeys.empty;
 
   PosterState copyWith({ PosterStatus? status, 
     PosterPresetKeys? presetKeys,
     SlotsWrapper? slots}) {
-    BuffersData? noteClob;
-    BuffersData? noteImages;
-    BuffersData? noteAttachments;
     StructData? noteAvailablePersistSlots;
-    String? noteTitle;
+    BuffersData? noteImages;
+    BuffersData? noteClob;
+    BuffersData? noteAttachments;
+    BuffersData? noteClobSlot;
+    BuffersData? noteImagesSlot;
+    BuffersData? noteAttachmentsSlot;
+    String? noteNoteId;
     String? noteContent;
+    String? noteMoreInfoItemName;
+    DateTime? noteNoteDateTime;
+    String? noteMoreInfoItemId;
+    String? noteTitle;
     String? noteAuthor;
+    String? noteMoreInfoUrl;
     
-    BuffersData? memoClob;
-    BuffersData? memoImages;
-    BuffersData? memoAttachments;
     StructData? memoAvailablePersistSlots;
+    BuffersData? memoImages;
+    BuffersData? memoClob;
+    BuffersData? memoAttachments;
+    BuffersData? memoClobSlot;
+    BuffersData? memoImagesSlot;
+    BuffersData? memoAttachmentsSlot;
+    String? memoNoteId;
+    String? memoContent;
+    String? memoMoreInfoItemName;
+    DateTime? memoNoteDateTime;
+    String? memoMoreInfoItemId;
+    String? memoTitle;
+    String? memoAuthor;
+    String? memoMoreInfoUrl;
     String? memoLastContent;
     String? memoLastAuthor;
-    String? memoAuthor;
-    String? memoContent;
     
 
-    // From complicated fields
+    // From complicated fields  
       
     BuffersMap? notePersistSlots = slots?.asProto(
         PosterDomainDefs.notePersistSlots.index, BuffersMap.fromBuffer);    
     if (notePersistSlots != null) {
       
-      noteClob = notePersistSlots.values['clob'];
       noteImages = notePersistSlots.values['images'];
+      noteClob = notePersistSlots.values['clob'];
       noteAttachments = notePersistSlots.values['attachments'];  
+         
+    }
+      
+    NoteProto? noteNote = slots?.asProto(
+        PosterDomainDefs.noteNote.index, NoteProto.fromBuffer);    
+    if (noteNote != null) {
+      
+      noteNoteId = noteNote.noteId;
+      noteContent = noteNote.content;
+      noteMoreInfoItemName = noteNote.moreInfoItemName;
+      noteNoteDateTime = noteNote.noteDateTime.dt;
+      noteMoreInfoItemId = noteNote.moreInfoItemId;
+      noteTitle = noteNote.title;
+      noteAuthor = noteNote.author;
+      noteMoreInfoUrl = noteNote.moreInfoUrl;
          
     }
       
@@ -101,21 +175,41 @@ class PosterState extends Equatable {
         PosterDomainDefs.noteDefaultDomain.index, NoteProto.fromBuffer);    
     if (noteDefaultDomain != null) {
       
+      noteNoteId = noteDefaultDomain.noteId;
+      noteContent = noteDefaultDomain.content;
+      noteMoreInfoItemName = noteDefaultDomain.moreInfoItemName;
+      noteNoteDateTime = noteDefaultDomain.noteDateTime.dt;
+      noteMoreInfoItemId = noteDefaultDomain.moreInfoItemId;
       noteTitle = noteDefaultDomain.title;
       noteAuthor = noteDefaultDomain.author;
-      noteContent = noteDefaultDomain.content;
+      noteMoreInfoUrl = noteDefaultDomain.moreInfoUrl;
          
     }
         
-    
+      
       
     BuffersMap? memoPersistSlots = slots?.asProto(
         PosterDomainDefs.memoPersistSlots.index, BuffersMap.fromBuffer);    
     if (memoPersistSlots != null) {
       
-      memoClob = memoPersistSlots.values['clob'];
       memoImages = memoPersistSlots.values['images'];
+      memoClob = memoPersistSlots.values['clob'];
       memoAttachments = memoPersistSlots.values['attachments'];  
+         
+    }
+      
+    NoteProto? memoNote = slots?.asProto(
+        PosterDomainDefs.memoNote.index, NoteProto.fromBuffer);    
+    if (memoNote != null) {
+      
+      memoNoteId = memoNote.noteId;
+      memoContent = memoNote.content;
+      memoMoreInfoItemName = memoNote.moreInfoItemName;
+      memoNoteDateTime = memoNote.noteDateTime.dt;
+      memoMoreInfoItemId = memoNote.moreInfoItemId;
+      memoTitle = memoNote.title;
+      memoAuthor = memoNote.author;
+      memoMoreInfoUrl = memoNote.moreInfoUrl;
          
     }
       
@@ -124,47 +218,64 @@ class PosterState extends Equatable {
     if (memoContentAndAuthor != null) {
       
       memoLastContent = memoContentAndAuthor.lastContent;
-      memoAuthor = memoContentAndAuthor.author;
-      memoContent = memoContentAndAuthor.content;
       memoLastAuthor = memoContentAndAuthor.lastAuthor;
+      memoContent = memoContentAndAuthor.content;
+      memoAuthor = memoContentAndAuthor.author;
          
     }
         
         
 
     // From scalars  
-    noteClob = slots?.asBuffers(PosterDomainDefs.noteClob.index) ?? noteClob;  
-    noteImages = slots?.asBuffers(PosterDomainDefs.noteImages.index) ?? noteImages;  
-    noteAttachments = slots?.asBuffers(PosterDomainDefs.noteAttachments.index) ?? noteAttachments;  
     noteAvailablePersistSlots = slots?.asStruct(PosterDomainDefs.noteAvailablePersistSlots.index) ?? noteAvailablePersistSlots;  
+    noteClobSlot = slots?.asBuffers(PosterDomainDefs.noteClobSlot.index) ?? noteClobSlot;  
+    noteImagesSlot = slots?.asBuffers(PosterDomainDefs.noteImagesSlot.index) ?? noteImagesSlot;  
+    noteAttachmentsSlot = slots?.asBuffers(PosterDomainDefs.noteAttachmentsSlot.index) ?? noteAttachmentsSlot;  
     noteTitle = slots?.asString(PosterDomainDefs.noteTitle.index) ?? noteTitle;  
     noteContent = slots?.asString(PosterDomainDefs.noteContent.index) ?? noteContent;  
-    memoClob = slots?.asBuffers(PosterDomainDefs.memoClob.index) ?? memoClob;  
-    memoImages = slots?.asBuffers(PosterDomainDefs.memoImages.index) ?? memoImages;  
-    memoAttachments = slots?.asBuffers(PosterDomainDefs.memoAttachments.index) ?? memoAttachments;  
     memoAvailablePersistSlots = slots?.asStruct(PosterDomainDefs.memoAvailablePersistSlots.index) ?? memoAvailablePersistSlots;  
+    memoClobSlot = slots?.asBuffers(PosterDomainDefs.memoClobSlot.index) ?? memoClobSlot;  
+    memoImagesSlot = slots?.asBuffers(PosterDomainDefs.memoImagesSlot.index) ?? memoImagesSlot;  
+    memoAttachmentsSlot = slots?.asBuffers(PosterDomainDefs.memoAttachmentsSlot.index) ?? memoAttachmentsSlot;  
     memoLastContent = slots?.asString(PosterDomainDefs.memoLastContent.index) ?? memoLastContent;  
     memoLastAuthor = slots?.asString(PosterDomainDefs.memoLastAuthor.index) ?? memoLastAuthor;
 
     return PosterState(
       status: status ?? this.status,
       presetKeys: presetKeys ?? this.presetKeys,
-      noteClob: noteClob ?? this.noteClob,
-      noteImages: noteImages ?? this.noteImages,
-      noteAttachments: noteAttachments ?? this.noteAttachments,
       noteAvailablePersistSlots: noteAvailablePersistSlots ?? this.noteAvailablePersistSlots,
-      noteTitle: noteTitle ?? this.noteTitle,
+      noteImages: noteImages ?? this.noteImages,
+      noteClob: noteClob ?? this.noteClob,
+      noteAttachments: noteAttachments ?? this.noteAttachments,
+      noteClobSlot: noteClobSlot ?? this.noteClobSlot,
+      noteImagesSlot: noteImagesSlot ?? this.noteImagesSlot,
+      noteAttachmentsSlot: noteAttachmentsSlot ?? this.noteAttachmentsSlot,
+      noteNoteId: noteNoteId ?? this.noteNoteId,
       noteContent: noteContent ?? this.noteContent,
+      noteMoreInfoItemName: noteMoreInfoItemName ?? this.noteMoreInfoItemName,
+      noteNoteDateTime: noteNoteDateTime ?? this.noteNoteDateTime,
+      noteMoreInfoItemId: noteMoreInfoItemId ?? this.noteMoreInfoItemId,
+      noteTitle: noteTitle ?? this.noteTitle,
       noteAuthor: noteAuthor ?? this.noteAuthor,
+      noteMoreInfoUrl: noteMoreInfoUrl ?? this.noteMoreInfoUrl,
       
-      memoClob: memoClob ?? this.memoClob,
-      memoImages: memoImages ?? this.memoImages,
-      memoAttachments: memoAttachments ?? this.memoAttachments,
       memoAvailablePersistSlots: memoAvailablePersistSlots ?? this.memoAvailablePersistSlots,
+      memoImages: memoImages ?? this.memoImages,
+      memoClob: memoClob ?? this.memoClob,
+      memoAttachments: memoAttachments ?? this.memoAttachments,
+      memoClobSlot: memoClobSlot ?? this.memoClobSlot,
+      memoImagesSlot: memoImagesSlot ?? this.memoImagesSlot,
+      memoAttachmentsSlot: memoAttachmentsSlot ?? this.memoAttachmentsSlot,
+      memoNoteId: memoNoteId ?? this.memoNoteId,
+      memoContent: memoContent ?? this.memoContent,
+      memoMoreInfoItemName: memoMoreInfoItemName ?? this.memoMoreInfoItemName,
+      memoNoteDateTime: memoNoteDateTime ?? this.memoNoteDateTime,
+      memoMoreInfoItemId: memoMoreInfoItemId ?? this.memoMoreInfoItemId,
+      memoTitle: memoTitle ?? this.memoTitle,
+      memoAuthor: memoAuthor ?? this.memoAuthor,
+      memoMoreInfoUrl: memoMoreInfoUrl ?? this.memoMoreInfoUrl,
       memoLastContent: memoLastContent ?? this.memoLastContent,
       memoLastAuthor: memoLastAuthor ?? this.memoLastAuthor,
-      memoAuthor: memoAuthor ?? this.memoAuthor,
-      memoContent: memoContent ?? this.memoContent,
       
     );
   }
@@ -173,21 +284,38 @@ class PosterState extends Equatable {
   List<Object?> get props => [        
         status, 
         presetKeys,
-        noteClob,
-        noteImages,
-        noteAttachments,
         noteAvailablePersistSlots,
-        noteTitle,
+        noteImages,
+        noteClob,
+        noteAttachments,
+        noteClobSlot,
+        noteImagesSlot,
+        noteAttachmentsSlot,
+        noteNoteId,
         noteContent,
+        noteMoreInfoItemName,
+        noteNoteDateTime,
+        noteMoreInfoItemId,
+        noteTitle,
         noteAuthor,
-        memoClob,
-        memoImages,
-        memoAttachments,
+        noteMoreInfoUrl,
         memoAvailablePersistSlots,
+        memoImages,
+        memoClob,
+        memoAttachments,
+        memoClobSlot,
+        memoImagesSlot,
+        memoAttachmentsSlot,
+        memoNoteId,
+        memoContent,
+        memoMoreInfoItemName,
+        memoNoteDateTime,
+        memoMoreInfoItemId,
+        memoTitle,
+        memoAuthor,
+        memoMoreInfoUrl,
         memoLastContent,
         memoLastAuthor,
-        memoAuthor,
-        memoContent,
       ];
 }
 

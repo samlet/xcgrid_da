@@ -1,6 +1,10 @@
 import 'package:xcgrid_da/preset_common.dart';
+import '../../generated/call_builder.pb.dart';
 import '../../generated/workeff_domain.pb.dart';
+import '../../generated/extra/common_slot.pb.dart';
+import '../../generated/work_effort.pb.dart';
 import '../../generated/fixture_objects.pb.dart';
+import '../../generated/preset_manager.pb.dart';
 import '../../generated/todos.pb.dart';
 
 part 'milestones_defs.dart';
@@ -14,10 +18,6 @@ part 'milestones_cubit.dart';
 // for list
 part 'milestones_todo_list_state.dart';
 part 'milestones_todos__todo_list_cubit.dart';
-
-
-
-
 
 class MilestonesPresetKeys extends Equatable {
   final String regionId;
@@ -48,7 +48,7 @@ class MilestonesPresetKeys extends Equatable {
     Map<String, BundleKey> keysMap = meta.keys;
     return MilestonesPresetKeys(
         todosId: keysMap['todos']!.id,
-        plId: meta.plId,
+        plId: meta.plXid.bundleId,
         regionId: meta.regionId
     );
   }
@@ -59,7 +59,8 @@ class MilestonesPresetKeys extends Equatable {
 
   Map<String, BundleKey> get bundleKeys => {
     'todos': todosKey,
-    'fixtures': regionKey,       
+    'fixtures': regionKey,
+    'psm': regionKey,       
   };
 
   PresetManagerCreatePresetPlRequest asPlRequest(String tag, String owner){
@@ -91,7 +92,8 @@ class MilestonesPresetKeys extends Equatable {
 class MilestonesPreset extends PresetBase {
   final MilestonesPresetKeys keys;
   BundleKey get todos => keys.todosKey;
-  BundleKey get fixtures => keys.regionKey;       
+  BundleKey get fixtures => keys.regionKey;
+  BundleKey get psm => keys.regionKey;       
 
   MilestonesPreset(
       this.keys,
@@ -104,7 +106,7 @@ class MilestonesPreset extends PresetBase {
     return this;
   }
 
-  
+     
   
   TodosHandle get todosWithTodosHandle {
     return TodosHandle()
@@ -123,6 +125,7 @@ class MilestonesPreset extends PresetBase {
         ..assocId = assocId       
       );     
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosRemoveTodo.index;
     pushCall("todosRemoveTodo", "Todos", todos, el, c);
@@ -133,6 +136,32 @@ class MilestonesPreset extends PresetBase {
     String assocId
   ) async {
     todosRemoveTodo(assocId);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  MilestonesPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -152,6 +181,7 @@ class MilestonesPreset extends PresetBase {
         ..description = description       
       );     
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosUpdateTodo.index;
     pushCall("todosUpdateTodo", "Todos", todos, el, c);
@@ -169,31 +199,6 @@ class MilestonesPreset extends PresetBase {
   }
 
      
-  MilestonesPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-    // final c = 0;
-    final c = MilestonesDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   MilestonesPreset todosGetTodosProto(
   ) {
     
@@ -201,6 +206,7 @@ class MilestonesPreset extends PresetBase {
       ..getTodosProto = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosDefaultDomain.index;
     pushCall("todosGetTodosProto", "Todos", todos, el, c);
@@ -222,6 +228,7 @@ class MilestonesPreset extends PresetBase {
       ..getTodoProtoList = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosGetTodoProtoList.index;
     pushCall("todosGetTodoProtoList", "Todos", todos, el, c);
@@ -248,6 +255,7 @@ class MilestonesPreset extends PresetBase {
         ..description = description       
       );     
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosAddTodo.index;
     pushCall("todosAddTodo", "Todos", todos, el, c);
@@ -271,6 +279,7 @@ class MilestonesPreset extends PresetBase {
       ..getPercentComplete = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosPercentComplete.index;
     pushCall("todosGetPercentComplete", "Todos", todos, el, c);
@@ -295,6 +304,7 @@ class MilestonesPreset extends PresetBase {
         ..assocId = assocId       
       );     
      
+
     // final c = 0;
     final c = MilestonesDomainDefs.todosMarkComplete.index;
     pushCall("todosMarkComplete", "Todos", todos, el, c);
@@ -309,8 +319,30 @@ class MilestonesPreset extends PresetBase {
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
 
+     
+  MilestonesPreset todosGetWorkEffort(
+  ) {
+    
+    var el = TodosCall()
+      ..getWorkEffort = todosWithTodosHandle;    
+       
+     
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.todosWorkEffort.index;
+    pushCall("todosGetWorkEffort", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<WorkEffortProto> todosGetWorkEffortCall(
+  ) async {
+    todosGetWorkEffort();
+    var result= await dispatch();
+    return WorkEffortProto.fromBuffer(result.values.last.slotData);
+  }
+
           
-  
+     
        
 
      
@@ -322,6 +354,7 @@ class MilestonesPreset extends PresetBase {
         ..someNotes=Int32Value(value: total);    
 
          
+
     // final c = 0;
     final c = MilestonesDomainDefs.nonDomainField.index;
     pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
@@ -344,6 +377,7 @@ class MilestonesPreset extends PresetBase {
         ..oneNote=Empty.getDefault();    
 
          
+
     // final c = 0;
     final c = MilestonesDomainDefs.nonDomainField.index;
     pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
@@ -355,6 +389,68 @@ class MilestonesPreset extends PresetBase {
     fixturesOneNote();
     var result= await dispatch();
     return XcRefId.fromBuffer(result.values.last.slotData);
+  }
+
+          
+     
+       
+
+     
+  MilestonesPreset psmGetPlIdByOwnerAndTag(
+    String regionId,
+    String owner,
+    String tag
+  ) {
+    
+    
+    var el = PresetManagerCall()
+      ..getPlIdByOwnerAndTag = (PresetManagerGetPlIdByOwnerAndTagRequest()
+        ..regionId = regionId
+        ..owner = owner
+        ..tag = tag       
+      );     
+    
+
+         
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.nonDomainField.index;
+    pushCall("psmGetPlIdByOwnerAndTag", "PresetManager", psm, el, c);
+    return this;
+  }
+
+  Future<IdOrErr> psmGetPlIdByOwnerAndTagCall(
+    String regionId,
+    String owner,
+    String tag
+  ) async {
+    psmGetPlIdByOwnerAndTag(regionId, owner, tag);
+    var result= await dispatch();
+    return IdOrErr.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  MilestonesPreset psmLoadPresetMeta(
+    String plId
+  ) {
+    
+    var el= PresetManagerCall()
+        ..loadPresetMeta=StringValue(value: plId);    
+
+         
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.nonDomainField.index;
+    pushCall("psmLoadPresetMeta", "PresetManager", psm, el, c);
+    return this;
+  }
+
+  Future<CallBuilderContextProto> psmLoadPresetMetaCall(
+    String plId
+  ) async {
+    psmLoadPresetMeta(plId);
+    var result= await dispatch();
+    return CallBuilderContextProto.fromBuffer(result.values.last.slotData);
   }
 
           

@@ -1,36 +1,38 @@
 part of 'dummy.dart';
 enum DummyMethodDefs {
     noname, // 0
-    noteGetAttachments,    // NoteAuto.getAttachments
-    noteGetClob,    // NoteAuto.getClob
+    noteGetAttachmentsSlot,    // NoteAuto.getAttachmentsSlot
+    noteGetClobSlot,    // NoteAuto.getClobSlot
     noteGetContent,    // NoteCo.getContent
-    noteGetImages,    // NoteAuto.getImages
+    noteGetImagesSlot,    // NoteAuto.getImagesSlot
+    noteGetNote,    // NoteAuto.getNote
     noteGetNoteProto,    // NoteCo.getNoteProto
     noteName,    // NoteCo.name
     notePersistSlotValues,    // NoteAuto.persistSlotValues
     notePersistSlotsExistent,    // NoteAuto.persistSlotsExistent
     noteRevokeContent,    // NoteCo.revokeContent
-    noteSetAttachments,    // NoteAuto.setAttachments
-    noteSetClob,    // NoteAuto.setClob
+    noteSetAttachmentsSlot,    // NoteAuto.setAttachmentsSlot
+    noteSetClobSlot,    // NoteAuto.setClobSlot
     noteSetContent,    // NoteCo.setContent
     noteSetContentComp,    // NoteCo.setContentComp
-    noteSetImages,    // NoteAuto.setImages
+    noteSetImagesSlot,    // NoteAuto.setImagesSlot
     noteUpdateNote,    // NoteAuto.updateNote
     noteUpdateNoteContent,    // NoteAuto.updateNoteContent
-    memoGetAttachments,    // NoteAuto.getAttachments
-    memoGetClob,    // NoteAuto.getClob
+    memoGetAttachmentsSlot,    // NoteAuto.getAttachmentsSlot
+    memoGetClobSlot,    // NoteAuto.getClobSlot
     memoGetContent,    // NoteCo.getContent
-    memoGetImages,    // NoteAuto.getImages
+    memoGetImagesSlot,    // NoteAuto.getImagesSlot
+    memoGetNote,    // NoteAuto.getNote
     memoGetNoteProto,    // NoteCo.getNoteProto
     memoName,    // NoteCo.name
     memoPersistSlotValues,    // NoteAuto.persistSlotValues
     memoPersistSlotsExistent,    // NoteAuto.persistSlotsExistent
     memoRevokeContent,    // NoteCo.revokeContent
-    memoSetAttachments,    // NoteAuto.setAttachments
-    memoSetClob,    // NoteAuto.setClob
+    memoSetAttachmentsSlot,    // NoteAuto.setAttachmentsSlot
+    memoSetClobSlot,    // NoteAuto.setClobSlot
     memoSetContent,    // NoteCo.setContent
     memoSetContentComp,    // NoteCo.setContentComp
-    memoSetImages,    // NoteAuto.setImages
+    memoSetImagesSlot,    // NoteAuto.setImagesSlot
     memoUpdateNote,    // NoteAuto.updateNote
     memoUpdateNoteContent,    // NoteAuto.updateNoteContent
     todosAddTodo,    // Todos.addTodo
@@ -38,6 +40,7 @@ enum DummyMethodDefs {
     todosGetPercentComplete,    // Todos.getPercentComplete
     todosGetTodoProtoList,    // Todos.getTodoProtoList
     todosGetTodosProto,    // Todos.getTodosProto
+    todosGetWorkEffort,    // Todos.getWorkEffort
     todosMarkComplete,    // Todos.markComplete
     todosRemoveTodo,    // Todos.removeTodo
     todosUpdateTodo,    // Todos.updateTodo
@@ -45,42 +48,53 @@ enum DummyMethodDefs {
 
 enum DummyDomainDefs {
     nonDomainField, // 0
+
+    // domain fields ---->
     // note: [NoteAuto, NoteCo]  
-    noteClob,   // proto.BuffersData, NoteAuto.getClob  
-    noteImages,   // proto.BuffersData, NoteAuto.getImages  
-    noteAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    noteClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
+    noteImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
+    noteAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
+    noteNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     noteTitle,   // google.protobuf.StringValue, NoteCo.name  
     noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
-    noteDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
+    noteDefaultDomain,   // bluecc.note.NoteProto, NoteCo.getNoteProto
     // memo: [NoteAuto, NoteCo]  
-    memoClob,   // proto.BuffersData, NoteAuto.getClob  
-    memoImages,   // proto.BuffersData, NoteAuto.getImages  
-    memoAttachments,   // proto.BuffersData, NoteAuto.getAttachments  
     memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
+    memoClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
+    memoImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
+    memoAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
+    memoNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     memoTitle,   // google.protobuf.StringValue, NoteCo.name  
     memoContent,   // google.protobuf.StringValue, NoteCo.getContent  
-    memoDefaultDomain,   // domain.NoteProto, NoteCo.getNoteProto
+    memoDefaultDomain,   // bluecc.note.NoteProto, NoteCo.getNoteProto
     // todos: [WorkEffortAuto, Todos]  
+    todosWorkEffort,   // bluecc.work_effort.WorkEffortProto, WorkEffortAuto.getWorkEffort  
     todosPercentComplete,   // google.protobuf.Int64Value, Todos.getPercentComplete  
     todosDefaultDomain,   // domain.TodosProto, Todos.getTodosProto    
-    // note: enum values for list query
+    // note: enum values for list query ----->
 
-    // note: enum values for list muts    
-    // memo: enum values for list query
+    // note: enum values for list muts ------>    
+    // memo: enum values for list query ----->
 
-    // memo: enum values for list muts    
-    // todos: enum values for list query   
+    // memo: enum values for list muts ------>    
+    // todos: enum values for list query ----->   
+    // Todos.getTodoProtoList
     todosGetTodoProtoList,
 
-    // todos: enum values for list muts   
-    todosAddTodo,   
-    todosRemoveTodo,   
-    todosUpdateTodo,   
+    // todos: enum values for list muts ------>   
+    // Todos.addTodoById
     todosAddTodoById,   
-    todosMarkComplete,           
+    // Todos.markComplete
+    todosMarkComplete,   
+    // Todos.addTodo
+    todosAddTodo,   
+    // Todos.removeTodo
+    todosRemoveTodo,   
+    // Todos.updateTodo
+    todosUpdateTodo,           
 
 }
 

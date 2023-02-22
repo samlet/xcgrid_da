@@ -31,14 +31,15 @@ Future<void> main(List<String> arguments) async {
   // create
   var parentPlId = plOr.value;
   var result=await pls.callBuilderOnPlWithParentPl(listProto, parentPlId);
-
-  print("runtime-pl: ${result.fields['plId']?.stringValue}");
+  // print("runtime-pl: ${result.fields['plId']?.stringValue}");
+  print("runtime-pl: ${result.plXid.bundleId}");
   cnt=await cb.memoGetContentCall();
   print("memo.cnt: $cnt");  // world(2)
 
   // revoke
-  var plId=result.fields['plId']?.stringValue;
-  result = await pls.revokeCallBuilderOnPl(plId!.proto);
+  // var plId=result.fields['plId']?.stringValue;
+  var plId=result.plXid.bundleId;
+  result = await pls.revokeCallBuilderOnPl(plId.proto);
   print("revoke result: $result");
   cnt=await cb.memoGetContentCall();
   print("after revoked, memo.cnt: $cnt"); // world(1)

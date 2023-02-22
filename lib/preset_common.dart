@@ -3,6 +3,7 @@ export 'package:bloc/bloc.dart';
 export 'package:protobuf/protobuf.dart';
 export 'package:equatable/equatable.dart';
 export 'package:rxdart/rxdart.dart';
+export 'package:decimal/decimal.dart';
 
 export 'common_proto.dart';
 export 'src/agent/preset_dispatcher.dart';

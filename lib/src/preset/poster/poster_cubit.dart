@@ -37,7 +37,9 @@ class PosterCubit extends PresetCubit<PosterState> {
 
       // Init state with loaders
       preset!  
+        .noteGetNote()  
         .noteGetNoteProto()  
+        .memoGetNote()  
         .memoGetContentAndAuthor();
 
       var slots = await preset!.dispatch();
@@ -51,31 +53,6 @@ class PosterCubit extends PresetCubit<PosterState> {
   }
 
     
-  Future<void> noteUpdateNote(
-      String content,
-      String author   
-  ) async {
-    await mut(() => preset!.noteUpdateNote(content, author)
-        .noteGetNoteProto()
-    );
-  }
-    
-  Future<void> noteSetClob(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.noteSetClob(data)
-        .noteGetClob()
-    );
-  }
-    
-  Future<void> noteSetImages(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.noteSetImages(data)
-        .noteGetImages()
-    );
-  }
-    
   Future<void> noteUpdateNoteContent(
       String content   
   ) async {
@@ -84,19 +61,36 @@ class PosterCubit extends PresetCubit<PosterState> {
     );
   }
     
-  Future<void> noteSetAttachments(
+  Future<void> noteSetClobSlot(
       BuffersData data   
   ) async {
-    await mut(() => preset!.noteSetAttachments(data)
-        .noteGetAttachments()
+    await mut(() => preset!.noteSetClobSlot(data)
+        .noteGetClobSlot()
     );
   }
     
-  Future<void> noteSetContent(
-      String cnt   
+  Future<void> noteSetImagesSlot(
+      BuffersData data   
   ) async {
-    await mut(() => preset!.noteSetContent(cnt)
-        .noteGetContent()
+    await mut(() => preset!.noteSetImagesSlot(data)
+        .noteGetImagesSlot()
+    );
+  }
+    
+  Future<void> noteSetAttachmentsSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.noteSetAttachmentsSlot(data)
+        .noteGetAttachmentsSlot()
+    );
+  }
+    
+  Future<void> noteUpdateNote(
+      String content,
+      String author   
+  ) async {
+    await mut(() => preset!.noteUpdateNote(content, author)
+        .noteGetNote()
     );
   }
     
@@ -114,46 +108,54 @@ class PosterCubit extends PresetCubit<PosterState> {
         .noteGetContent()
     );
   }
+    
+  Future<void> noteSetContent(
+      String cnt   
+  ) async {
+    await mut(() => preset!.noteSetContent(cnt)
+        .noteGetContent()
+    );
+  }
       
+    
+  Future<void> memoUpdateNoteContent(
+      String content   
+  ) async {
+    await mut(() => preset!.memoUpdateNoteContent(content)
+        .memoGetNote()
+    );
+  }
+    
+  Future<void> memoSetClobSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.memoSetClobSlot(data)
+        .memoGetClobSlot()
+    );
+  }
+    
+  Future<void> memoSetImagesSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.memoSetImagesSlot(data)
+        .memoGetImagesSlot()
+    );
+  }
+    
+  Future<void> memoSetAttachmentsSlot(
+      BuffersData data   
+  ) async {
+    await mut(() => preset!.memoSetAttachmentsSlot(data)
+        .memoGetAttachmentsSlot()
+    );
+  }
     
   Future<void> memoUpdateNote(
       String content,
       String author   
   ) async {
     await mut(() => preset!.memoUpdateNote(content, author)
-        .memoGetContentAndAuthor()
-    );
-  }
-    
-  Future<void> memoSetClob(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.memoSetClob(data)
-        .memoGetClob()
-    );
-  }
-    
-  Future<void> memoSetImages(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.memoSetImages(data)
-        .memoGetImages()
-    );
-  }
-    
-  Future<void> memoUpdateNoteContent(
-      String content   
-  ) async {
-    await mut(() => preset!.memoUpdateNoteContent(content)
-        .memoGetContentAndAuthor()
-    );
-  }
-    
-  Future<void> memoSetAttachments(
-      BuffersData data   
-  ) async {
-    await mut(() => preset!.memoSetAttachments(data)
-        .memoGetAttachments()
+        .memoGetNote()
     );
   }
     

@@ -1,7 +1,8 @@
 import 'package:xcgrid_da/preset_common.dart';
+import '../../generated/note.pb.dart';
 import '../../generated/call_builder.pb.dart';
-import '../../generated/note_domain.pb.dart';
 import '../../generated/workeff_domain.pb.dart';
+import '../../generated/work_effort.pb.dart';
 import '../../generated/note_co.pb.dart';
 import '../../generated/note_auto.pb.dart';
 import '../../generated/pipelines.pb.dart';
@@ -20,10 +21,6 @@ part 'dummy_cubit.dart';
 // for list
 part 'dummy_todo_list_state.dart';
 part 'dummy_todos__todo_list_cubit.dart';
-
-
-
-
 
 class DummyPresetKeys extends Equatable {
   final String regionId;
@@ -66,7 +63,7 @@ class DummyPresetKeys extends Equatable {
         noteId: keysMap['note']!.id,
         memoId: keysMap['memo']!.id,
         todosId: keysMap['todos']!.id,
-        plId: meta.plId,
+        plId: meta.plXid.bundleId,
         regionId: meta.regionId
     );
   }
@@ -134,7 +131,7 @@ class DummyPreset extends PresetBase {
     return this;
   }
 
-  
+     
   
   NoteAutoHandle get noteWithNoteAutoHandle {
     return NoteAutoHandle()
@@ -143,47 +140,49 @@ class DummyPreset extends PresetBase {
   }     
 
      
-  DummyPreset noteGetAttachments(
+  DummyPreset noteGetImagesSlot(
   ) {
     
     var el = NoteAutoCall()
-      ..getAttachments = noteWithNoteAutoHandle;    
+      ..getImagesSlot = noteWithNoteAutoHandle;    
        
      
-    // final c = NoteDefs.ATTACHMENTS.value;
-    final c = DummyDomainDefs.noteAttachments.index;
-    pushCall("noteGetAttachments", "NoteAuto", note, el, c);
+
+    // final c = NoteDefs.IMAGES_SLOT.value;
+    final c = DummyDomainDefs.noteImagesSlot.index;
+    pushCall("noteGetImagesSlot", "NoteAuto", note, el, c);
     return this;
   }
 
-  Future<BuffersData> noteGetAttachmentsCall(
+  Future<BuffersData> noteGetImagesSlotCall(
   ) async {
-    noteGetAttachments();
+    noteGetImagesSlot();
     var result= await dispatch();
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
      
-  DummyPreset noteSetAttachments(
+  DummyPreset noteSetClobSlot(
     BuffersData data
   ) {
     
     var el = NoteAutoCall()
-      ..setAttachments = (NoteAutoSetAttachmentsRequest()
+      ..setClobSlot = (NoteAutoSetClobSlotRequest()
         ..handle = noteWithNoteAutoHandle
         ..data = data       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("noteSetAttachments", "NoteAuto", note, el, c);
+    pushCall("noteSetClobSlot", "NoteAuto", note, el, c);
     return this;
   }
 
-  Future<Empty> noteSetAttachmentsCall(
+  Future<Empty> noteSetClobSlotCall(
     BuffersData data
   ) async {
-    noteSetAttachments(data);
+    noteSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -201,6 +200,7 @@ class DummyPreset extends PresetBase {
         ..author = author       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("noteUpdateNote", "NoteAuto", note, el, c);
@@ -217,28 +217,47 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset noteSetClob(
-    BuffersData data
+  DummyPreset noteGetClobSlot(
   ) {
     
     var el = NoteAutoCall()
-      ..setClob = (NoteAutoSetClobRequest()
-        ..handle = noteWithNoteAutoHandle
-        ..data = data       
-      );     
+      ..getClobSlot = noteWithNoteAutoHandle;    
+       
      
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("noteSetClob", "NoteAuto", note, el, c);
+
+    // final c = NoteDefs.CLOB_SLOT.value;
+    final c = DummyDomainDefs.noteClobSlot.index;
+    pushCall("noteGetClobSlot", "NoteAuto", note, el, c);
     return this;
   }
 
-  Future<Empty> noteSetClobCall(
-    BuffersData data
+  Future<BuffersData> noteGetClobSlotCall(
   ) async {
-    noteSetClob(data);
-    await dispatch();
-    return Empty.getDefault();
+    noteGetClobSlot();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset noteGetAttachmentsSlot(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..getAttachmentsSlot = noteWithNoteAutoHandle;    
+       
+     
+
+    // final c = NoteDefs.ATTACHMENTS_SLOT.value;
+    final c = DummyDomainDefs.noteAttachmentsSlot.index;
+    pushCall("noteGetAttachmentsSlot", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<BuffersData> noteGetAttachmentsSlotCall(
+  ) async {
+    noteGetAttachmentsSlot();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
      
@@ -252,6 +271,7 @@ class DummyPreset extends PresetBase {
         ..content = content       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("noteUpdateNoteContent", "NoteAuto", note, el, c);
@@ -267,6 +287,32 @@ class DummyPreset extends PresetBase {
   }
 
      
+  DummyPreset noteSetImagesSlot(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setImagesSlot = (NoteAutoSetImagesSlotRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("noteSetImagesSlot", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetImagesSlotCall(
+    BuffersData data
+  ) async {
+    noteSetImagesSlot(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
   DummyPreset notePersistSlotsExistent(
   ) {
     
@@ -274,6 +320,7 @@ class DummyPreset extends PresetBase {
       ..persistSlotsExistent = noteWithNoteAutoHandle;    
        
      
+
     // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
     final c = DummyDomainDefs.noteAvailablePersistSlots.index;
     pushCall("notePersistSlotsExistent", "NoteAuto", note, el, c);
@@ -295,6 +342,7 @@ class DummyPreset extends PresetBase {
       ..persistSlotValues = noteWithNoteAutoHandle;    
        
      
+
     // final c = NoteDefs.PERSIST_SLOTS.value;
     final c = DummyDomainDefs.notePersistSlots.index;
     pushCall("notePersistSlotValues", "NoteAuto", note, el, c);
@@ -309,74 +357,55 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset noteGetClob(
-  ) {
-    
-    var el = NoteAutoCall()
-      ..getClob = noteWithNoteAutoHandle;    
-       
-     
-    // final c = NoteDefs.CLOB.value;
-    final c = DummyDomainDefs.noteClob.index;
-    pushCall("noteGetClob", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<BuffersData> noteGetClobCall(
-  ) async {
-    noteGetClob();
-    var result= await dispatch();
-    return BuffersData.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  DummyPreset noteSetImages(
+  DummyPreset noteSetAttachmentsSlot(
     BuffersData data
   ) {
     
     var el = NoteAutoCall()
-      ..setImages = (NoteAutoSetImagesRequest()
+      ..setAttachmentsSlot = (NoteAutoSetAttachmentsSlotRequest()
         ..handle = noteWithNoteAutoHandle
         ..data = data       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("noteSetImages", "NoteAuto", note, el, c);
+    pushCall("noteSetAttachmentsSlot", "NoteAuto", note, el, c);
     return this;
   }
 
-  Future<Empty> noteSetImagesCall(
+  Future<Empty> noteSetAttachmentsSlotCall(
     BuffersData data
   ) async {
-    noteSetImages(data);
+    noteSetAttachmentsSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
 
      
-  DummyPreset noteGetImages(
+  DummyPreset noteGetNote(
   ) {
     
     var el = NoteAutoCall()
-      ..getImages = noteWithNoteAutoHandle;    
+      ..getNote = noteWithNoteAutoHandle;    
        
      
-    // final c = NoteDefs.IMAGES.value;
-    final c = DummyDomainDefs.noteImages.index;
-    pushCall("noteGetImages", "NoteAuto", note, el, c);
+
+    // final c = NoteDefs.NOTE.value;
+    final c = DummyDomainDefs.noteNote.index;
+    pushCall("noteGetNote", "NoteAuto", note, el, c);
     return this;
   }
 
-  Future<BuffersData> noteGetImagesCall(
+  Future<NoteProto> noteGetNoteCall(
   ) async {
-    noteGetImages();
+    noteGetNote();
     var result= await dispatch();
-    return BuffersData.fromBuffer(result.values.last.slotData);
+    return NoteProto.fromBuffer(result.values.last.slotData);
   }
 
           
-  
+     
   
   NoteCoHandle get noteWithNoteCoHandle {
     return NoteCoHandle()
@@ -392,6 +421,7 @@ class DummyPreset extends PresetBase {
       ..getNoteProto = noteWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.DEFAULT_DOMAIN.value;
     final c = DummyDomainDefs.noteDefaultDomain.index;
     pushCall("noteGetNoteProto", "NoteCo", note, el, c);
@@ -413,6 +443,7 @@ class DummyPreset extends PresetBase {
       ..revokeContent = noteWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("noteRevokeContent", "NoteCo", note, el, c);
@@ -437,6 +468,7 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("noteSetContent", "NoteCo", note, el, c);
@@ -462,6 +494,7 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("noteSetContentComp", "NoteCo", note, el, c);
@@ -484,6 +517,7 @@ class DummyPreset extends PresetBase {
       ..getContent = noteWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.CONTENT.value;
     final c = DummyDomainDefs.noteContent.index;
     pushCall("noteGetContent", "NoteCo", note, el, c);
@@ -505,6 +539,7 @@ class DummyPreset extends PresetBase {
       ..name = noteWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.TITLE.value;
     final c = DummyDomainDefs.noteTitle.index;
     pushCall("noteName", "NoteCo", note, el, c);
@@ -519,7 +554,7 @@ class DummyPreset extends PresetBase {
   }
 
           
-  
+     
   
   NoteAutoHandle get memoWithNoteAutoHandle {
     return NoteAutoHandle()
@@ -528,47 +563,49 @@ class DummyPreset extends PresetBase {
   }     
 
      
-  DummyPreset memoGetAttachments(
+  DummyPreset memoGetImagesSlot(
   ) {
     
     var el = NoteAutoCall()
-      ..getAttachments = memoWithNoteAutoHandle;    
+      ..getImagesSlot = memoWithNoteAutoHandle;    
        
      
-    // final c = NoteDefs.ATTACHMENTS.value;
-    final c = DummyDomainDefs.memoAttachments.index;
-    pushCall("memoGetAttachments", "NoteAuto", memo, el, c);
+
+    // final c = NoteDefs.IMAGES_SLOT.value;
+    final c = DummyDomainDefs.memoImagesSlot.index;
+    pushCall("memoGetImagesSlot", "NoteAuto", memo, el, c);
     return this;
   }
 
-  Future<BuffersData> memoGetAttachmentsCall(
+  Future<BuffersData> memoGetImagesSlotCall(
   ) async {
-    memoGetAttachments();
+    memoGetImagesSlot();
     var result= await dispatch();
     return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
      
-  DummyPreset memoSetAttachments(
+  DummyPreset memoSetClobSlot(
     BuffersData data
   ) {
     
     var el = NoteAutoCall()
-      ..setAttachments = (NoteAutoSetAttachmentsRequest()
+      ..setClobSlot = (NoteAutoSetClobSlotRequest()
         ..handle = memoWithNoteAutoHandle
         ..data = data       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoSetAttachments", "NoteAuto", memo, el, c);
+    pushCall("memoSetClobSlot", "NoteAuto", memo, el, c);
     return this;
   }
 
-  Future<Empty> memoSetAttachmentsCall(
+  Future<Empty> memoSetClobSlotCall(
     BuffersData data
   ) async {
-    memoSetAttachments(data);
+    memoSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -586,6 +623,7 @@ class DummyPreset extends PresetBase {
         ..author = author       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("memoUpdateNote", "NoteAuto", memo, el, c);
@@ -602,28 +640,47 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset memoSetClob(
-    BuffersData data
+  DummyPreset memoGetClobSlot(
   ) {
     
     var el = NoteAutoCall()
-      ..setClob = (NoteAutoSetClobRequest()
-        ..handle = memoWithNoteAutoHandle
-        ..data = data       
-      );     
+      ..getClobSlot = memoWithNoteAutoHandle;    
+       
      
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoSetClob", "NoteAuto", memo, el, c);
+
+    // final c = NoteDefs.CLOB_SLOT.value;
+    final c = DummyDomainDefs.memoClobSlot.index;
+    pushCall("memoGetClobSlot", "NoteAuto", memo, el, c);
     return this;
   }
 
-  Future<Empty> memoSetClobCall(
-    BuffersData data
+  Future<BuffersData> memoGetClobSlotCall(
   ) async {
-    memoSetClob(data);
-    await dispatch();
-    return Empty.getDefault();
+    memoGetClobSlot();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset memoGetAttachmentsSlot(
+  ) {
+    
+    var el = NoteAutoCall()
+      ..getAttachmentsSlot = memoWithNoteAutoHandle;    
+       
+     
+
+    // final c = NoteDefs.ATTACHMENTS_SLOT.value;
+    final c = DummyDomainDefs.memoAttachmentsSlot.index;
+    pushCall("memoGetAttachmentsSlot", "NoteAuto", memo, el, c);
+    return this;
+  }
+
+  Future<BuffersData> memoGetAttachmentsSlotCall(
+  ) async {
+    memoGetAttachmentsSlot();
+    var result= await dispatch();
+    return BuffersData.fromBuffer(result.values.last.slotData);
   }
 
      
@@ -637,6 +694,7 @@ class DummyPreset extends PresetBase {
         ..content = content       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("memoUpdateNoteContent", "NoteAuto", memo, el, c);
@@ -652,6 +710,32 @@ class DummyPreset extends PresetBase {
   }
 
      
+  DummyPreset memoSetImagesSlot(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setImagesSlot = (NoteAutoSetImagesSlotRequest()
+        ..handle = memoWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("memoSetImagesSlot", "NoteAuto", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetImagesSlotCall(
+    BuffersData data
+  ) async {
+    memoSetImagesSlot(data);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
   DummyPreset memoPersistSlotsExistent(
   ) {
     
@@ -659,6 +743,7 @@ class DummyPreset extends PresetBase {
       ..persistSlotsExistent = memoWithNoteAutoHandle;    
        
      
+
     // final c = NoteDefs.AVAILABLE_PERSIST_SLOTS.value;
     final c = DummyDomainDefs.memoAvailablePersistSlots.index;
     pushCall("memoPersistSlotsExistent", "NoteAuto", memo, el, c);
@@ -680,6 +765,7 @@ class DummyPreset extends PresetBase {
       ..persistSlotValues = memoWithNoteAutoHandle;    
        
      
+
     // final c = NoteDefs.PERSIST_SLOTS.value;
     final c = DummyDomainDefs.memoPersistSlots.index;
     pushCall("memoPersistSlotValues", "NoteAuto", memo, el, c);
@@ -694,74 +780,55 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset memoGetClob(
-  ) {
-    
-    var el = NoteAutoCall()
-      ..getClob = memoWithNoteAutoHandle;    
-       
-     
-    // final c = NoteDefs.CLOB.value;
-    final c = DummyDomainDefs.memoClob.index;
-    pushCall("memoGetClob", "NoteAuto", memo, el, c);
-    return this;
-  }
-
-  Future<BuffersData> memoGetClobCall(
-  ) async {
-    memoGetClob();
-    var result= await dispatch();
-    return BuffersData.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  DummyPreset memoSetImages(
+  DummyPreset memoSetAttachmentsSlot(
     BuffersData data
   ) {
     
     var el = NoteAutoCall()
-      ..setImages = (NoteAutoSetImagesRequest()
+      ..setAttachmentsSlot = (NoteAutoSetAttachmentsSlotRequest()
         ..handle = memoWithNoteAutoHandle
         ..data = data       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoSetImages", "NoteAuto", memo, el, c);
+    pushCall("memoSetAttachmentsSlot", "NoteAuto", memo, el, c);
     return this;
   }
 
-  Future<Empty> memoSetImagesCall(
+  Future<Empty> memoSetAttachmentsSlotCall(
     BuffersData data
   ) async {
-    memoSetImages(data);
+    memoSetAttachmentsSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
 
      
-  DummyPreset memoGetImages(
+  DummyPreset memoGetNote(
   ) {
     
     var el = NoteAutoCall()
-      ..getImages = memoWithNoteAutoHandle;    
+      ..getNote = memoWithNoteAutoHandle;    
        
      
-    // final c = NoteDefs.IMAGES.value;
-    final c = DummyDomainDefs.memoImages.index;
-    pushCall("memoGetImages", "NoteAuto", memo, el, c);
+
+    // final c = NoteDefs.NOTE.value;
+    final c = DummyDomainDefs.memoNote.index;
+    pushCall("memoGetNote", "NoteAuto", memo, el, c);
     return this;
   }
 
-  Future<BuffersData> memoGetImagesCall(
+  Future<NoteProto> memoGetNoteCall(
   ) async {
-    memoGetImages();
+    memoGetNote();
     var result= await dispatch();
-    return BuffersData.fromBuffer(result.values.last.slotData);
+    return NoteProto.fromBuffer(result.values.last.slotData);
   }
 
           
-  
+     
   
   NoteCoHandle get memoWithNoteCoHandle {
     return NoteCoHandle()
@@ -777,6 +844,7 @@ class DummyPreset extends PresetBase {
       ..getNoteProto = memoWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.DEFAULT_DOMAIN.value;
     final c = DummyDomainDefs.memoDefaultDomain.index;
     pushCall("memoGetNoteProto", "NoteCo", memo, el, c);
@@ -798,6 +866,7 @@ class DummyPreset extends PresetBase {
       ..revokeContent = memoWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("memoRevokeContent", "NoteCo", memo, el, c);
@@ -822,6 +891,7 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("memoSetContent", "NoteCo", memo, el, c);
@@ -847,6 +917,7 @@ class DummyPreset extends PresetBase {
         ..cnt = cnt       
       );     
      
+
     // final c = NoteDefs.NON_DOMAIN_FIELD.value;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("memoSetContentComp", "NoteCo", memo, el, c);
@@ -869,6 +940,7 @@ class DummyPreset extends PresetBase {
       ..getContent = memoWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.CONTENT.value;
     final c = DummyDomainDefs.memoContent.index;
     pushCall("memoGetContent", "NoteCo", memo, el, c);
@@ -890,6 +962,7 @@ class DummyPreset extends PresetBase {
       ..name = memoWithNoteCoHandle;    
        
      
+
     // final c = NoteDefs.TITLE.value;
     final c = DummyDomainDefs.memoTitle.index;
     pushCall("memoName", "NoteCo", memo, el, c);
@@ -904,7 +977,7 @@ class DummyPreset extends PresetBase {
   }
 
           
-  
+     
   
   TodosHandle get todosWithTodosHandle {
     return TodosHandle()
@@ -923,6 +996,7 @@ class DummyPreset extends PresetBase {
         ..assocId = assocId       
       );     
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosRemoveTodo.index;
     pushCall("todosRemoveTodo", "Todos", todos, el, c);
@@ -933,6 +1007,32 @@ class DummyPreset extends PresetBase {
     String assocId
   ) async {
     todosRemoveTodo(assocId);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+
+    // final c = 0;
+    final c = DummyDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -952,6 +1052,7 @@ class DummyPreset extends PresetBase {
         ..description = description       
       );     
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosUpdateTodo.index;
     pushCall("todosUpdateTodo", "Todos", todos, el, c);
@@ -969,31 +1070,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-    // final c = 0;
-    final c = DummyDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset todosGetTodosProto(
   ) {
     
@@ -1001,6 +1077,7 @@ class DummyPreset extends PresetBase {
       ..getTodosProto = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosDefaultDomain.index;
     pushCall("todosGetTodosProto", "Todos", todos, el, c);
@@ -1022,6 +1099,7 @@ class DummyPreset extends PresetBase {
       ..getTodoProtoList = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosGetTodoProtoList.index;
     pushCall("todosGetTodoProtoList", "Todos", todos, el, c);
@@ -1048,6 +1126,7 @@ class DummyPreset extends PresetBase {
         ..description = description       
       );     
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosAddTodo.index;
     pushCall("todosAddTodo", "Todos", todos, el, c);
@@ -1071,6 +1150,7 @@ class DummyPreset extends PresetBase {
       ..getPercentComplete = todosWithTodosHandle;    
        
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosPercentComplete.index;
     pushCall("todosGetPercentComplete", "Todos", todos, el, c);
@@ -1095,6 +1175,7 @@ class DummyPreset extends PresetBase {
         ..assocId = assocId       
       );     
      
+
     // final c = 0;
     final c = DummyDomainDefs.todosMarkComplete.index;
     pushCall("todosMarkComplete", "Todos", todos, el, c);
@@ -1109,8 +1190,30 @@ class DummyPreset extends PresetBase {
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
 
+     
+  DummyPreset todosGetWorkEffort(
+  ) {
+    
+    var el = TodosCall()
+      ..getWorkEffort = todosWithTodosHandle;    
+       
+     
+
+    // final c = 0;
+    final c = DummyDomainDefs.todosWorkEffort.index;
+    pushCall("todosGetWorkEffort", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<WorkEffortProto> todosGetWorkEffortCall(
+  ) async {
+    todosGetWorkEffort();
+    var result= await dispatch();
+    return WorkEffortProto.fromBuffer(result.values.last.slotData);
+  }
+
           
-  
+     
        
 
      
@@ -1122,6 +1225,7 @@ class DummyPreset extends PresetBase {
         ..isDone=StringValue(value: plId);    
 
          
+
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("plsIsDone", "Pipelines", pls, el, c);
@@ -1155,13 +1259,14 @@ class DummyPreset extends PresetBase {
     
 
          
+
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("plsCreateArchivePl", "Pipelines", pls, el, c);
     return this;
   }
 
-  Future<StructData> plsCreateArchivePlCall(
+  Future<SandboxResultProto> plsCreateArchivePlCall(
     String token,
     String assetName,
     String regionId,
@@ -1169,11 +1274,11 @@ class DummyPreset extends PresetBase {
   ) async {
     plsCreateArchivePl(token, assetName, regionId, bindArgs);
     var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
+    return SandboxResultProto.fromBuffer(result.values.last.slotData);
   }
 
           
-  
+     
   
   ChainHandle get merchantWithMerchantOnChainHandle {
     return ChainHandle()
@@ -1191,6 +1296,7 @@ class DummyPreset extends PresetBase {
         ..totalSupply = totalSupply       
       );     
      
+
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("merchantCreateMarketplace", "MerchantOnChain", merchant, el, c);
@@ -1206,8 +1312,32 @@ class DummyPreset extends PresetBase {
   }
 
           
-  
+     
        
+
+     
+  DummyPreset fixturesEcho(
+    StructData input
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..echo=input;    
+
+         
+
+    // final c = 0;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<StructData> fixturesEchoCall(
+    StructData input
+  ) async {
+    fixturesEcho(input);
+    var result= await dispatch();
+    return StructData.fromBuffer(result.values.last.slotData);
+  }
 
      
   DummyPreset fixturesOneNote(
@@ -1217,6 +1347,7 @@ class DummyPreset extends PresetBase {
         ..oneNote=Empty.getDefault();    
 
          
+
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
@@ -1239,6 +1370,7 @@ class DummyPreset extends PresetBase {
         ..someNotes=Int32Value(value: total);    
 
          
+
     // final c = 0;
     final c = DummyDomainDefs.nonDomainField.index;
     pushCall("fixturesSomeNotes", "FixtureObjects", fixtures, el, c);
@@ -1251,29 +1383,6 @@ class DummyPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  DummyPreset fixturesEcho(
-    StructData input
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..echo=input;    
-
-         
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesEcho", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<StructData> fixturesEchoCall(
-    StructData input
-  ) async {
-    fixturesEcho(input);
-    var result= await dispatch();
-    return StructData.fromBuffer(result.values.last.slotData);
   }
 
           
