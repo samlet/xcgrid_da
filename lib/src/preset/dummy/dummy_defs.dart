@@ -51,22 +51,22 @@ enum DummyDomainDefs {
 
     // domain fields ---->
     // note: [NoteAuto, NoteCo]  
+    noteNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     noteClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
     noteImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
     noteAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
-    noteNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     noteTitle,   // google.protobuf.StringValue, NoteCo.name  
     noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
     noteDefaultDomain,   // bluecc.note.NoteProto, NoteCo.getNoteProto
     // memo: [NoteAuto, NoteCo]  
+    memoNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     memoClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
     memoImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
     memoAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
-    memoNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     memoTitle,   // google.protobuf.StringValue, NoteCo.name  
     memoContent,   // google.protobuf.StringValue, NoteCo.getContent  
     memoDefaultDomain,   // bluecc.note.NoteProto, NoteCo.getNoteProto
@@ -85,16 +85,16 @@ enum DummyDomainDefs {
     todosGetTodoProtoList,
 
     // todos: enum values for list muts ------>   
-    // Todos.addTodoById
-    todosAddTodoById,   
-    // Todos.markComplete
-    todosMarkComplete,   
     // Todos.addTodo
     todosAddTodo,   
     // Todos.removeTodo
     todosRemoveTodo,   
     // Todos.updateTodo
-    todosUpdateTodo,           
+    todosUpdateTodo,   
+    // Todos.addTodoById
+    todosAddTodoById,   
+    // Todos.markComplete
+    todosMarkComplete,           
 
 }
 

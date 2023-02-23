@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:xcgrid_da/src/generated/note_co_handle.pb.dart';
 import 'package:xcgrid_da/xcrpc_api.dart';
 
 Future<void> main(List<String> arguments) async {

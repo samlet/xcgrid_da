@@ -25,16 +25,16 @@ enum MilestonesDomainDefs {
     todosGetTodoProtoList,
 
     // todos: enum values for list muts ------>   
-    // Todos.addTodoById
-    todosAddTodoById,   
-    // Todos.markComplete
-    todosMarkComplete,   
     // Todos.addTodo
     todosAddTodo,   
     // Todos.removeTodo
     todosRemoveTodo,   
     // Todos.updateTodo
-    todosUpdateTodo,           
+    todosUpdateTodo,   
+    // Todos.addTodoById
+    todosAddTodoById,   
+    // Todos.markComplete
+    todosMarkComplete,           
 
 }
 

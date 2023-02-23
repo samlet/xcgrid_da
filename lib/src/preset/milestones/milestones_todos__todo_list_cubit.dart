@@ -39,69 +39,6 @@ class MilestonesTodos_TodoListCubit extends Cubit<MilestonesTodoListState> {
 
   
   // add item
-  Future<void> addTodoById(
-      String todoId   
-  ) async {
-    if(state.status==MilestonesTodoListStatus.success){
-      preset!.todosAddTodoById(todoId).todosGetPercentComplete();
-      var slots = await preset!.dispatch();
-      var wrapper = SlotsWrapper(slots);
-
-      TodoProto? result = wrapper.asProto(
-          MilestonesDomainDefs.todosAddTodoById.index,
-          TodoProto.fromBuffer);
-      emit(MilestonesTodoListState.success([...state.items,
-        MilestonesTodoItem(value: result!)]));
-
-      // notify domain cubit
-      repository.emit(AffectsEvent(wrapper));
-    }
-  }
-  
-
-     
-  
-     
-
-  
-
-  
-  // modify item
-  Future<void> markComplete(
-      String assocId   
-  ) async {
-    if(state.status==MilestonesTodoListStatus.success){
-      // update remote item
-      preset!.todosMarkComplete(assocId).todosGetPercentComplete();
-      var slots = await preset!.dispatch();
-      var wrapper = SlotsWrapper(slots);
-
-      TodoProto? result = wrapper.asProto(
-          MilestonesDomainDefs.todosMarkComplete.index,
-          TodoProto.fromBuffer);
-
-      // update local items
-      final items = [...state.items];
-      final itemIndex = items.indexWhere((t) => t.id == assocId);
-      if (itemIndex >= 0) {
-        items[itemIndex] = MilestonesTodoItem(value: result!);
-      } else {
-        print("error, not found $assocId in items");
-        return;
-      }
-
-      emit(MilestonesTodoListState.success(items));
-
-      // notify domain cubit
-      repository.emit(AffectsEvent(wrapper));
-    }
-  }
-     
-  
-     
-
-  
-  // add item
   Future<void> addTodo(
       String title,
       String description   
@@ -171,6 +108,69 @@ class MilestonesTodos_TodoListCubit extends Cubit<MilestonesTodoListState> {
 
       TodoProto? result = wrapper.asProto(
           MilestonesDomainDefs.todosUpdateTodo.index,
+          TodoProto.fromBuffer);
+
+      // update local items
+      final items = [...state.items];
+      final itemIndex = items.indexWhere((t) => t.id == assocId);
+      if (itemIndex >= 0) {
+        items[itemIndex] = MilestonesTodoItem(value: result!);
+      } else {
+        print("error, not found $assocId in items");
+        return;
+      }
+
+      emit(MilestonesTodoListState.success(items));
+
+      // notify domain cubit
+      repository.emit(AffectsEvent(wrapper));
+    }
+  }
+     
+  
+     
+
+  
+  // add item
+  Future<void> addTodoById(
+      String todoId   
+  ) async {
+    if(state.status==MilestonesTodoListStatus.success){
+      preset!.todosAddTodoById(todoId).todosGetPercentComplete();
+      var slots = await preset!.dispatch();
+      var wrapper = SlotsWrapper(slots);
+
+      TodoProto? result = wrapper.asProto(
+          MilestonesDomainDefs.todosAddTodoById.index,
+          TodoProto.fromBuffer);
+      emit(MilestonesTodoListState.success([...state.items,
+        MilestonesTodoItem(value: result!)]));
+
+      // notify domain cubit
+      repository.emit(AffectsEvent(wrapper));
+    }
+  }
+  
+
+     
+  
+     
+
+  
+
+  
+  // modify item
+  Future<void> markComplete(
+      String assocId   
+  ) async {
+    if(state.status==MilestonesTodoListStatus.success){
+      // update remote item
+      preset!.todosMarkComplete(assocId).todosGetPercentComplete();
+      var slots = await preset!.dispatch();
+      var wrapper = SlotsWrapper(slots);
+
+      TodoProto? result = wrapper.asProto(
+          MilestonesDomainDefs.todosMarkComplete.index,
           TodoProto.fromBuffer);
 
       // update local items

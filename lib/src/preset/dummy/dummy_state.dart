@@ -12,93 +12,93 @@ class DummyState extends Equatable {
   final DummyStatus status;
   final DummyPresetKeys presetKeys;
   // Fields for note   
+  final String noteAuthor;   
+  final String noteTitle;   
+  final DateTime noteNoteDateTime;   
+  final String noteContent;   
+  final String noteMoreInfoItemName;   
+  final String noteNoteId;   
+  final String noteMoreInfoItemId;   
+  final String noteMoreInfoUrl;   
   final StructData noteAvailablePersistSlots;   
-  final BuffersData noteImages;   
   final BuffersData noteClob;   
+  final BuffersData noteImages;   
   final BuffersData noteAttachments;   
   final BuffersData noteClobSlot;   
   final BuffersData noteImagesSlot;   
-  final BuffersData noteAttachmentsSlot;   
-  final String noteNoteId;   
-  final String noteContent;   
-  final String noteMoreInfoItemName;   
-  final DateTime noteNoteDateTime;   
-  final String noteMoreInfoItemId;   
-  final String noteTitle;   
-  final String noteAuthor;   
-  final String noteMoreInfoUrl;
+  final BuffersData noteAttachmentsSlot;
   
   // Fields for memo   
+  final String memoAuthor;   
+  final String memoTitle;   
+  final DateTime memoNoteDateTime;   
+  final String memoContent;   
+  final String memoMoreInfoItemName;   
+  final String memoNoteId;   
+  final String memoMoreInfoItemId;   
+  final String memoMoreInfoUrl;   
   final StructData memoAvailablePersistSlots;   
-  final BuffersData memoImages;   
   final BuffersData memoClob;   
+  final BuffersData memoImages;   
   final BuffersData memoAttachments;   
   final BuffersData memoClobSlot;   
   final BuffersData memoImagesSlot;   
-  final BuffersData memoAttachmentsSlot;   
-  final String memoNoteId;   
-  final String memoContent;   
-  final String memoMoreInfoItemName;   
-  final DateTime memoNoteDateTime;   
-  final String memoMoreInfoItemId;   
-  final String memoTitle;   
-  final String memoAuthor;   
-  final String memoMoreInfoUrl;
+  final BuffersData memoAttachmentsSlot;
   
   // Fields for todos   
   final Decimal todosQuantityToProduce;   
+  final String todosRuntimeDataId;   
   final double todosTotalMilliSecondsAllowed;   
-  final String todosTempExprId;   
-  final String todosShowAsEnumId;   
-  final String todosInfoUrl;   
-  final String todosFixedAssetId;   
-  final String todosUniversalId;   
+  final String todosScopeEnumId;   
   final Decimal todosReservNthPPPerc;   
+  final DateTime todosEstimatedStartDate;   
   final Decimal todosReservPersons;   
-  final String todosEstimateCalcMethod;   
-  final String todosServiceLoaderName;   
-  final String todosWorkEffortParentId;   
+  final String todosAccommodationMapId;   
+  final String todosWorkEffortPurposeTypeId;   
+  final String todosSlotId;   
   final int todosPercentComplete;   
-  final DateTime todosCreatedDate;   
+  final String todosServiceLoaderName;   
+  final String todosWorkEffortId;   
   final int todosPriority;   
   final Decimal todosTotalMoneyAllowed;   
-  final String todosScopeEnumId;   
-  final String todosNoteId;   
-  final String todosAccommodationMapId;   
-  final String todosCreatedByUserLogin;   
-  final String todosRuntimeDataId;   
-  final double todosEstimatedMilliSeconds;   
-  final double todosEstimatedSetupMillis;   
-  final String todosSpecialTerms;   
-  final String todosFacilityId;   
-  final DateTime todosEstimatedStartDate;   
-  final Decimal todosQuantityRejected;   
   final String todosMoneyUomId;   
   final String todosLocationDesc;   
-  final int todosTimeTransparency;   
-  final DateTime todosActualCompletionDate;   
-  final double todosActualSetupMillis;   
-  final String todosWorkEffortName;   
-  final Indicator todosSendNotificationEmail;   
-  final String todosCurrentStatusId;   
-  final String todosSlotId;   
-  final String todosWorkEffortPurposeTypeId;   
-  final String todosWorkEffortId;   
-  final String todosAccommodationSpotId;   
-  final String todosLastModifiedByUserLogin;   
+  final String todosFixedAssetId;   
+  final String todosFacilityId;   
+  final String todosUniversalId;   
+  final String todosShowAsEnumId;   
+  final String todosInfoUrl;   
   final DateTime todosLastStatusUpdate;   
+  final double todosEstimatedMilliSeconds;   
+  final double todosEstimatedSetupMillis;   
+  final String todosCreatedByUserLogin;   
+  final String todosSpecialTerms;   
   final DateTime todosEstimatedCompletionDate;   
-  final Decimal todosReserv2ndPPPerc;   
+  final Decimal todosQuantityRejected;   
+  final int todosTimeTransparency;   
   final String todosDescription;   
-  final Indicator todosConfirmation;   
-  final DateTime todosLastModifiedDate;   
+  final double todosActualSetupMillis;   
+  final String todosNoteId;   
+  final Indicator todosSendNotificationEmail;   
   final String todosWorkEffortTypeId;   
+  final String todosLastModifiedByUserLogin;   
+  final String todosCurrentStatusId;   
+  final String todosWorkEffortParentId;   
+  final String todosAccommodationSpotId;   
+  final String todosEstimateCalcMethod;   
+  final Decimal todosReserv2ndPPPerc;   
+  final DateTime todosCreatedDate;   
+  final DateTime todosActualCompletionDate;   
+  final DateTime todosLastModifiedDate;   
+  final String todosWorkEffortName;   
+  final Indicator todosConfirmation;   
   final int todosRevisionNumber;   
-  final DateTime todosActualStartDate;   
   final String todosSourceReferenceId;   
-  final int todosSequenceNum;   
-  final double todosActualMilliSeconds;   
   final String todosRecurrenceInfoId;   
+  final String todosTempExprId;   
+  final int todosSequenceNum;   
+  final DateTime todosActualStartDate;   
+  final double todosActualMilliSeconds;   
   final Decimal todosQuantityProduced;   
   final String todosName;   
   final String todosTypeId;   
@@ -108,91 +108,91 @@ class DummyState extends Equatable {
 
   DummyState({
     this.status = DummyStatus.initial,
+    this.noteAuthor = '',
+    this.noteTitle = '',
+    DateTime? noteNoteDateTime,
+    this.noteContent = '',
+    this.noteMoreInfoItemName = '',
+    this.noteNoteId = '',
+    this.noteMoreInfoItemId = '',
+    this.noteMoreInfoUrl = '',
     StructData? noteAvailablePersistSlots,
-    BuffersData? noteImages,
     BuffersData? noteClob,
+    BuffersData? noteImages,
     BuffersData? noteAttachments,
     BuffersData? noteClobSlot,
     BuffersData? noteImagesSlot,
-    BuffersData? noteAttachmentsSlot,
-    this.noteNoteId = '',
-    this.noteContent = '',
-    this.noteMoreInfoItemName = '',
-    DateTime? noteNoteDateTime,
-    this.noteMoreInfoItemId = '',
-    this.noteTitle = '',
-    this.noteAuthor = '',
-    this.noteMoreInfoUrl = '',   
+    BuffersData? noteAttachmentsSlot,   
     
+    this.memoAuthor = '',
+    this.memoTitle = '',
+    DateTime? memoNoteDateTime,
+    this.memoContent = '',
+    this.memoMoreInfoItemName = '',
+    this.memoNoteId = '',
+    this.memoMoreInfoItemId = '',
+    this.memoMoreInfoUrl = '',
     StructData? memoAvailablePersistSlots,
-    BuffersData? memoImages,
     BuffersData? memoClob,
+    BuffersData? memoImages,
     BuffersData? memoAttachments,
     BuffersData? memoClobSlot,
     BuffersData? memoImagesSlot,
-    BuffersData? memoAttachmentsSlot,
-    this.memoNoteId = '',
-    this.memoContent = '',
-    this.memoMoreInfoItemName = '',
-    DateTime? memoNoteDateTime,
-    this.memoMoreInfoItemId = '',
-    this.memoTitle = '',
-    this.memoAuthor = '',
-    this.memoMoreInfoUrl = '',   
+    BuffersData? memoAttachmentsSlot,   
     
     Decimal? todosQuantityToProduce,
+    this.todosRuntimeDataId = '',
     this.todosTotalMilliSecondsAllowed = 0.0,
-    this.todosTempExprId = '',
-    this.todosShowAsEnumId = '',
-    this.todosInfoUrl = '',
-    this.todosFixedAssetId = '',
-    this.todosUniversalId = '',
+    this.todosScopeEnumId = '',
     Decimal? todosReservNthPPPerc,
+    DateTime? todosEstimatedStartDate,
     Decimal? todosReservPersons,
-    this.todosEstimateCalcMethod = '',
-    this.todosServiceLoaderName = '',
-    this.todosWorkEffortParentId = '',
+    this.todosAccommodationMapId = '',
+    this.todosWorkEffortPurposeTypeId = '',
+    this.todosSlotId = '',
     this.todosPercentComplete = 0,
-    DateTime? todosCreatedDate,
+    this.todosServiceLoaderName = '',
+    this.todosWorkEffortId = '',
     this.todosPriority = 0,
     Decimal? todosTotalMoneyAllowed,
-    this.todosScopeEnumId = '',
-    this.todosNoteId = '',
-    this.todosAccommodationMapId = '',
-    this.todosCreatedByUserLogin = '',
-    this.todosRuntimeDataId = '',
-    this.todosEstimatedMilliSeconds = 0.0,
-    this.todosEstimatedSetupMillis = 0.0,
-    this.todosSpecialTerms = '',
-    this.todosFacilityId = '',
-    DateTime? todosEstimatedStartDate,
-    Decimal? todosQuantityRejected,
     this.todosMoneyUomId = '',
     this.todosLocationDesc = '',
-    this.todosTimeTransparency = 0,
-    DateTime? todosActualCompletionDate,
-    this.todosActualSetupMillis = 0.0,
-    this.todosWorkEffortName = '',
-    this.todosSendNotificationEmail = Indicator.NO,
-    this.todosCurrentStatusId = '',
-    this.todosSlotId = '',
-    this.todosWorkEffortPurposeTypeId = '',
-    this.todosWorkEffortId = '',
-    this.todosAccommodationSpotId = '',
-    this.todosLastModifiedByUserLogin = '',
+    this.todosFixedAssetId = '',
+    this.todosFacilityId = '',
+    this.todosUniversalId = '',
+    this.todosShowAsEnumId = '',
+    this.todosInfoUrl = '',
     DateTime? todosLastStatusUpdate,
+    this.todosEstimatedMilliSeconds = 0.0,
+    this.todosEstimatedSetupMillis = 0.0,
+    this.todosCreatedByUserLogin = '',
+    this.todosSpecialTerms = '',
     DateTime? todosEstimatedCompletionDate,
-    Decimal? todosReserv2ndPPPerc,
+    Decimal? todosQuantityRejected,
+    this.todosTimeTransparency = 0,
     this.todosDescription = '',
-    this.todosConfirmation = Indicator.NO,
-    DateTime? todosLastModifiedDate,
+    this.todosActualSetupMillis = 0.0,
+    this.todosNoteId = '',
+    this.todosSendNotificationEmail = Indicator.NO,
     this.todosWorkEffortTypeId = '',
+    this.todosLastModifiedByUserLogin = '',
+    this.todosCurrentStatusId = '',
+    this.todosWorkEffortParentId = '',
+    this.todosAccommodationSpotId = '',
+    this.todosEstimateCalcMethod = '',
+    Decimal? todosReserv2ndPPPerc,
+    DateTime? todosCreatedDate,
+    DateTime? todosActualCompletionDate,
+    DateTime? todosLastModifiedDate,
+    this.todosWorkEffortName = '',
+    this.todosConfirmation = Indicator.NO,
     this.todosRevisionNumber = 0,
-    DateTime? todosActualStartDate,
     this.todosSourceReferenceId = '',
-    this.todosSequenceNum = 0,
-    this.todosActualMilliSeconds = 0.0,
     this.todosRecurrenceInfoId = '',
+    this.todosTempExprId = '',
+    this.todosSequenceNum = 0,
+    DateTime? todosActualStartDate,
+    this.todosActualMilliSeconds = 0.0,
     Decimal? todosQuantityProduced,
     this.todosName = '',
     this.todosTypeId = '',
@@ -201,35 +201,35 @@ class DummyState extends Equatable {
     
     DummyPresetKeys? presetKeys
   }):
+      noteNoteDateTime = noteNoteDateTime??DateTime(0),
       noteAvailablePersistSlots = noteAvailablePersistSlots??StructData.getDefault(),
-      noteImages = noteImages??BuffersData.getDefault(),
       noteClob = noteClob??BuffersData.getDefault(),
+      noteImages = noteImages??BuffersData.getDefault(),
       noteAttachments = noteAttachments??BuffersData.getDefault(),
       noteClobSlot = noteClobSlot??BuffersData.getDefault(),
       noteImagesSlot = noteImagesSlot??BuffersData.getDefault(),
-      noteAttachmentsSlot = noteAttachmentsSlot??BuffersData.getDefault(),
-      noteNoteDateTime = noteNoteDateTime??DateTime(0),   
+      noteAttachmentsSlot = noteAttachmentsSlot??BuffersData.getDefault(),   
       
+      memoNoteDateTime = memoNoteDateTime??DateTime(0),
       memoAvailablePersistSlots = memoAvailablePersistSlots??StructData.getDefault(),
-      memoImages = memoImages??BuffersData.getDefault(),
       memoClob = memoClob??BuffersData.getDefault(),
+      memoImages = memoImages??BuffersData.getDefault(),
       memoAttachments = memoAttachments??BuffersData.getDefault(),
       memoClobSlot = memoClobSlot??BuffersData.getDefault(),
       memoImagesSlot = memoImagesSlot??BuffersData.getDefault(),
-      memoAttachmentsSlot = memoAttachmentsSlot??BuffersData.getDefault(),
-      memoNoteDateTime = memoNoteDateTime??DateTime(0),   
+      memoAttachmentsSlot = memoAttachmentsSlot??BuffersData.getDefault(),   
       
       todosQuantityToProduce = todosQuantityToProduce??Decimal.zero,
       todosReservNthPPPerc = todosReservNthPPPerc??Decimal.zero,
-      todosReservPersons = todosReservPersons??Decimal.zero,
-      todosCreatedDate = todosCreatedDate??DateTime(0),
-      todosTotalMoneyAllowed = todosTotalMoneyAllowed??Decimal.zero,
       todosEstimatedStartDate = todosEstimatedStartDate??DateTime(0),
-      todosQuantityRejected = todosQuantityRejected??Decimal.zero,
-      todosActualCompletionDate = todosActualCompletionDate??DateTime(0),
+      todosReservPersons = todosReservPersons??Decimal.zero,
+      todosTotalMoneyAllowed = todosTotalMoneyAllowed??Decimal.zero,
       todosLastStatusUpdate = todosLastStatusUpdate??DateTime(0),
       todosEstimatedCompletionDate = todosEstimatedCompletionDate??DateTime(0),
+      todosQuantityRejected = todosQuantityRejected??Decimal.zero,
       todosReserv2ndPPPerc = todosReserv2ndPPPerc??Decimal.zero,
+      todosCreatedDate = todosCreatedDate??DateTime(0),
+      todosActualCompletionDate = todosActualCompletionDate??DateTime(0),
       todosLastModifiedDate = todosLastModifiedDate??DateTime(0),
       todosActualStartDate = todosActualStartDate??DateTime(0),
       todosQuantityProduced = todosQuantityProduced??Decimal.zero,   
@@ -239,91 +239,91 @@ class DummyState extends Equatable {
   DummyState copyWith({ DummyStatus? status, 
     DummyPresetKeys? presetKeys,
     SlotsWrapper? slots}) {
+    String? noteAuthor;
+    String? noteTitle;
+    DateTime? noteNoteDateTime;
+    String? noteContent;
+    String? noteMoreInfoItemName;
+    String? noteNoteId;
+    String? noteMoreInfoItemId;
+    String? noteMoreInfoUrl;
     StructData? noteAvailablePersistSlots;
-    BuffersData? noteImages;
     BuffersData? noteClob;
+    BuffersData? noteImages;
     BuffersData? noteAttachments;
     BuffersData? noteClobSlot;
     BuffersData? noteImagesSlot;
     BuffersData? noteAttachmentsSlot;
-    String? noteNoteId;
-    String? noteContent;
-    String? noteMoreInfoItemName;
-    DateTime? noteNoteDateTime;
-    String? noteMoreInfoItemId;
-    String? noteTitle;
-    String? noteAuthor;
-    String? noteMoreInfoUrl;
     
+    String? memoAuthor;
+    String? memoTitle;
+    DateTime? memoNoteDateTime;
+    String? memoContent;
+    String? memoMoreInfoItemName;
+    String? memoNoteId;
+    String? memoMoreInfoItemId;
+    String? memoMoreInfoUrl;
     StructData? memoAvailablePersistSlots;
-    BuffersData? memoImages;
     BuffersData? memoClob;
+    BuffersData? memoImages;
     BuffersData? memoAttachments;
     BuffersData? memoClobSlot;
     BuffersData? memoImagesSlot;
     BuffersData? memoAttachmentsSlot;
-    String? memoNoteId;
-    String? memoContent;
-    String? memoMoreInfoItemName;
-    DateTime? memoNoteDateTime;
-    String? memoMoreInfoItemId;
-    String? memoTitle;
-    String? memoAuthor;
-    String? memoMoreInfoUrl;
     
     Decimal? todosQuantityToProduce;
+    String? todosRuntimeDataId;
     double? todosTotalMilliSecondsAllowed;
-    String? todosTempExprId;
-    String? todosShowAsEnumId;
-    String? todosInfoUrl;
-    String? todosFixedAssetId;
-    String? todosUniversalId;
+    String? todosScopeEnumId;
     Decimal? todosReservNthPPPerc;
+    DateTime? todosEstimatedStartDate;
     Decimal? todosReservPersons;
-    String? todosEstimateCalcMethod;
-    String? todosServiceLoaderName;
-    String? todosWorkEffortParentId;
+    String? todosAccommodationMapId;
+    String? todosWorkEffortPurposeTypeId;
+    String? todosSlotId;
     int? todosPercentComplete;
-    DateTime? todosCreatedDate;
+    String? todosServiceLoaderName;
+    String? todosWorkEffortId;
     int? todosPriority;
     Decimal? todosTotalMoneyAllowed;
-    String? todosScopeEnumId;
-    String? todosNoteId;
-    String? todosAccommodationMapId;
-    String? todosCreatedByUserLogin;
-    String? todosRuntimeDataId;
-    double? todosEstimatedMilliSeconds;
-    double? todosEstimatedSetupMillis;
-    String? todosSpecialTerms;
-    String? todosFacilityId;
-    DateTime? todosEstimatedStartDate;
-    Decimal? todosQuantityRejected;
     String? todosMoneyUomId;
     String? todosLocationDesc;
-    int? todosTimeTransparency;
-    DateTime? todosActualCompletionDate;
-    double? todosActualSetupMillis;
-    String? todosWorkEffortName;
-    Indicator? todosSendNotificationEmail;
-    String? todosCurrentStatusId;
-    String? todosSlotId;
-    String? todosWorkEffortPurposeTypeId;
-    String? todosWorkEffortId;
-    String? todosAccommodationSpotId;
-    String? todosLastModifiedByUserLogin;
+    String? todosFixedAssetId;
+    String? todosFacilityId;
+    String? todosUniversalId;
+    String? todosShowAsEnumId;
+    String? todosInfoUrl;
     DateTime? todosLastStatusUpdate;
+    double? todosEstimatedMilliSeconds;
+    double? todosEstimatedSetupMillis;
+    String? todosCreatedByUserLogin;
+    String? todosSpecialTerms;
     DateTime? todosEstimatedCompletionDate;
-    Decimal? todosReserv2ndPPPerc;
+    Decimal? todosQuantityRejected;
+    int? todosTimeTransparency;
     String? todosDescription;
-    Indicator? todosConfirmation;
-    DateTime? todosLastModifiedDate;
+    double? todosActualSetupMillis;
+    String? todosNoteId;
+    Indicator? todosSendNotificationEmail;
     String? todosWorkEffortTypeId;
+    String? todosLastModifiedByUserLogin;
+    String? todosCurrentStatusId;
+    String? todosWorkEffortParentId;
+    String? todosAccommodationSpotId;
+    String? todosEstimateCalcMethod;
+    Decimal? todosReserv2ndPPPerc;
+    DateTime? todosCreatedDate;
+    DateTime? todosActualCompletionDate;
+    DateTime? todosLastModifiedDate;
+    String? todosWorkEffortName;
+    Indicator? todosConfirmation;
     int? todosRevisionNumber;
-    DateTime? todosActualStartDate;
     String? todosSourceReferenceId;
-    int? todosSequenceNum;
-    double? todosActualMilliSeconds;
     String? todosRecurrenceInfoId;
+    String? todosTempExprId;
+    int? todosSequenceNum;
+    DateTime? todosActualStartDate;
+    double? todosActualMilliSeconds;
     Decimal? todosQuantityProduced;
     String? todosName;
     String? todosTypeId;
@@ -333,28 +333,28 @@ class DummyState extends Equatable {
 
     // From complicated fields  
       
-    BuffersMap? notePersistSlots = slots?.asProto(
-        DummyDomainDefs.notePersistSlots.index, BuffersMap.fromBuffer);    
-    if (notePersistSlots != null) {
-      
-      noteImages = notePersistSlots.values['images'];
-      noteClob = notePersistSlots.values['clob'];
-      noteAttachments = notePersistSlots.values['attachments'];  
-         
-    }
-      
     NoteProto? noteNote = slots?.asProto(
         DummyDomainDefs.noteNote.index, NoteProto.fromBuffer);    
     if (noteNote != null) {
       
-      noteNoteId = noteNote.noteId;
+      noteAuthor = noteNote.author;
+      noteTitle = noteNote.title;
+      noteNoteDateTime = noteNote.noteDateTime.dt;
       noteContent = noteNote.content;
       noteMoreInfoItemName = noteNote.moreInfoItemName;
-      noteNoteDateTime = noteNote.noteDateTime.dt;
+      noteNoteId = noteNote.noteId;
       noteMoreInfoItemId = noteNote.moreInfoItemId;
-      noteTitle = noteNote.title;
-      noteAuthor = noteNote.author;
       noteMoreInfoUrl = noteNote.moreInfoUrl;
+         
+    }
+      
+    BuffersMap? notePersistSlots = slots?.asProto(
+        DummyDomainDefs.notePersistSlots.index, BuffersMap.fromBuffer);    
+    if (notePersistSlots != null) {
+      
+      noteClob = notePersistSlots.values['clob'];
+      noteImages = notePersistSlots.values['images'];
+      noteAttachments = notePersistSlots.values['attachments'];  
          
     }
       
@@ -362,41 +362,41 @@ class DummyState extends Equatable {
         DummyDomainDefs.noteDefaultDomain.index, NoteProto.fromBuffer);    
     if (noteDefaultDomain != null) {
       
-      noteNoteId = noteDefaultDomain.noteId;
+      noteAuthor = noteDefaultDomain.author;
+      noteTitle = noteDefaultDomain.title;
+      noteNoteDateTime = noteDefaultDomain.noteDateTime.dt;
       noteContent = noteDefaultDomain.content;
       noteMoreInfoItemName = noteDefaultDomain.moreInfoItemName;
-      noteNoteDateTime = noteDefaultDomain.noteDateTime.dt;
+      noteNoteId = noteDefaultDomain.noteId;
       noteMoreInfoItemId = noteDefaultDomain.moreInfoItemId;
-      noteTitle = noteDefaultDomain.title;
-      noteAuthor = noteDefaultDomain.author;
       noteMoreInfoUrl = noteDefaultDomain.moreInfoUrl;
          
     }
         
       
       
-    BuffersMap? memoPersistSlots = slots?.asProto(
-        DummyDomainDefs.memoPersistSlots.index, BuffersMap.fromBuffer);    
-    if (memoPersistSlots != null) {
-      
-      memoImages = memoPersistSlots.values['images'];
-      memoClob = memoPersistSlots.values['clob'];
-      memoAttachments = memoPersistSlots.values['attachments'];  
-         
-    }
-      
     NoteProto? memoNote = slots?.asProto(
         DummyDomainDefs.memoNote.index, NoteProto.fromBuffer);    
     if (memoNote != null) {
       
-      memoNoteId = memoNote.noteId;
+      memoAuthor = memoNote.author;
+      memoTitle = memoNote.title;
+      memoNoteDateTime = memoNote.noteDateTime.dt;
       memoContent = memoNote.content;
       memoMoreInfoItemName = memoNote.moreInfoItemName;
-      memoNoteDateTime = memoNote.noteDateTime.dt;
+      memoNoteId = memoNote.noteId;
       memoMoreInfoItemId = memoNote.moreInfoItemId;
-      memoTitle = memoNote.title;
-      memoAuthor = memoNote.author;
       memoMoreInfoUrl = memoNote.moreInfoUrl;
+         
+    }
+      
+    BuffersMap? memoPersistSlots = slots?.asProto(
+        DummyDomainDefs.memoPersistSlots.index, BuffersMap.fromBuffer);    
+    if (memoPersistSlots != null) {
+      
+      memoClob = memoPersistSlots.values['clob'];
+      memoImages = memoPersistSlots.values['images'];
+      memoAttachments = memoPersistSlots.values['attachments'];  
          
     }
       
@@ -404,13 +404,13 @@ class DummyState extends Equatable {
         DummyDomainDefs.memoDefaultDomain.index, NoteProto.fromBuffer);    
     if (memoDefaultDomain != null) {
       
-      memoNoteId = memoDefaultDomain.noteId;
+      memoAuthor = memoDefaultDomain.author;
+      memoTitle = memoDefaultDomain.title;
+      memoNoteDateTime = memoDefaultDomain.noteDateTime.dt;
       memoContent = memoDefaultDomain.content;
       memoMoreInfoItemName = memoDefaultDomain.moreInfoItemName;
-      memoNoteDateTime = memoDefaultDomain.noteDateTime.dt;
+      memoNoteId = memoDefaultDomain.noteId;
       memoMoreInfoItemId = memoDefaultDomain.moreInfoItemId;
-      memoTitle = memoDefaultDomain.title;
-      memoAuthor = memoDefaultDomain.author;
       memoMoreInfoUrl = memoDefaultDomain.moreInfoUrl;
          
     }
@@ -422,58 +422,58 @@ class DummyState extends Equatable {
     if (todosWorkEffort != null) {
       
       todosQuantityToProduce = todosWorkEffort.quantityToProduce.decimal;
+      todosRuntimeDataId = todosWorkEffort.runtimeDataId;
       todosTotalMilliSecondsAllowed = todosWorkEffort.totalMilliSecondsAllowed;
-      todosTempExprId = todosWorkEffort.tempExprId;
-      todosShowAsEnumId = todosWorkEffort.showAsEnumId;
-      todosInfoUrl = todosWorkEffort.infoUrl;
-      todosFixedAssetId = todosWorkEffort.fixedAssetId;
-      todosUniversalId = todosWorkEffort.universalId;
+      todosScopeEnumId = todosWorkEffort.scopeEnumId;
       todosReservNthPPPerc = todosWorkEffort.reservNthPPPerc.decimal;
+      todosEstimatedStartDate = todosWorkEffort.estimatedStartDate.dt;
       todosReservPersons = todosWorkEffort.reservPersons.decimal;
-      todosEstimateCalcMethod = todosWorkEffort.estimateCalcMethod;
-      todosServiceLoaderName = todosWorkEffort.serviceLoaderName;
-      todosWorkEffortParentId = todosWorkEffort.workEffortParentId;
+      todosAccommodationMapId = todosWorkEffort.accommodationMapId;
+      todosWorkEffortPurposeTypeId = todosWorkEffort.workEffortPurposeTypeId;
+      todosSlotId = todosWorkEffort.slotId;
       todosPercentComplete = todosWorkEffort.percentComplete.toInt();
-      todosCreatedDate = todosWorkEffort.createdDate.dt;
+      todosServiceLoaderName = todosWorkEffort.serviceLoaderName;
+      todosWorkEffortId = todosWorkEffort.workEffortId;
       todosPriority = todosWorkEffort.priority.toInt();
       todosTotalMoneyAllowed = todosWorkEffort.totalMoneyAllowed.decimal;
-      todosScopeEnumId = todosWorkEffort.scopeEnumId;
-      todosNoteId = todosWorkEffort.noteId;
-      todosAccommodationMapId = todosWorkEffort.accommodationMapId;
-      todosCreatedByUserLogin = todosWorkEffort.createdByUserLogin;
-      todosRuntimeDataId = todosWorkEffort.runtimeDataId;
-      todosEstimatedMilliSeconds = todosWorkEffort.estimatedMilliSeconds;
-      todosEstimatedSetupMillis = todosWorkEffort.estimatedSetupMillis;
-      todosSpecialTerms = todosWorkEffort.specialTerms;
-      todosFacilityId = todosWorkEffort.facilityId;
-      todosEstimatedStartDate = todosWorkEffort.estimatedStartDate.dt;
-      todosQuantityRejected = todosWorkEffort.quantityRejected.decimal;
       todosMoneyUomId = todosWorkEffort.moneyUomId;
       todosLocationDesc = todosWorkEffort.locationDesc;
-      todosTimeTransparency = todosWorkEffort.timeTransparency.toInt();
-      todosActualCompletionDate = todosWorkEffort.actualCompletionDate.dt;
-      todosActualSetupMillis = todosWorkEffort.actualSetupMillis;
-      todosWorkEffortName = todosWorkEffort.workEffortName;
-      todosSendNotificationEmail = todosWorkEffort.sendNotificationEmail;
-      todosCurrentStatusId = todosWorkEffort.currentStatusId;
-      todosSlotId = todosWorkEffort.slotId;
-      todosWorkEffortPurposeTypeId = todosWorkEffort.workEffortPurposeTypeId;
-      todosWorkEffortId = todosWorkEffort.workEffortId;
-      todosAccommodationSpotId = todosWorkEffort.accommodationSpotId;
-      todosLastModifiedByUserLogin = todosWorkEffort.lastModifiedByUserLogin;
+      todosFixedAssetId = todosWorkEffort.fixedAssetId;
+      todosFacilityId = todosWorkEffort.facilityId;
+      todosUniversalId = todosWorkEffort.universalId;
+      todosShowAsEnumId = todosWorkEffort.showAsEnumId;
+      todosInfoUrl = todosWorkEffort.infoUrl;
       todosLastStatusUpdate = todosWorkEffort.lastStatusUpdate.dt;
+      todosEstimatedMilliSeconds = todosWorkEffort.estimatedMilliSeconds;
+      todosEstimatedSetupMillis = todosWorkEffort.estimatedSetupMillis;
+      todosCreatedByUserLogin = todosWorkEffort.createdByUserLogin;
+      todosSpecialTerms = todosWorkEffort.specialTerms;
       todosEstimatedCompletionDate = todosWorkEffort.estimatedCompletionDate.dt;
-      todosReserv2ndPPPerc = todosWorkEffort.reserv2ndPPPerc.decimal;
+      todosQuantityRejected = todosWorkEffort.quantityRejected.decimal;
+      todosTimeTransparency = todosWorkEffort.timeTransparency.toInt();
       todosDescription = todosWorkEffort.description;
-      todosConfirmation = todosWorkEffort.confirmation;
-      todosLastModifiedDate = todosWorkEffort.lastModifiedDate.dt;
+      todosActualSetupMillis = todosWorkEffort.actualSetupMillis;
+      todosNoteId = todosWorkEffort.noteId;
+      todosSendNotificationEmail = todosWorkEffort.sendNotificationEmail;
       todosWorkEffortTypeId = todosWorkEffort.workEffortTypeId;
+      todosLastModifiedByUserLogin = todosWorkEffort.lastModifiedByUserLogin;
+      todosCurrentStatusId = todosWorkEffort.currentStatusId;
+      todosWorkEffortParentId = todosWorkEffort.workEffortParentId;
+      todosAccommodationSpotId = todosWorkEffort.accommodationSpotId;
+      todosEstimateCalcMethod = todosWorkEffort.estimateCalcMethod;
+      todosReserv2ndPPPerc = todosWorkEffort.reserv2ndPPPerc.decimal;
+      todosCreatedDate = todosWorkEffort.createdDate.dt;
+      todosActualCompletionDate = todosWorkEffort.actualCompletionDate.dt;
+      todosLastModifiedDate = todosWorkEffort.lastModifiedDate.dt;
+      todosWorkEffortName = todosWorkEffort.workEffortName;
+      todosConfirmation = todosWorkEffort.confirmation;
       todosRevisionNumber = todosWorkEffort.revisionNumber.toInt();
-      todosActualStartDate = todosWorkEffort.actualStartDate.dt;
       todosSourceReferenceId = todosWorkEffort.sourceReferenceId;
-      todosSequenceNum = todosWorkEffort.sequenceNum.toInt();
-      todosActualMilliSeconds = todosWorkEffort.actualMilliSeconds;
       todosRecurrenceInfoId = todosWorkEffort.recurrenceInfoId;
+      todosTempExprId = todosWorkEffort.tempExprId;
+      todosSequenceNum = todosWorkEffort.sequenceNum.toInt();
+      todosActualStartDate = todosWorkEffort.actualStartDate.dt;
+      todosActualMilliSeconds = todosWorkEffort.actualMilliSeconds;
       todosQuantityProduced = todosWorkEffort.quantityProduced.decimal;
          
     }
@@ -482,13 +482,13 @@ class DummyState extends Equatable {
         DummyDomainDefs.todosDefaultDomain.index, TodosProto.fromBuffer);    
     if (todosDefaultDomain != null) {
       
-      todosDescription = todosDefaultDomain.description;
       todosName = todosDefaultDomain.name;
       todosTypeId = todosDefaultDomain.typeId;
       todosPercentComplete = todosDefaultDomain.percentComplete.toInt();
+      todosDescription = todosDefaultDomain.description;
       todosId = todosDefaultDomain.id;
-      todosLastStatusUpdate = todosDefaultDomain.lastStatusUpdate.dt;
       todosStatus = todosDefaultDomain.status;
+      todosLastStatusUpdate = todosDefaultDomain.lastStatusUpdate.dt;
          
     }
         
@@ -512,91 +512,91 @@ class DummyState extends Equatable {
     return DummyState(
       status: status ?? this.status,
       presetKeys: presetKeys ?? this.presetKeys,
+      noteAuthor: noteAuthor ?? this.noteAuthor,
+      noteTitle: noteTitle ?? this.noteTitle,
+      noteNoteDateTime: noteNoteDateTime ?? this.noteNoteDateTime,
+      noteContent: noteContent ?? this.noteContent,
+      noteMoreInfoItemName: noteMoreInfoItemName ?? this.noteMoreInfoItemName,
+      noteNoteId: noteNoteId ?? this.noteNoteId,
+      noteMoreInfoItemId: noteMoreInfoItemId ?? this.noteMoreInfoItemId,
+      noteMoreInfoUrl: noteMoreInfoUrl ?? this.noteMoreInfoUrl,
       noteAvailablePersistSlots: noteAvailablePersistSlots ?? this.noteAvailablePersistSlots,
-      noteImages: noteImages ?? this.noteImages,
       noteClob: noteClob ?? this.noteClob,
+      noteImages: noteImages ?? this.noteImages,
       noteAttachments: noteAttachments ?? this.noteAttachments,
       noteClobSlot: noteClobSlot ?? this.noteClobSlot,
       noteImagesSlot: noteImagesSlot ?? this.noteImagesSlot,
       noteAttachmentsSlot: noteAttachmentsSlot ?? this.noteAttachmentsSlot,
-      noteNoteId: noteNoteId ?? this.noteNoteId,
-      noteContent: noteContent ?? this.noteContent,
-      noteMoreInfoItemName: noteMoreInfoItemName ?? this.noteMoreInfoItemName,
-      noteNoteDateTime: noteNoteDateTime ?? this.noteNoteDateTime,
-      noteMoreInfoItemId: noteMoreInfoItemId ?? this.noteMoreInfoItemId,
-      noteTitle: noteTitle ?? this.noteTitle,
-      noteAuthor: noteAuthor ?? this.noteAuthor,
-      noteMoreInfoUrl: noteMoreInfoUrl ?? this.noteMoreInfoUrl,
       
+      memoAuthor: memoAuthor ?? this.memoAuthor,
+      memoTitle: memoTitle ?? this.memoTitle,
+      memoNoteDateTime: memoNoteDateTime ?? this.memoNoteDateTime,
+      memoContent: memoContent ?? this.memoContent,
+      memoMoreInfoItemName: memoMoreInfoItemName ?? this.memoMoreInfoItemName,
+      memoNoteId: memoNoteId ?? this.memoNoteId,
+      memoMoreInfoItemId: memoMoreInfoItemId ?? this.memoMoreInfoItemId,
+      memoMoreInfoUrl: memoMoreInfoUrl ?? this.memoMoreInfoUrl,
       memoAvailablePersistSlots: memoAvailablePersistSlots ?? this.memoAvailablePersistSlots,
-      memoImages: memoImages ?? this.memoImages,
       memoClob: memoClob ?? this.memoClob,
+      memoImages: memoImages ?? this.memoImages,
       memoAttachments: memoAttachments ?? this.memoAttachments,
       memoClobSlot: memoClobSlot ?? this.memoClobSlot,
       memoImagesSlot: memoImagesSlot ?? this.memoImagesSlot,
       memoAttachmentsSlot: memoAttachmentsSlot ?? this.memoAttachmentsSlot,
-      memoNoteId: memoNoteId ?? this.memoNoteId,
-      memoContent: memoContent ?? this.memoContent,
-      memoMoreInfoItemName: memoMoreInfoItemName ?? this.memoMoreInfoItemName,
-      memoNoteDateTime: memoNoteDateTime ?? this.memoNoteDateTime,
-      memoMoreInfoItemId: memoMoreInfoItemId ?? this.memoMoreInfoItemId,
-      memoTitle: memoTitle ?? this.memoTitle,
-      memoAuthor: memoAuthor ?? this.memoAuthor,
-      memoMoreInfoUrl: memoMoreInfoUrl ?? this.memoMoreInfoUrl,
       
       todosQuantityToProduce: todosQuantityToProduce ?? this.todosQuantityToProduce,
+      todosRuntimeDataId: todosRuntimeDataId ?? this.todosRuntimeDataId,
       todosTotalMilliSecondsAllowed: todosTotalMilliSecondsAllowed ?? this.todosTotalMilliSecondsAllowed,
-      todosTempExprId: todosTempExprId ?? this.todosTempExprId,
-      todosShowAsEnumId: todosShowAsEnumId ?? this.todosShowAsEnumId,
-      todosInfoUrl: todosInfoUrl ?? this.todosInfoUrl,
-      todosFixedAssetId: todosFixedAssetId ?? this.todosFixedAssetId,
-      todosUniversalId: todosUniversalId ?? this.todosUniversalId,
+      todosScopeEnumId: todosScopeEnumId ?? this.todosScopeEnumId,
       todosReservNthPPPerc: todosReservNthPPPerc ?? this.todosReservNthPPPerc,
+      todosEstimatedStartDate: todosEstimatedStartDate ?? this.todosEstimatedStartDate,
       todosReservPersons: todosReservPersons ?? this.todosReservPersons,
-      todosEstimateCalcMethod: todosEstimateCalcMethod ?? this.todosEstimateCalcMethod,
-      todosServiceLoaderName: todosServiceLoaderName ?? this.todosServiceLoaderName,
-      todosWorkEffortParentId: todosWorkEffortParentId ?? this.todosWorkEffortParentId,
+      todosAccommodationMapId: todosAccommodationMapId ?? this.todosAccommodationMapId,
+      todosWorkEffortPurposeTypeId: todosWorkEffortPurposeTypeId ?? this.todosWorkEffortPurposeTypeId,
+      todosSlotId: todosSlotId ?? this.todosSlotId,
       todosPercentComplete: todosPercentComplete ?? this.todosPercentComplete,
-      todosCreatedDate: todosCreatedDate ?? this.todosCreatedDate,
+      todosServiceLoaderName: todosServiceLoaderName ?? this.todosServiceLoaderName,
+      todosWorkEffortId: todosWorkEffortId ?? this.todosWorkEffortId,
       todosPriority: todosPriority ?? this.todosPriority,
       todosTotalMoneyAllowed: todosTotalMoneyAllowed ?? this.todosTotalMoneyAllowed,
-      todosScopeEnumId: todosScopeEnumId ?? this.todosScopeEnumId,
-      todosNoteId: todosNoteId ?? this.todosNoteId,
-      todosAccommodationMapId: todosAccommodationMapId ?? this.todosAccommodationMapId,
-      todosCreatedByUserLogin: todosCreatedByUserLogin ?? this.todosCreatedByUserLogin,
-      todosRuntimeDataId: todosRuntimeDataId ?? this.todosRuntimeDataId,
-      todosEstimatedMilliSeconds: todosEstimatedMilliSeconds ?? this.todosEstimatedMilliSeconds,
-      todosEstimatedSetupMillis: todosEstimatedSetupMillis ?? this.todosEstimatedSetupMillis,
-      todosSpecialTerms: todosSpecialTerms ?? this.todosSpecialTerms,
-      todosFacilityId: todosFacilityId ?? this.todosFacilityId,
-      todosEstimatedStartDate: todosEstimatedStartDate ?? this.todosEstimatedStartDate,
-      todosQuantityRejected: todosQuantityRejected ?? this.todosQuantityRejected,
       todosMoneyUomId: todosMoneyUomId ?? this.todosMoneyUomId,
       todosLocationDesc: todosLocationDesc ?? this.todosLocationDesc,
-      todosTimeTransparency: todosTimeTransparency ?? this.todosTimeTransparency,
-      todosActualCompletionDate: todosActualCompletionDate ?? this.todosActualCompletionDate,
-      todosActualSetupMillis: todosActualSetupMillis ?? this.todosActualSetupMillis,
-      todosWorkEffortName: todosWorkEffortName ?? this.todosWorkEffortName,
-      todosSendNotificationEmail: todosSendNotificationEmail ?? this.todosSendNotificationEmail,
-      todosCurrentStatusId: todosCurrentStatusId ?? this.todosCurrentStatusId,
-      todosSlotId: todosSlotId ?? this.todosSlotId,
-      todosWorkEffortPurposeTypeId: todosWorkEffortPurposeTypeId ?? this.todosWorkEffortPurposeTypeId,
-      todosWorkEffortId: todosWorkEffortId ?? this.todosWorkEffortId,
-      todosAccommodationSpotId: todosAccommodationSpotId ?? this.todosAccommodationSpotId,
-      todosLastModifiedByUserLogin: todosLastModifiedByUserLogin ?? this.todosLastModifiedByUserLogin,
+      todosFixedAssetId: todosFixedAssetId ?? this.todosFixedAssetId,
+      todosFacilityId: todosFacilityId ?? this.todosFacilityId,
+      todosUniversalId: todosUniversalId ?? this.todosUniversalId,
+      todosShowAsEnumId: todosShowAsEnumId ?? this.todosShowAsEnumId,
+      todosInfoUrl: todosInfoUrl ?? this.todosInfoUrl,
       todosLastStatusUpdate: todosLastStatusUpdate ?? this.todosLastStatusUpdate,
+      todosEstimatedMilliSeconds: todosEstimatedMilliSeconds ?? this.todosEstimatedMilliSeconds,
+      todosEstimatedSetupMillis: todosEstimatedSetupMillis ?? this.todosEstimatedSetupMillis,
+      todosCreatedByUserLogin: todosCreatedByUserLogin ?? this.todosCreatedByUserLogin,
+      todosSpecialTerms: todosSpecialTerms ?? this.todosSpecialTerms,
       todosEstimatedCompletionDate: todosEstimatedCompletionDate ?? this.todosEstimatedCompletionDate,
-      todosReserv2ndPPPerc: todosReserv2ndPPPerc ?? this.todosReserv2ndPPPerc,
+      todosQuantityRejected: todosQuantityRejected ?? this.todosQuantityRejected,
+      todosTimeTransparency: todosTimeTransparency ?? this.todosTimeTransparency,
       todosDescription: todosDescription ?? this.todosDescription,
-      todosConfirmation: todosConfirmation ?? this.todosConfirmation,
-      todosLastModifiedDate: todosLastModifiedDate ?? this.todosLastModifiedDate,
+      todosActualSetupMillis: todosActualSetupMillis ?? this.todosActualSetupMillis,
+      todosNoteId: todosNoteId ?? this.todosNoteId,
+      todosSendNotificationEmail: todosSendNotificationEmail ?? this.todosSendNotificationEmail,
       todosWorkEffortTypeId: todosWorkEffortTypeId ?? this.todosWorkEffortTypeId,
+      todosLastModifiedByUserLogin: todosLastModifiedByUserLogin ?? this.todosLastModifiedByUserLogin,
+      todosCurrentStatusId: todosCurrentStatusId ?? this.todosCurrentStatusId,
+      todosWorkEffortParentId: todosWorkEffortParentId ?? this.todosWorkEffortParentId,
+      todosAccommodationSpotId: todosAccommodationSpotId ?? this.todosAccommodationSpotId,
+      todosEstimateCalcMethod: todosEstimateCalcMethod ?? this.todosEstimateCalcMethod,
+      todosReserv2ndPPPerc: todosReserv2ndPPPerc ?? this.todosReserv2ndPPPerc,
+      todosCreatedDate: todosCreatedDate ?? this.todosCreatedDate,
+      todosActualCompletionDate: todosActualCompletionDate ?? this.todosActualCompletionDate,
+      todosLastModifiedDate: todosLastModifiedDate ?? this.todosLastModifiedDate,
+      todosWorkEffortName: todosWorkEffortName ?? this.todosWorkEffortName,
+      todosConfirmation: todosConfirmation ?? this.todosConfirmation,
       todosRevisionNumber: todosRevisionNumber ?? this.todosRevisionNumber,
-      todosActualStartDate: todosActualStartDate ?? this.todosActualStartDate,
       todosSourceReferenceId: todosSourceReferenceId ?? this.todosSourceReferenceId,
-      todosSequenceNum: todosSequenceNum ?? this.todosSequenceNum,
-      todosActualMilliSeconds: todosActualMilliSeconds ?? this.todosActualMilliSeconds,
       todosRecurrenceInfoId: todosRecurrenceInfoId ?? this.todosRecurrenceInfoId,
+      todosTempExprId: todosTempExprId ?? this.todosTempExprId,
+      todosSequenceNum: todosSequenceNum ?? this.todosSequenceNum,
+      todosActualStartDate: todosActualStartDate ?? this.todosActualStartDate,
+      todosActualMilliSeconds: todosActualMilliSeconds ?? this.todosActualMilliSeconds,
       todosQuantityProduced: todosQuantityProduced ?? this.todosQuantityProduced,
       todosName: todosName ?? this.todosName,
       todosTypeId: todosTypeId ?? this.todosTypeId,
@@ -610,89 +610,89 @@ class DummyState extends Equatable {
   List<Object?> get props => [        
         status, 
         presetKeys,
+        noteAuthor,
+        noteTitle,
+        noteNoteDateTime,
+        noteContent,
+        noteMoreInfoItemName,
+        noteNoteId,
+        noteMoreInfoItemId,
+        noteMoreInfoUrl,
         noteAvailablePersistSlots,
-        noteImages,
         noteClob,
+        noteImages,
         noteAttachments,
         noteClobSlot,
         noteImagesSlot,
         noteAttachmentsSlot,
-        noteNoteId,
-        noteContent,
-        noteMoreInfoItemName,
-        noteNoteDateTime,
-        noteMoreInfoItemId,
-        noteTitle,
-        noteAuthor,
-        noteMoreInfoUrl,
+        memoAuthor,
+        memoTitle,
+        memoNoteDateTime,
+        memoContent,
+        memoMoreInfoItemName,
+        memoNoteId,
+        memoMoreInfoItemId,
+        memoMoreInfoUrl,
         memoAvailablePersistSlots,
-        memoImages,
         memoClob,
+        memoImages,
         memoAttachments,
         memoClobSlot,
         memoImagesSlot,
         memoAttachmentsSlot,
-        memoNoteId,
-        memoContent,
-        memoMoreInfoItemName,
-        memoNoteDateTime,
-        memoMoreInfoItemId,
-        memoTitle,
-        memoAuthor,
-        memoMoreInfoUrl,
         todosQuantityToProduce,
+        todosRuntimeDataId,
         todosTotalMilliSecondsAllowed,
-        todosTempExprId,
-        todosShowAsEnumId,
-        todosInfoUrl,
-        todosFixedAssetId,
-        todosUniversalId,
+        todosScopeEnumId,
         todosReservNthPPPerc,
+        todosEstimatedStartDate,
         todosReservPersons,
-        todosEstimateCalcMethod,
-        todosServiceLoaderName,
-        todosWorkEffortParentId,
+        todosAccommodationMapId,
+        todosWorkEffortPurposeTypeId,
+        todosSlotId,
         todosPercentComplete,
-        todosCreatedDate,
+        todosServiceLoaderName,
+        todosWorkEffortId,
         todosPriority,
         todosTotalMoneyAllowed,
-        todosScopeEnumId,
-        todosNoteId,
-        todosAccommodationMapId,
-        todosCreatedByUserLogin,
-        todosRuntimeDataId,
-        todosEstimatedMilliSeconds,
-        todosEstimatedSetupMillis,
-        todosSpecialTerms,
-        todosFacilityId,
-        todosEstimatedStartDate,
-        todosQuantityRejected,
         todosMoneyUomId,
         todosLocationDesc,
-        todosTimeTransparency,
-        todosActualCompletionDate,
-        todosActualSetupMillis,
-        todosWorkEffortName,
-        todosSendNotificationEmail,
-        todosCurrentStatusId,
-        todosSlotId,
-        todosWorkEffortPurposeTypeId,
-        todosWorkEffortId,
-        todosAccommodationSpotId,
-        todosLastModifiedByUserLogin,
+        todosFixedAssetId,
+        todosFacilityId,
+        todosUniversalId,
+        todosShowAsEnumId,
+        todosInfoUrl,
         todosLastStatusUpdate,
+        todosEstimatedMilliSeconds,
+        todosEstimatedSetupMillis,
+        todosCreatedByUserLogin,
+        todosSpecialTerms,
         todosEstimatedCompletionDate,
-        todosReserv2ndPPPerc,
+        todosQuantityRejected,
+        todosTimeTransparency,
         todosDescription,
-        todosConfirmation,
-        todosLastModifiedDate,
+        todosActualSetupMillis,
+        todosNoteId,
+        todosSendNotificationEmail,
         todosWorkEffortTypeId,
+        todosLastModifiedByUserLogin,
+        todosCurrentStatusId,
+        todosWorkEffortParentId,
+        todosAccommodationSpotId,
+        todosEstimateCalcMethod,
+        todosReserv2ndPPPerc,
+        todosCreatedDate,
+        todosActualCompletionDate,
+        todosLastModifiedDate,
+        todosWorkEffortName,
+        todosConfirmation,
         todosRevisionNumber,
-        todosActualStartDate,
         todosSourceReferenceId,
-        todosSequenceNum,
-        todosActualMilliSeconds,
         todosRecurrenceInfoId,
+        todosTempExprId,
+        todosSequenceNum,
+        todosActualStartDate,
+        todosActualMilliSeconds,
         todosQuantityProduced,
         todosName,
         todosTypeId,

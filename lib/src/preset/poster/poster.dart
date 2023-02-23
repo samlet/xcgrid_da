@@ -3,8 +3,11 @@ import '../../generated/note.pb.dart';
 import '../../generated/note_domain.pb.dart';
 import '../../generated/note_co.pb.dart';
 import '../../generated/note_auto.pb.dart';
+import '../../generated/white_board_handle.pb.dart';
 import '../../generated/fixture_objects.pb.dart';
+import '../../generated/note_auto_handle.pb.dart';
 import '../../generated/white_board.pb.dart';
+import '../../generated/note_co_handle.pb.dart';
 
 part 'poster_defs.dart';
 part 'poster_loader.dart';
@@ -142,32 +145,6 @@ class PosterPreset extends PresetBase {
   }
 
      
-  PosterPreset noteSetClobSlot(
-    BuffersData data
-  ) {
-    
-    var el = NoteAutoCall()
-      ..setClobSlot = (NoteAutoSetClobSlotRequest()
-        ..handle = noteWithNoteAutoHandle
-        ..data = data       
-      );     
-     
-
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("noteSetClobSlot", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<Empty> noteSetClobSlotCall(
-    BuffersData data
-  ) async {
-    noteSetClobSlot(data);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-     
   PosterPreset noteUpdateNote(
     String content,
     String author
@@ -192,6 +169,32 @@ class PosterPreset extends PresetBase {
     String author
   ) async {
     noteUpdateNote(content, author);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
+  PosterPreset noteSetClobSlot(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setClobSlot = (NoteAutoSetClobSlotRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("noteSetClobSlot", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetClobSlotCall(
+    BuffersData data
+  ) async {
+    noteSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -587,32 +590,6 @@ class PosterPreset extends PresetBase {
   }
 
      
-  PosterPreset memoSetClobSlot(
-    BuffersData data
-  ) {
-    
-    var el = WhiteBoardCall()
-      ..setClobSlot = (WhiteBoardSetClobSlotRequest()
-        ..handle = memoWithWhiteBoardHandle
-        ..data = data       
-      );     
-     
-
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("memoSetClobSlot", "WhiteBoard", memo, el, c);
-    return this;
-  }
-
-  Future<Empty> memoSetClobSlotCall(
-    BuffersData data
-  ) async {
-    memoSetClobSlot(data);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-     
   PosterPreset memoUpdateNote(
     String content,
     String author
@@ -637,6 +614,32 @@ class PosterPreset extends PresetBase {
     String author
   ) async {
     memoUpdateNote(content, author);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
+  PosterPreset memoSetClobSlot(
+    BuffersData data
+  ) {
+    
+    var el = WhiteBoardCall()
+      ..setClobSlot = (WhiteBoardSetClobSlotRequest()
+        ..handle = memoWithWhiteBoardHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("memoSetClobSlot", "WhiteBoard", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetClobSlotCall(
+    BuffersData data
+  ) async {
+    memoSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -907,6 +910,28 @@ class PosterPreset extends PresetBase {
        
 
      
+  PosterPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+
+    // final c = 0;
+    final c = PosterDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
+  }
+
+     
   PosterPreset fixturesSomeNotes(
     int total
   ) {
@@ -928,28 +953,6 @@ class PosterPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  PosterPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-
-    // final c = 0;
-    final c = PosterDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
           

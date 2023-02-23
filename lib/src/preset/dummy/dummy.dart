@@ -6,8 +6,11 @@ import '../../generated/work_effort.pb.dart';
 import '../../generated/note_co.pb.dart';
 import '../../generated/note_auto.pb.dart';
 import '../../generated/pipelines.pb.dart';
+import '../../generated/todos_handle.pb.dart';
 import '../../generated/fixture_objects.pb.dart';
+import '../../generated/note_auto_handle.pb.dart';
 import '../../generated/todos.pb.dart';
+import '../../generated/note_co_handle.pb.dart';
 import '../../generated/merchant_on_chain.pb.dart';
 
 part 'dummy_defs.dart';
@@ -162,32 +165,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset noteSetClobSlot(
-    BuffersData data
-  ) {
-    
-    var el = NoteAutoCall()
-      ..setClobSlot = (NoteAutoSetClobSlotRequest()
-        ..handle = noteWithNoteAutoHandle
-        ..data = data       
-      );     
-     
-
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("noteSetClobSlot", "NoteAuto", note, el, c);
-    return this;
-  }
-
-  Future<Empty> noteSetClobSlotCall(
-    BuffersData data
-  ) async {
-    noteSetClobSlot(data);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-     
   DummyPreset noteUpdateNote(
     String content,
     String author
@@ -212,6 +189,32 @@ class DummyPreset extends PresetBase {
     String author
   ) async {
     noteUpdateNote(content, author);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
+  DummyPreset noteSetClobSlot(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setClobSlot = (NoteAutoSetClobSlotRequest()
+        ..handle = noteWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("noteSetClobSlot", "NoteAuto", note, el, c);
+    return this;
+  }
+
+  Future<Empty> noteSetClobSlotCall(
+    BuffersData data
+  ) async {
+    noteSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -585,32 +588,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset memoSetClobSlot(
-    BuffersData data
-  ) {
-    
-    var el = NoteAutoCall()
-      ..setClobSlot = (NoteAutoSetClobSlotRequest()
-        ..handle = memoWithNoteAutoHandle
-        ..data = data       
-      );     
-     
-
-    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("memoSetClobSlot", "NoteAuto", memo, el, c);
-    return this;
-  }
-
-  Future<Empty> memoSetClobSlotCall(
-    BuffersData data
-  ) async {
-    memoSetClobSlot(data);
-    await dispatch();
-    return Empty.getDefault();
-  }
-
-     
   DummyPreset memoUpdateNote(
     String content,
     String author
@@ -635,6 +612,32 @@ class DummyPreset extends PresetBase {
     String author
   ) async {
     memoUpdateNote(content, author);
+    await dispatch();
+    return Empty.getDefault();
+  }
+
+     
+  DummyPreset memoSetClobSlot(
+    BuffersData data
+  ) {
+    
+    var el = NoteAutoCall()
+      ..setClobSlot = (NoteAutoSetClobSlotRequest()
+        ..handle = memoWithNoteAutoHandle
+        ..data = data       
+      );     
+     
+
+    // final c = NoteDefs.NON_DOMAIN_FIELD.value;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("memoSetClobSlot", "NoteAuto", memo, el, c);
+    return this;
+  }
+
+  Future<Empty> memoSetClobSlotCall(
+    BuffersData data
+  ) async {
+    memoSetClobSlot(data);
     await dispatch();
     return Empty.getDefault();
   }
@@ -1012,32 +1015,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-
-    // final c = 0;
-    final c = DummyDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset todosUpdateTodo(
     String assocId,
     String title,
@@ -1065,6 +1042,32 @@ class DummyPreset extends PresetBase {
     String description
   ) async {
     todosUpdateTodo(assocId, title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+
+    // final c = 0;
+    final c = DummyDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -1217,30 +1220,6 @@ class DummyPreset extends PresetBase {
        
 
      
-  DummyPreset plsIsDone(
-    String plId
-  ) {
-    
-    var el= PipelinesCall()
-        ..isDone=StringValue(value: plId);    
-
-         
-
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("plsIsDone", "Pipelines", pls, el, c);
-    return this;
-  }
-
-  Future<BoolValue> plsIsDoneCall(
-    String plId
-  ) async {
-    plsIsDone(plId);
-    var result= await dispatch();
-    return BoolValue.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset plsCreateArchivePl(
     String token,
     String assetName,
@@ -1275,6 +1254,30 @@ class DummyPreset extends PresetBase {
     plsCreateArchivePl(token, assetName, regionId, bindArgs);
     var result= await dispatch();
     return SandboxResultProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset plsIsDone(
+    String plId
+  ) {
+    
+    var el= PipelinesCall()
+        ..isDone=StringValue(value: plId);    
+
+         
+
+    // final c = 0;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("plsIsDone", "Pipelines", pls, el, c);
+    return this;
+  }
+
+  Future<BoolValue> plsIsDoneCall(
+    String plId
+  ) async {
+    plsIsDone(plId);
+    var result= await dispatch();
+    return BoolValue.fromBuffer(result.values.last.slotData);
   }
 
           
@@ -1340,28 +1343,6 @@ class DummyPreset extends PresetBase {
   }
 
      
-  DummyPreset fixturesOneNote(
-  ) {
-    
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
-
-         
-
-    // final c = 0;
-    final c = DummyDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
-    return this;
-  }
-
-  Future<XcRefId> fixturesOneNoteCall(
-  ) async {
-    fixturesOneNote();
-    var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
-  }
-
-     
   DummyPreset fixturesSomeNotes(
     int total
   ) {
@@ -1383,6 +1364,28 @@ class DummyPreset extends PresetBase {
     fixturesSomeNotes(total);
     var result= await dispatch();
     return Strings.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  DummyPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+
+    // final c = 0;
+    final c = DummyDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
   }
 
           

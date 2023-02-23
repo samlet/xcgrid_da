@@ -3,6 +3,7 @@ import '../../generated/call_builder.pb.dart';
 import '../../generated/workeff_domain.pb.dart';
 import '../../generated/extra/common_slot.pb.dart';
 import '../../generated/work_effort.pb.dart';
+import '../../generated/todos_handle.pb.dart';
 import '../../generated/fixture_objects.pb.dart';
 import '../../generated/preset_manager.pb.dart';
 import '../../generated/todos.pb.dart';
@@ -141,32 +142,6 @@ class MilestonesPreset extends PresetBase {
   }
 
      
-  MilestonesPreset todosAddTodoById(
-    String todoId
-  ) {
-    
-    var el = TodosCall()
-      ..addTodoById = (TodosAddTodoByIdRequest()
-        ..handle = todosWithTodosHandle
-        ..todoId = todoId       
-      );     
-     
-
-    // final c = 0;
-    final c = MilestonesDomainDefs.todosAddTodoById.index;
-    pushCall("todosAddTodoById", "Todos", todos, el, c);
-    return this;
-  }
-
-  Future<TodoProto> todosAddTodoByIdCall(
-    String todoId
-  ) async {
-    todosAddTodoById(todoId);
-    var result= await dispatch();
-    return TodoProto.fromBuffer(result.values.last.slotData);
-  }
-
-     
   MilestonesPreset todosUpdateTodo(
     String assocId,
     String title,
@@ -194,6 +169,32 @@ class MilestonesPreset extends PresetBase {
     String description
   ) async {
     todosUpdateTodo(assocId, title, description);
+    var result= await dispatch();
+    return TodoProto.fromBuffer(result.values.last.slotData);
+  }
+
+     
+  MilestonesPreset todosAddTodoById(
+    String todoId
+  ) {
+    
+    var el = TodosCall()
+      ..addTodoById = (TodosAddTodoByIdRequest()
+        ..handle = todosWithTodosHandle
+        ..todoId = todoId       
+      );     
+     
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.todosAddTodoById.index;
+    pushCall("todosAddTodoById", "Todos", todos, el, c);
+    return this;
+  }
+
+  Future<TodoProto> todosAddTodoByIdCall(
+    String todoId
+  ) async {
+    todosAddTodoById(todoId);
     var result= await dispatch();
     return TodoProto.fromBuffer(result.values.last.slotData);
   }
@@ -346,6 +347,28 @@ class MilestonesPreset extends PresetBase {
        
 
      
+  MilestonesPreset fixturesOneNote(
+  ) {
+    
+    var el= FixtureObjectsCall()
+        ..oneNote=Empty.getDefault();    
+
+         
+
+    // final c = 0;
+    final c = MilestonesDomainDefs.nonDomainField.index;
+    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    return this;
+  }
+
+  Future<XcRefId> fixturesOneNoteCall(
+  ) async {
+    fixturesOneNote();
+    var result= await dispatch();
+    return XcRefId.fromBuffer(result.values.last.slotData);
+  }
+
+     
   MilestonesPreset fixturesSomeNotes(
     int total
   ) {
@@ -369,31 +392,33 @@ class MilestonesPreset extends PresetBase {
     return Strings.fromBuffer(result.values.last.slotData);
   }
 
+          
      
-  MilestonesPreset fixturesOneNote(
+       
+
+     
+  MilestonesPreset psmLoadPresetMeta(
+    String plId
   ) {
     
-    var el= FixtureObjectsCall()
-        ..oneNote=Empty.getDefault();    
+    var el= PresetManagerCall()
+        ..loadPresetMeta=StringValue(value: plId);    
 
          
 
     // final c = 0;
     final c = MilestonesDomainDefs.nonDomainField.index;
-    pushCall("fixturesOneNote", "FixtureObjects", fixtures, el, c);
+    pushCall("psmLoadPresetMeta", "PresetManager", psm, el, c);
     return this;
   }
 
-  Future<XcRefId> fixturesOneNoteCall(
+  Future<CallBuilderContextProto> psmLoadPresetMetaCall(
+    String plId
   ) async {
-    fixturesOneNote();
+    psmLoadPresetMeta(plId);
     var result= await dispatch();
-    return XcRefId.fromBuffer(result.values.last.slotData);
+    return CallBuilderContextProto.fromBuffer(result.values.last.slotData);
   }
-
-          
-     
-       
 
      
   MilestonesPreset psmGetPlIdByOwnerAndTag(
@@ -427,30 +452,6 @@ class MilestonesPreset extends PresetBase {
     psmGetPlIdByOwnerAndTag(regionId, owner, tag);
     var result= await dispatch();
     return IdOrErr.fromBuffer(result.values.last.slotData);
-  }
-
-     
-  MilestonesPreset psmLoadPresetMeta(
-    String plId
-  ) {
-    
-    var el= PresetManagerCall()
-        ..loadPresetMeta=StringValue(value: plId);    
-
-         
-
-    // final c = 0;
-    final c = MilestonesDomainDefs.nonDomainField.index;
-    pushCall("psmLoadPresetMeta", "PresetManager", psm, el, c);
-    return this;
-  }
-
-  Future<CallBuilderContextProto> psmLoadPresetMetaCall(
-    String plId
-  ) async {
-    psmLoadPresetMeta(plId);
-    var result= await dispatch();
-    return CallBuilderContextProto.fromBuffer(result.values.last.slotData);
   }
 
           

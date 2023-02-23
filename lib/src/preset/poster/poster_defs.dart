@@ -40,22 +40,22 @@ enum PosterDomainDefs {
 
     // domain fields ---->
     // note: [NoteAuto, NoteCo]  
+    noteNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     noteAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     notePersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     noteClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
     noteImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
     noteAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
-    noteNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     noteTitle,   // google.protobuf.StringValue, NoteCo.name  
     noteContent,   // google.protobuf.StringValue, NoteCo.getContent  
     noteDefaultDomain,   // bluecc.note.NoteProto, NoteCo.getNoteProto
     // memo: [NoteAuto, WhiteBoard]  
+    memoNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     memoAvailablePersistSlots,   // proto.StructData, NoteAuto.persistSlotsExistent  
     memoPersistSlots,   // proto.BuffersMap, NoteAuto.persistSlotValues  
     memoClobSlot,   // proto.BuffersData, NoteAuto.getClobSlot  
     memoImagesSlot,   // proto.BuffersData, NoteAuto.getImagesSlot  
     memoAttachmentsSlot,   // proto.BuffersData, NoteAuto.getAttachmentsSlot  
-    memoNote,   // bluecc.note.NoteProto, NoteAuto.getNote  
     memoLastContent,   // google.protobuf.StringValue, WhiteBoard.getLastContent  
     memoLastAuthor,   // google.protobuf.StringValue, WhiteBoard.getLastAuthor  
     memoContentAndAuthor,   // domain.ContentAndAuthor, WhiteBoard.getContentAndAuthor    
