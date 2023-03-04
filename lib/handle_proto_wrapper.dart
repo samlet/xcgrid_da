@@ -103,6 +103,9 @@ extension HandleProtoEx on XcRefId {
   PaymentMethodCoHandle get asPaymentMethodCoHandle =>
       PaymentMethodCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  MultisigAutoHandle get asMultisigAutoHandle =>
+      MultisigAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   OnlineStoreAutoHandle get asOnlineStoreAutoHandle =>
       OnlineStoreAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
@@ -168,6 +171,9 @@ extension HandleProtoEx on XcRefId {
   
   ContentAutoHandle get asContentAutoHandle =>
       ContentAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
+  MultisigPalHandle get asMultisigPalHandle =>
+      MultisigPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   BillboardPalHandle get asBillboardPalHandle =>
       BillboardPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);

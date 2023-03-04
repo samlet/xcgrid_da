@@ -171,6 +171,11 @@ extension PaymentMethodCoEx on PaymentMethodCoHandle {
       locator<XcClient>().paymentMethodCoAgent(bundleId, regionId: regionId);
 }
 
+extension MultisigAutoEx on MultisigAutoHandle {
+  MultisigAutoAgent get agent =>
+      locator<XcClient>().multisigAutoAgent(bundleId, regionId: regionId);
+}
+
 extension OnlineStoreAutoEx on OnlineStoreAutoHandle {
   OnlineStoreAutoAgent get agent =>
       locator<XcClient>().onlineStoreAutoAgent(bundleId, regionId: regionId);
@@ -279,6 +284,11 @@ extension ShoppingCartPalEx on ShoppingCartPalHandle {
 extension ContentAutoEx on ContentAutoHandle {
   ContentAutoAgent get agent =>
       locator<XcClient>().contentAutoAgent(bundleId, regionId: regionId);
+}
+
+extension MultisigPalEx on MultisigPalHandle {
+  MultisigPalAgent get agent =>
+      locator<XcClient>().multisigPalAgent(bundleId, regionId: regionId);
 }
 
 extension BillboardPalEx on BillboardPalHandle {

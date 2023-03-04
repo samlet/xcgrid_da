@@ -23,19 +23,19 @@ Decimal currencyAsDecimal(Currency c) {
   return d;
 }
 
-extension DecimalExForFixedPoint on FixedPoint{
+extension DecimalExForFixedPoint on FixedPoint {
   Decimal get decimal => asDecimal(this);
 }
 
-extension DecimalExForCurrency on Currency{
+extension DecimalExForCurrency on Currency {
   Decimal get decimal => currencyAsDecimal(this);
 }
 
-extension DateTimeEx on Timestamp{
+extension DateTimeEx on Timestamp {
   DateTime get dt => toDateTime();
 }
 
-extension StringProto on String{
+extension StringProto on String {
   StringValue get proto => StringValue(value: this);
 }
 
@@ -45,51 +45,86 @@ Currency asCurrency(String numVal) {
 
 var timeFormat = DateFormat("HH:mm:ss");
 var dateFormat = DateFormat("yyyy-MM-dd");
+
 TimeOfDay asTimeOfDay(String timeStr) {
   var time = timeFormat.parse(timeStr);
   return TimeOfDay(
       hours: time.hour, minutes: time.minute, seconds: time.second);
 }
 
-Date asDate(String dateStr){
-  var date=dateFormat.parse(dateStr);
+Date asDate(String dateStr) {
+  var date = dateFormat.parse(dateStr);
   return Date(year: date.year, month: date.month, day: date.day);
 }
 
-Timestamp asTimestamp(String ts){
-  var dt=DateTime.parse(ts);
+Timestamp asTimestamp(String ts) {
+  var dt = DateTime.parse(ts);
   return Timestamp.fromDateTime(dt);
 }
 
+int asInt(String s) {
+  return int.parse(s);
+}
+
 getProtoJsonValue(argResult, String fldType) {
-  if(argResult==null){
+  if (argResult == null) {
     return null;
   }
-  var data=getProtoValue(argResult, fldType);
-  return data is GeneratedMessage?data.toProto3Json():data;
+  var data = getProtoValue(argResult, fldType);
+  return data is GeneratedMessage ? data.toProto3Json() : data;
 }
 
 getProtoValue(argResult, String fldType) {
-  if(argResult==null){
+  if (argResult == null) {
     return null;
   }
-  switch(fldType){
-    case "date-time": return asTimestamp(argResult);
-    case "date": return asDate(argResult);
-    case "time": return asTimeOfDay(argResult);
+  switch (fldType) {
+    case "date-time":
+      return asTimestamp(argResult);
+    case "date":
+      return asDate(argResult);
+    case "time":
+      return asTimeOfDay(argResult);
     case "currency-amount":
     case "currency-precise":
       return asCurrency(argResult);
-    case "fixed-point": return asFixedPoint(argResult);
-    default: return argResult;
+    case "integer":
+    case "numeric":
+      return asInt(argResult);
+    case "fixed-point":
+      return asFixedPoint(argResult);
+    case "strings":
+      return asStrings(argResult);
+    case "ints":
+      return asInts(argResult);
+    case "string-map":
+      return asStringMap(argResult);
+    default:
+      return argResult;
   }
+}
+
+StringMap asStringMap(argResult) {
+  Map<String, String> resultMap={};
+  for (var element in (argResult as List)) {
+    var pair=element.toString().split(':');
+    resultMap[pair[0]]=pair[1];
+  }
+  return StringMap(values: resultMap);
+}
+
+Strings asStrings(argResult) {
+  return Strings(value: [for (var s in argResult as List) s.toString()]);
+}
+
+Ints asInts(argResult) {
+  return Ints(value: [for (var s in argResult as List) Int64.parseInt(s)]);
 }
 
 T asProto<T extends GeneratedMessage>(String protoString, T instance) {
   instance.mergeFromBuffer(base64Decode(protoString));
   return instance;
 }
-
 
 Struct asStruct(Map<String, String> stringMap) {
   var struct = Struct()
@@ -98,4 +133,3 @@ Struct asStruct(Map<String, String> stringMap) {
         .entries);
   return struct;
 }
-
