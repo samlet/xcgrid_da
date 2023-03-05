@@ -5,10 +5,11 @@ import 'package:grpc/grpc.dart';
 //   return rpcClient;
 // }
 
-class XcClient{
+class XcClient {
   late ClientChannel channel;
+  final String xcId;
 
-  XcClient(){
+  XcClient({this.xcId = 'alice'}) {
     channel = defaultChannel();
   }
 }
@@ -20,7 +21,7 @@ ClientChannel defaultChannel() {
     options: ChannelOptions(
       credentials: ChannelCredentials.insecure(),
       codecRegistry:
-      CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
+          CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
     ),
   );
   return channel;
