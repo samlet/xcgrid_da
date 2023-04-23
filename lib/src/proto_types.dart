@@ -68,7 +68,7 @@ int asInt(String s) {
 
 getProtoJsonValue(argResult, String fldType) {
   if (argResult == null) {
-    return null;
+    return fldType=='string'?'':null;
   }
   var data = getProtoValue(argResult, fldType);
   return data is GeneratedMessage ? data.toProto3Json() : data;
