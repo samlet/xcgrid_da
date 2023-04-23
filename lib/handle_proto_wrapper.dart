@@ -10,6 +10,9 @@ extension HandleProtoEx on XcRefId {
   SurveyPalHandle get asSurveyPalHandle =>
       SurveyPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  DigitalStoreAutoHandle get asDigitalStoreAutoHandle =>
+      DigitalStoreAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   OrderEscrowCoHandle get asOrderEscrowCoHandle =>
       OrderEscrowCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
@@ -25,6 +28,9 @@ extension HandleProtoEx on XcRefId {
   OrderEscrowPalHandle get asOrderEscrowPalHandle =>
       OrderEscrowPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  ReservationAutoHandle get asReservationAutoHandle =>
+      ReservationAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   EmailAddressAutoHandle get asEmailAddressAutoHandle =>
       EmailAddressAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
@@ -33,6 +39,9 @@ extension HandleProtoEx on XcRefId {
   
   UserLoginAutoHandle get asUserLoginAutoHandle =>
       UserLoginAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
+  RentalAutoHandle get asRentalAutoHandle =>
+      RentalAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   AudioAutoHandle get asAudioAutoHandle =>
       AudioAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
@@ -88,6 +97,9 @@ extension HandleProtoEx on XcRefId {
   WorkEffortAutoHandle get asWorkEffortAutoHandle =>
       WorkEffortAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  AssetAutoHandle get asAssetAutoHandle =>
+      AssetAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   ProductCategoryAutoHandle get asProductCategoryAutoHandle =>
       ProductCategoryAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
@@ -105,6 +117,9 @@ extension HandleProtoEx on XcRefId {
   
   MultisigAutoHandle get asMultisigAutoHandle =>
       MultisigAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
+  TradeAutoHandle get asTradeAutoHandle =>
+      TradeAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   OnlineStoreAutoHandle get asOnlineStoreAutoHandle =>
       OnlineStoreAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
@@ -157,11 +172,17 @@ extension HandleProtoEx on XcRefId {
   BudgetCoHandle get asBudgetCoHandle =>
       BudgetCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  CustRequestAutoHandle get asCustRequestAutoHandle =>
+      CustRequestAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   CatalogCoHandle get asCatalogCoHandle =>
       CatalogCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   OrderCoHandle get asOrderCoHandle =>
       OrderCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
+  TokenAttributeAutoHandle get asTokenAttributeAutoHandle =>
+      TokenAttributeAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   InteractBoxPalHandle get asInteractBoxPalHandle =>
       InteractBoxPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
@@ -199,6 +220,9 @@ extension HandleProtoEx on XcRefId {
   ImageAutoHandle get asImageAutoHandle =>
       ImageAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
+  RentalPalHandle get asRentalPalHandle =>
+      RentalPalHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
   InvoiceCoHandle get asInvoiceCoHandle =>
       InvoiceCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
@@ -219,6 +243,9 @@ extension HandleProtoEx on XcRefId {
   
   CrowdFundingCoHandle get asCrowdFundingCoHandle =>
       CrowdFundingCoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
+  
+  TaskAutoHandle get asTaskAutoHandle =>
+      TaskAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);
   
   TicketAutoHandle get asTicketAutoHandle =>
       TicketAutoHandle(xcId: xcId, regionId: regionId, bundleId: bundleId);

@@ -16,6 +16,11 @@ extension SurveyPalEx on SurveyPalHandle {
       locator<XcClient>().surveyPalAgent(bundleId, regionId: regionId);
 }
 
+extension DigitalStoreAutoEx on DigitalStoreAutoHandle {
+  DigitalStoreAutoAgent get agent =>
+      locator<XcClient>().digitalStoreAutoAgent(bundleId, regionId: regionId);
+}
+
 extension OrderEscrowCoEx on OrderEscrowCoHandle {
   OrderEscrowCoAgent get agent =>
       locator<XcClient>().orderEscrowCoAgent(bundleId, regionId: regionId);
@@ -41,6 +46,11 @@ extension OrderEscrowPalEx on OrderEscrowPalHandle {
       locator<XcClient>().orderEscrowPalAgent(bundleId, regionId: regionId);
 }
 
+extension ReservationAutoEx on ReservationAutoHandle {
+  ReservationAutoAgent get agent =>
+      locator<XcClient>().reservationAutoAgent(bundleId, regionId: regionId);
+}
+
 extension EmailAddressAutoEx on EmailAddressAutoHandle {
   EmailAddressAutoAgent get agent =>
       locator<XcClient>().emailAddressAutoAgent(bundleId, regionId: regionId);
@@ -54,6 +64,11 @@ extension WebSiteAutoEx on WebSiteAutoHandle {
 extension UserLoginAutoEx on UserLoginAutoHandle {
   UserLoginAutoAgent get agent =>
       locator<XcClient>().userLoginAutoAgent(bundleId, regionId: regionId);
+}
+
+extension RentalAutoEx on RentalAutoHandle {
+  RentalAutoAgent get agent =>
+      locator<XcClient>().rentalAutoAgent(bundleId, regionId: regionId);
 }
 
 extension AudioAutoEx on AudioAutoHandle {
@@ -146,6 +161,11 @@ extension WorkEffortAutoEx on WorkEffortAutoHandle {
       locator<XcClient>().workEffortAutoAgent(bundleId, regionId: regionId);
 }
 
+extension AssetAutoEx on AssetAutoHandle {
+  AssetAutoAgent get agent =>
+      locator<XcClient>().assetAutoAgent(bundleId, regionId: regionId);
+}
+
 extension ProductCategoryAutoEx on ProductCategoryAutoHandle {
   ProductCategoryAutoAgent get agent =>
       locator<XcClient>().productCategoryAutoAgent(bundleId, regionId: regionId);
@@ -174,6 +194,11 @@ extension PaymentMethodCoEx on PaymentMethodCoHandle {
 extension MultisigAutoEx on MultisigAutoHandle {
   MultisigAutoAgent get agent =>
       locator<XcClient>().multisigAutoAgent(bundleId, regionId: regionId);
+}
+
+extension TradeAutoEx on TradeAutoHandle {
+  TradeAutoAgent get agent =>
+      locator<XcClient>().tradeAutoAgent(bundleId, regionId: regionId);
 }
 
 extension OnlineStoreAutoEx on OnlineStoreAutoHandle {
@@ -261,6 +286,11 @@ extension BudgetCoEx on BudgetCoHandle {
       locator<XcClient>().budgetCoAgent(bundleId, regionId: regionId);
 }
 
+extension CustRequestAutoEx on CustRequestAutoHandle {
+  CustRequestAutoAgent get agent =>
+      locator<XcClient>().custRequestAutoAgent(bundleId, regionId: regionId);
+}
+
 extension CatalogCoEx on CatalogCoHandle {
   CatalogCoAgent get agent =>
       locator<XcClient>().catalogCoAgent(bundleId, regionId: regionId);
@@ -269,6 +299,11 @@ extension CatalogCoEx on CatalogCoHandle {
 extension OrderCoEx on OrderCoHandle {
   OrderCoAgent get agent =>
       locator<XcClient>().orderCoAgent(bundleId, regionId: regionId);
+}
+
+extension TokenAttributeAutoEx on TokenAttributeAutoHandle {
+  TokenAttributeAutoAgent get agent =>
+      locator<XcClient>().tokenAttributeAutoAgent(bundleId, regionId: regionId);
 }
 
 extension InteractBoxPalEx on InteractBoxPalHandle {
@@ -331,6 +366,11 @@ extension ImageAutoEx on ImageAutoHandle {
       locator<XcClient>().imageAutoAgent(bundleId, regionId: regionId);
 }
 
+extension RentalPalEx on RentalPalHandle {
+  RentalPalAgent get agent =>
+      locator<XcClient>().rentalPalAgent(bundleId, regionId: regionId);
+}
+
 extension InvoiceCoEx on InvoiceCoHandle {
   InvoiceCoAgent get agent =>
       locator<XcClient>().invoiceCoAgent(bundleId, regionId: regionId);
@@ -364,6 +404,11 @@ extension FixedAssetAutoEx on FixedAssetAutoHandle {
 extension CrowdFundingCoEx on CrowdFundingCoHandle {
   CrowdFundingCoAgent get agent =>
       locator<XcClient>().crowdFundingCoAgent(bundleId, regionId: regionId);
+}
+
+extension TaskAutoEx on TaskAutoHandle {
+  TaskAutoAgent get agent =>
+      locator<XcClient>().taskAutoAgent(bundleId, regionId: regionId);
 }
 
 extension TicketAutoEx on TicketAutoHandle {

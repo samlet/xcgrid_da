@@ -1,4 +1,6 @@
+/// gentool: DartCoAgentGenTool, co_agent.j2
 import '../../common_proto.dart';
+import '../generated/google/protobuf/duration.pb.dart';
 import '../xcrpc_client.dart';
 import '../generated/note_co_handle.pb.dart';
 import '../generated/note_co.pbgrpc.dart';
@@ -50,17 +52,6 @@ class NoteCoAgent {
   }    
        
 
-  /// setContent -> void
-  Future<Empty> setContent(
-    String cnt
-  ) async {
-    return (await client.setContent(NoteCoSetContentRequest()
-      ..handle = handle
-      ..cnt = cnt
-    ));
-  }
-     
-
   /// attachToParty -> void
   Future<Empty> attachToParty(
     String partyId
@@ -106,6 +97,17 @@ class NoteCoAgent {
   }    
        
 
+  /// setContent -> void
+  Future<Empty> setContent(
+    String cnt
+  ) async {
+    return (await client.setContent(NoteCoSetContentRequest()
+      ..handle = handle
+      ..cnt = cnt
+    ));
+  }
+     
+
   /// query::getDecimals -> DecimalMap
   Future<DecimalMap> getDecimals() async {
     return (await client.getDecimals(handle));
@@ -123,22 +125,22 @@ class NoteCoAgent {
   }
      
 
-  /// query::getSlotValue -> IonValue
-  Future<ValueData> getSlotValue(
+  /// query::hasSlotValue -> boolean
+  Future<BoolValue> hasSlotValue(
     String slotName
   ) async {
-    return (await client.getSlotValue(NoteCoGetSlotValueRequest()
+    return (await client.hasSlotValue(NoteCoHasSlotValueRequest()
       ..handle = handle
       ..slotName = slotName
     ));
   }
      
 
-  /// query::hasSlotValue -> boolean
-  Future<BoolValue> hasSlotValue(
+  /// query::getSlotValue -> IonValue
+  Future<ValueData> getSlotValue(
     String slotName
   ) async {
-    return (await client.hasSlotValue(NoteCoHasSlotValueRequest()
+    return (await client.getSlotValue(NoteCoGetSlotValueRequest()
       ..handle = handle
       ..slotName = slotName
     ));
